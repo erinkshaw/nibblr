@@ -4,7 +4,7 @@ import Cards, { Card } from 'react-swipe-card'
 export default class Stack extends Component {
 
   render() {
-    const { actions, children, login } = this.props
+    const { actions, children, login, handleSwipe } = this.props
 
     const data = ['/img/nachos.jpg', '/img/soup.jpg', '/img/pizza.jpg', '/img/spaghetti.jpg']
 
@@ -14,7 +14,11 @@ export default class Stack extends Component {
             {data.map((item, i) =>
               <Card key={i}
                 onSwipeLeft={() => console.log('swipe left')}
-                onSwipeRight={() => console.log('swipe right')}>
+                onSwipeRight={() => {
+                  console.log('swipe right')
+                  handleSwipe(item)
+                }
+              }>
                 <img src={item}/>
               </Card>
             )}
