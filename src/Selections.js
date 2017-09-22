@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Restaurant from './Restaurant'
 
 
 class Selections extends Component {
@@ -9,8 +10,8 @@ class Selections extends Component {
     console.log(this.props)
     return (
       <div>
-        HIIII IT WORKED OMG THNKS
-        {selections.map((food) => <img src={food}/>)}
+        HIIII IT WORKED OMG
+        {selections.map((food) => <Restaurant url={food}/>)}
       </div>
     );
   }

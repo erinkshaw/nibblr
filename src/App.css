@@ -64,7 +64,7 @@ body {
     content: "Nibblr.";
     font-family: NoodleScript;
     position: absolute;
-    top: 30px;
+    top: 10px;
     left: 200px;
     font-size: 90px;
     color: rgba(0,0,0,.75);
@@ -86,7 +86,7 @@ body {
   text-align: center;
 }
 
-img {
+.card img {
   width: 100%;
 }
 
@@ -184,3 +184,7 @@ h1, h2 {
   transform: translate(-50%, 0);
   margin-left: 50%;
  }
+
+ /* .btn {
+  font-family: NoodleScript;
+} */
