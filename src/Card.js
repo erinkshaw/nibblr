@@ -17,33 +17,36 @@ export default class Stack extends Component {
     this.unsubscribe();
   }
 
-  makeGooglePlacesPhotoURL (photoReference, key) {
-    var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-    var maxHeight = 400;
-    var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-    return fullURL;
-  }
 
   render() {
+    function makeGooglePlacesPhotoURL (photoReference, key) {
+      var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
+      var maxHeight = 4000;
+      var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
+      return fullURL;
+    }
     const { actions, children, login, handleSwipe, data } = this.props
-    console.log('hi this dot state', this.state.places.results)
+    const places = this.state.places.results
+    // const url = places[i].photos[0].photo_reference
+    if (places) {console.log(makeGooglePlacesPhotoURL(places[1].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')) }
     return (
       <div  >
         <Cards onEnd={() => console.log('end')} className='master-root'>
-            {data.map((item, i) =>
-              <Card key={i}
-                onSwipeLeft={() => {
-                  console.log('swipe left')
-                  handleSwipe(item, 'left')}
+            {places && places.map((item, i) =>
+              {
+                const url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
+                return (<Card key={i}
+                  onSwipeLeft={() => {
+                    console.log('swipe left')
+                    handleSwipe(item, 'left')}
+                    }
+                  onSwipeRight={() => {
+                    console.log('swipe right')
+                    handleSwipe(item, 'right')
                   }
-                onSwipeRight={() => {
-                  console.log('swipe right')
-                  handleSwipe(item, 'right')
-                  console.log(data)
-                }
-              }>
-                <img src={item} className="stock"/>
-              </Card>
+                }>
+                <img src={url} className="stock"/>
+              </Card>)}
             )}
           </Cards>
       </div>

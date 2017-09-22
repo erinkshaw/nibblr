@@ -26078,16 +26078,14 @@ var Stack = function (_Component) {
       this.unsubscribe();
     }
   }, {
-    key: 'makeGooglePlacesPhotoURL',
-    value: function makeGooglePlacesPhotoURL(photoReference, key) {
-      var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-      var maxHeight = 400;
-      var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-      return fullURL;
-    }
-  }, {
     key: 'render',
     value: function render() {
+      function makeGooglePlacesPhotoURL(photoReference, key) {
+        var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
+        var maxHeight = 4000;
+        var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
+        return fullURL;
+      }
       var _props = this.props,
           actions = _props.actions,
           children = _props.children,
@@ -26095,7 +26093,11 @@ var Stack = function (_Component) {
           handleSwipe = _props.handleSwipe,
           data = _props.data;
 
-      console.log('hi this dot state', this.state.places.results);
+      var places = this.state.places.results;
+      // const url = places[i].photos[0].photo_reference
+      if (places) {
+        console.log(makeGooglePlacesPhotoURL(places[1].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo'));
+      }
       return _react2.default.createElement(
         'div',
         null,
@@ -26104,7 +26106,8 @@ var Stack = function (_Component) {
           { onEnd: function onEnd() {
               return console.log('end');
             }, className: 'master-root' },
-          data.map(function (item, i) {
+          places && places.map(function (item, i) {
+            var url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo');
             return _react2.default.createElement(
               _reactSwipeCard.Card,
               { key: i,
@@ -26115,9 +26118,8 @@ var Stack = function (_Component) {
                 onSwipeRight: function onSwipeRight() {
                   console.log('swipe right');
                   handleSwipe(item, 'right');
-                  console.log(data);
                 } },
-              _react2.default.createElement('img', { src: item, className: 'stock' })
+              _react2.default.createElement('img', { src: url, className: 'stock' })
             );
           })
         )
