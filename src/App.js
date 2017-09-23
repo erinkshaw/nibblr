@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-// import './App.css'
 import Stack from './Card'
 import Cards, { Card } from 'react-swipe-card'
 import Navbar from './Navbar'
 import Selections from './Selections'
 import { Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom'
+import Main from './Main'
 import store, { gettingPlacesData } from './store'
 
 class App extends Component {
@@ -13,7 +13,6 @@ class App extends Component {
     super(props)
     this.state = {
       selections: [],
-      data: ['/img/nachos.jpg', '/img/soup.jpg', '/img/pizza.jpg', '/img/spaghetti.jpg'],
       places: store.getState()
     }
     this.handleSwipe = this.handleSwipe.bind(this)
@@ -25,13 +24,14 @@ class App extends Component {
   }
 
   handleSwipe (food, direction) {
+    console.log(this.state)
     if (direction === 'right') {
       this.setState({selections: [...this.state.selections, food] })
-      this.setState({data: this.state.data.slice(1)})
+      // this.setState({places: this.state.places.slice(1)})
     }
-    else {
-      this.setState({data: this.state.data.slice(1)})
-    }
+    // else {
+    //   this.setState({places: this.state.places.slice(1)})
+    // }
   }
 
   render() {
@@ -40,14 +40,10 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navbar />
           <Switch>
             <Route path="/selections" render = {() => <Selections selections={this.state.selections} />} />
-            <div className="plate">
-              <Stack handleSwipe={this.handleSwipe} data={this.state.data} />
-            </div>
+            <Route path="/" render = {() => <Main handleSwipe={this.handleSwipe} />} />
           </Switch>
-          <div className="trademark">Tinder for Take Out</div>
         </div>
       </Router>
     );

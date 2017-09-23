@@ -13728,6 +13728,10 @@ var _Restaurant = __webpack_require__(295);
 
 var _Restaurant2 = _interopRequireDefault(_Restaurant);
 
+var _NavHome = __webpack_require__(298);
+
+var _NavHome2 = _interopRequireDefault(_NavHome);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13755,8 +13759,9 @@ var Selections = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(_NavHome2.default, null),
         selections.map(function (place) {
-          return _react2.default.createElement(_Restaurant2.default, { place: place });
+          return _react2.default.createElement(_Restaurant2.default, { key: place.id, place: place });
         })
       );
     }
@@ -25929,6 +25934,10 @@ var _reactRouter = __webpack_require__(128);
 
 var _reactRouterDom = __webpack_require__(115);
 
+var _Main = __webpack_require__(297);
+
+var _Main2 = _interopRequireDefault(_Main);
+
 var _store = __webpack_require__(103);
 
 var _store2 = _interopRequireDefault(_store);
@@ -25942,8 +25951,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import './App.css'
-
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -25955,7 +25962,6 @@ var App = function (_Component) {
 
     _this.state = {
       selections: [],
-      data: ['/img/nachos.jpg', '/img/soup.jpg', '/img/pizza.jpg', '/img/spaghetti.jpg'],
       places: _store2.default.getState()
     };
     _this.handleSwipe = _this.handleSwipe.bind(_this);
@@ -25971,12 +25977,14 @@ var App = function (_Component) {
   }, {
     key: 'handleSwipe',
     value: function handleSwipe(food, direction) {
+      console.log(this.state);
       if (direction === 'right') {
         this.setState({ selections: [].concat(_toConsumableArray(this.state.selections), [food]) });
-        this.setState({ data: this.state.data.slice(1) });
-      } else {
-        this.setState({ data: this.state.data.slice(1) });
+        // this.setState({places: this.state.places.slice(1)})
       }
+      // else {
+      //   this.setState({places: this.state.places.slice(1)})
+      // }
     }
   }, {
     key: 'render',
@@ -25991,23 +25999,15 @@ var App = function (_Component) {
         _react2.default.createElement(
           'div',
           null,
-          _react2.default.createElement(_Navbar2.default, null),
           _react2.default.createElement(
             _reactRouter.Switch,
             null,
             _react2.default.createElement(_reactRouter.Route, { path: '/selections', render: function render() {
                 return _react2.default.createElement(_Selections2.default, { selections: _this2.state.selections });
               } }),
-            _react2.default.createElement(
-              'div',
-              { className: 'plate' },
-              _react2.default.createElement(_Card2.default, { handleSwipe: this.handleSwipe, data: this.state.data })
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'trademark' },
-            'Tinder for Take Out'
+            _react2.default.createElement(_reactRouter.Route, { path: '/', render: function render() {
+                return _react2.default.createElement(_Main2.default, { handleSwipe: _this2.handleSwipe });
+              } })
           )
         )
       );
@@ -26103,7 +26103,7 @@ var Stack = function (_Component) {
         _react2.default.createElement(
           _reactSwipeCard2.default,
           { onEnd: function onEnd() {
-              console.log('end');
+              alert('You\'ve run out!');
             }, className: 'master-root' },
           places && places.map(function (item, i) {
             var url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo');
@@ -33293,7 +33293,7 @@ function Restaurant(props) {
 
   function makeGooglePlacesPhotoURL(photoReference, key) {
     var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-    var maxHeight = 4000;
+    var maxHeight = 200;
     var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
     return fullURL;
   }
@@ -33318,12 +33318,25 @@ function Restaurant(props) {
         _react2.default.createElement(
           'div',
           null,
-          props.place.name
+          _react2.default.createElement(
+            'strong',
+            null,
+            props.place.name
+          )
         ),
         _react2.default.createElement(
           'div',
           null,
           props.place.vicinity
+        ),
+        props.place.opening_hours.open_now ? _react2.default.createElement(
+          'div',
+          null,
+          'It\'s open now!'
+        ) : _react2.default.createElement(
+          'div',
+          null,
+          'It\'s closed for now :('
         )
       ),
       _react2.default.createElement('div', { className: 'col-md-3 restaurant' })
@@ -33444,6 +33457,118 @@ function unregister() {
   }
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 297 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (props) {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(_Navbar2.default, null),
+    _react2.default.createElement(
+      'div',
+      { className: 'plate' },
+      _react2.default.createElement(_Card2.default, { handleSwipe: props.handleSwipe })
+    ),
+    _react2.default.createElement(
+      'div',
+      { className: 'trademark' },
+      'Tinder for Take Out'
+    )
+  );
+};
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Card = __webpack_require__(231);
+
+var _Card2 = _interopRequireDefault(_Card);
+
+var _reactSwipeCard = __webpack_require__(101);
+
+var _reactSwipeCard2 = _interopRequireDefault(_reactSwipeCard);
+
+var _Navbar = __webpack_require__(273);
+
+var _Navbar2 = _interopRequireDefault(_Navbar);
+
+var _Selections = __webpack_require__(129);
+
+var _Selections2 = _interopRequireDefault(_Selections);
+
+var _reactRouter = __webpack_require__(128);
+
+var _reactRouterDom = __webpack_require__(115);
+
+var _store = __webpack_require__(103);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(115);
+
+var _reactRouter = __webpack_require__(128);
+
+var _Selections = __webpack_require__(129);
+
+var _Selections2 = _interopRequireDefault(_Selections);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function NavHome() {
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      _reactRouterDom.NavLink,
+      { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },
+      _react2.default.createElement(
+        'nav',
+        { className: 'navbar navbar-default' },
+        _react2.default.createElement(
+          'button',
+          { type: 'button', className: 'btn btn-outline-danger', style: { fontSize: '50px' } },
+          _react2.default.createElement(
+            'span',
+            { className: 'font' },
+            'Go back and swipe some more!'
+          )
+        )
+      )
+    )
+  );
+}
+
+exports.default = NavHome;
 
 /***/ })
 /******/ ]);

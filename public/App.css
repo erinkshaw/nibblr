@@ -14,6 +14,10 @@ body {
     background-size: 40px 40px;
 }
 
+img {
+  border-radius: 25px
+}
+
 /* make the plate */
 .plate {
     background: white;
@@ -112,13 +116,14 @@ h1, h2 {
   max-height: 100px;
   width: 300px; */
   position: absolute;
-  height: 300px;
+  height: 400px;
   width: 400px;
-  margin: -150px 0 0 -200px;
+  margin: -200px 0 0 -200px;
   top: 50%;
   left: 50%;
   overflow: hidden;
   /* border: 1px solid #e5e5e5; */
+    border-radius: 400px
 }
 
 .card {
@@ -132,6 +137,7 @@ h1, h2 {
   transition: box-shadow .3s;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   cursor: pointer;
+  border-radius: 20px
 }
 
 .animate {
@@ -159,7 +165,7 @@ h1, h2 {
   opacity: 1;
 }
 
-.alert-right {
+/* .alert-right {
   content: "YUM!";
   top: 0;
   right: 0;
@@ -174,7 +180,7 @@ h1, h2 {
   background: red;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-}
+} */
 
 .alert-top {
   background: purple;
@@ -210,8 +216,11 @@ h1, h2 {
   margin:50px;
   justify-content: space-around;
   flex-flow: row wrap */
-  font-size: 30px;
-  margin-top: 100px;
+  font-size: 25px;
+  margin: 50px 0 0 50px;
+  font-family: helvetica
+
+
   /* width: 70%; */
 }
 
