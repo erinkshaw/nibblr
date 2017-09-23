@@ -9,7 +9,7 @@ class Selections extends Component {
     const { selections } = this.props
     console.log(selections)
     return (
-      <div>
+      <div className="padBottom">
         <NavHome />
         {/* <div className="trademark">
         Your Yummy Bites!

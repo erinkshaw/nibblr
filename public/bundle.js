@@ -13757,7 +13757,7 @@ var Selections = function (_Component) {
       console.log(selections);
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'padBottom' },
         _react2.default.createElement(_NavHome2.default, null),
         !selections.length ? _react2.default.createElement(
           'h1',
@@ -33311,9 +33311,9 @@ function Restaurant(props) {
       _react2.default.createElement(
         'div',
         { className: 'col-md-3' },
-        _react2.default.createElement('iframe', {
+        _react2.default.createElement('iframe', { className: 'mappad',
           width: '450',
-          height: '300',
+          height: '250',
           frameBorder: '0', style: { border: '0p' },
           src: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:' + props.place.place_id, allowfullscreen: true })
       ),
@@ -33350,7 +33350,8 @@ function Restaurant(props) {
           null,
           'It\'s closed for now :('
         )
-      )
+      ),
+      _react2.default.createElement('div', { className: 'col-md-3' })
     ) : _react2.default.createElement(
       _reactRouterDom.NavLink,
       { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },

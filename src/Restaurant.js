@@ -15,12 +15,11 @@ function Restaurant(props) {
       {props && props ?
 
         <div className="row restaurant">
-        <div className="col-md-1">
-          </div>
+          <div className="col-md-1"></div>
           <div className="col-md-3">
-          <iframe
+          <iframe className="mappad"
                 width="450"
-                height="300"
+                height="250"
                 frameBorder="0" style={{ border: '0p'  }}
                 src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:${props.place.place_id}`} allowfullscreen>
               </iframe>
@@ -33,6 +32,8 @@ function Restaurant(props) {
           <div>It's open now!</div> :
           <div>It's closed for now :(</div>
           }
+          </div>
+          <div className="col-md-3">
           </div>
         </div>
         : <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>Go back and swipe!</NavLink>
