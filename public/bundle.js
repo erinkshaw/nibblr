@@ -13755,11 +13755,6 @@ var Selections = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'div',
-          { className: 'trademark' },
-          'Your Yummy Bites!'
-        ),
         selections.map(function (place) {
           return _react2.default.createElement(_Restaurant2.default, { place: place });
         })
@@ -25970,7 +25965,6 @@ var App = function (_Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log('hiiiii component did mount');
       var placesThunk = (0, _store.gettingPlacesData)();
       _store2.default.dispatch(placesThunk);
     }
@@ -25979,11 +25973,10 @@ var App = function (_Component) {
     value: function handleSwipe(food, direction) {
       if (direction === 'right') {
         this.setState({ selections: [].concat(_toConsumableArray(this.state.selections), [food]) });
-        // this.setState({data: this.state.data.slice(1)})
+        this.setState({ data: this.state.data.slice(1) });
+      } else {
+        this.setState({ data: this.state.data.slice(1) });
       }
-      // else {
-      //   this.setState({data: this.state.data.slice(1)})
-      // }
     }
   }, {
     key: 'render',
@@ -26014,7 +26007,7 @@ var App = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'trademark' },
-            'Tinder for Take Out!'
+            'Tinder for Take Out'
           )
         )
       );
@@ -26110,7 +26103,7 @@ var Stack = function (_Component) {
         _react2.default.createElement(
           _reactSwipeCard2.default,
           { onEnd: function onEnd() {
-              return console.log('end');
+              console.log('end');
             }, className: 'master-root' },
           places && places.map(function (item, i) {
             var url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo');
@@ -30750,8 +30743,12 @@ var Navbar = function (_React$Component) {
             { className: 'navbar navbar-default' },
             _react2.default.createElement(
               'button',
-              { type: 'button', className: 'btn btn-danger font', style: { fontSize: '40px' } },
-              'See your food!'
+              { type: 'button', className: 'btn btn-outline-danger', style: { fontSize: '50px' } },
+              _react2.default.createElement(
+                'span',
+                { className: 'font' },
+                'What are you in the mood for?'
+              )
             )
           )
         )
@@ -30763,18 +30760,6 @@ var Navbar = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Navbar;
-
-
-{} /* this.props.location
-   ? */
-//if we are on selections, change navlink render HOWOSOOWO
-// <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>
-//   <nav className="navbar navbar-default">
-//     <button type="button" className="btn btn-danger font" style={{ fontSize: '40px' }}>
-//       Choose more food!
-//     </button>
-//   </nav>
-// </NavLink>
 
 /***/ }),
 /* 274 */
@@ -33300,6 +33285,8 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(115);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function Restaurant(props) {
@@ -33311,20 +33298,23 @@ function Restaurant(props) {
     return fullURL;
   }
 
-  if (props) console.log(props.place, 'PROPPSPSPSPP');
-  // const url = makeGooglePlacesPhotoURL(props.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
   return _react2.default.createElement(
     'div',
     null,
     props && props ? _react2.default.createElement(
       'div',
-      { className: 'restaurant' },
+      { className: 'row restaurant' },
+      _react2.default.createElement('div', { className: 'col-md-3' }),
       _react2.default.createElement(
         'div',
-        { className: 'restaurant-img' },
+        { className: 'col-md-3' },
         _react2.default.createElement('img', {
           className: 'restaurant-img',
-          src: makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo') }),
+          src: makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo') })
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'col-md-3 restaurant' },
         _react2.default.createElement(
           'div',
           null,
@@ -33335,8 +33325,13 @@ function Restaurant(props) {
           null,
           props.place.vicinity
         )
-      )
-    ) : null
+      ),
+      _react2.default.createElement('div', { className: 'col-md-3 restaurant' })
+    ) : _react2.default.createElement(
+      _reactRouterDom.NavLink,
+      { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },
+      'Go back and swipe!'
+    )
   );
 }
 

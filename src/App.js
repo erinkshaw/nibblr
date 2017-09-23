@@ -20,7 +20,6 @@ class App extends Component {
   }
 
   componentDidMount () {
-    console.log('hiiiii component did mount')
     const placesThunk = gettingPlacesData()
     store.dispatch(placesThunk)
   }
@@ -28,11 +27,11 @@ class App extends Component {
   handleSwipe (food, direction) {
     if (direction === 'right') {
       this.setState({selections: [...this.state.selections, food] })
-      // this.setState({data: this.state.data.slice(1)})
+      this.setState({data: this.state.data.slice(1)})
     }
-    // else {
-    //   this.setState({data: this.state.data.slice(1)})
-    // }
+    else {
+      this.setState({data: this.state.data.slice(1)})
+    }
   }
 
   render() {
@@ -48,7 +47,7 @@ class App extends Component {
               <Stack handleSwipe={this.handleSwipe} data={this.state.data} />
             </div>
           </Switch>
-          <div className="trademark">Tinder for Take Out!</div>
+          <div className="trademark">Tinder for Take Out</div>
         </div>
       </Router>
     );

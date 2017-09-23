@@ -10,9 +10,9 @@ class Selections extends Component {
     console.log(selections)
     return (
       <div>
-        <div className="trademark">
+        {/* <div className="trademark">
         Your Yummy Bites!
-        </div>
+        </div> */}
         {selections.map((place) => <Restaurant place={place}/>)}
       </div>
     );

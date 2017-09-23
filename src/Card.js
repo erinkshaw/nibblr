@@ -30,7 +30,8 @@ export default class Stack extends Component {
 
     return (
       <div  >
-        <Cards onEnd={() => console.log('end')} className='master-root'>
+        <Cards onEnd={() => {console.log('end')}
+          } className='master-root'>
             {places && places.map((item, i) =>
               {
                 const url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {NavLink} from 'react-router-dom'
 
 function Restaurant(props) {
 
@@ -10,21 +10,19 @@ function Restaurant(props) {
     return fullURL;
   }
 
-  if (props) console.log(props.place, 'PROPPSPSPSPP')
-  // const url = makeGooglePlacesPhotoURL(props.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
-    return (
-      <div>
+  return (
+    <div>
       {props && props ?
-        <div className="restaurant">
-          <div className="restaurant-img">
-            <img
+
+        <div className="row restaurant">
+          <div className="col-md-3"></div>
+          <div className="col-md-3"><img
             className="restaurant-img"
-            src ={makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')} />
-        <div>{props.place.name}</div>
-        <div>{props.place.vicinity}</div>
-          </div>
+            src ={makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')} /></div>
+          <div className="col-md-3 restaurant"><div>{props.place.name}</div><div>{props.place.vicinity}</div></div>
+          <div className="col-md-3 restaurant"></div>
         </div>
-        : null
+        : <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>Go back and swipe!</NavLink>
       }
       </div>
 

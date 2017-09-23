@@ -3,6 +3,7 @@ body,
 ul,
 li {
     margin: 0; padding: 0;
+
 }
 
 /* make tablecloth background */
@@ -19,7 +20,7 @@ body {
     background-position: 50% 0%;
     width: 650px;
     height: 650px;
-    margin: 100px auto 0px;
+    margin: 30px auto 0px;
 
     /* Plate Styling */
     position: relative;
@@ -56,13 +57,18 @@ body {
 /* place nibblr logo */
 
 @font-face {
-    font-family: NoodleScript;
+    font-family: NoodleShade;
     src: url("./font/nooshade.ttf");
+}
+
+@font-face {
+  font-family: NoodleScript;
+  src: url("./font/NoodleScript.ttf");
 }
 
 .plate::after {
     content: "Nibblr.";
-    font-family: NoodleScript;
+    font-family: NoodleShade;
     position: absolute;
     top: 10px;
     left: 200px;
@@ -82,7 +88,7 @@ html {
 body {
   margin: 0 auto;
   padding: 0;
-  font-family: sans-serif;
+  font-family: NoodleScript;
   text-align: center;
 }
 
@@ -154,6 +160,7 @@ h1, h2 {
 }
 
 .alert-right {
+  content: "YUM!";
   top: 0;
   right: 0;
   background: green;
@@ -191,18 +198,21 @@ h1, h2 {
  }
 
  /* .btn {
-  font-family: NoodleScript;
+  font-family: NoodleShade;
 } */
 
 .restaurant {
   /* background-color: white; */
   /* opacity: .5; */
-  width: 150;
+  /* width: 150;
   display: inline-flex;
   align-content: center;
   margin:50px;
   justify-content: space-around;
-  flex-flow: row wrap
+  flex-flow: row wrap */
+  font-size: 30px;
+  margin-top: 100px;
+  /* width: 70%; */
 }
 
 .restaurant-img {
@@ -212,4 +222,9 @@ h1, h2 {
 .restaurant-img div {
   background-color: white;
   opacity: 1;
+}
+
+.font {
+  color: black;
+  font-family: NoodleScript;
 }
