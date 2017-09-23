@@ -30,7 +30,7 @@ export default class Stack extends Component {
 
     return (
       <div  >
-        <Cards onEnd={() => {alert('You\'ve run out!')}
+        <Cards onEnd={() => {console.log('you\'ve run out!')}
           } className='master-root'>
             {places && places.map((item, i) =>
               {

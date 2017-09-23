@@ -13754,13 +13754,16 @@ var Selections = function (_Component) {
     value: function render() {
       var selections = this.props.selections;
 
-
       console.log(selections);
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_NavHome2.default, null),
-        selections.map(function (place) {
+        !selections.length ? _react2.default.createElement(
+          'h1',
+          { className: 'middle' },
+          'You haven\'t swiped anything yet!'
+        ) : selections.map(function (place) {
           return _react2.default.createElement(_Restaurant2.default, { key: place.id, place: place });
         })
       );
@@ -26103,7 +26106,7 @@ var Stack = function (_Component) {
         _react2.default.createElement(
           _reactSwipeCard2.default,
           { onEnd: function onEnd() {
-              alert('You\'ve run out!');
+              console.log('you\'ve run out!');
             }, className: 'master-root' },
           places && places.map(function (item, i) {
             var url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo');
@@ -33304,7 +33307,16 @@ function Restaurant(props) {
     props && props ? _react2.default.createElement(
       'div',
       { className: 'row restaurant' },
-      _react2.default.createElement('div', { className: 'col-md-3' }),
+      _react2.default.createElement('div', { className: 'col-md-1' }),
+      _react2.default.createElement(
+        'div',
+        { className: 'col-md-3' },
+        _react2.default.createElement('iframe', {
+          width: '450',
+          height: '300',
+          frameBorder: '0', style: { border: '0p' },
+          src: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:' + props.place.place_id, allowfullscreen: true })
+      ),
       _react2.default.createElement(
         'div',
         { className: 'col-md-3' },
@@ -33338,8 +33350,7 @@ function Restaurant(props) {
           null,
           'It\'s closed for now :('
         )
-      ),
-      _react2.default.createElement('div', { className: 'col-md-3 restaurant' })
+      )
     ) : _react2.default.createElement(
       _reactRouterDom.NavLink,
       { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },

@@ -11,7 +11,7 @@ body {
     background: white;
     background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
     linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
-    background-size: 40px 40px;
+    background-size: 75px 75px;
 }
 
 img {
@@ -97,7 +97,8 @@ body {
 }
 
 .card img {
-  width: 100%;
+  height: 100%;
+  width: 100%
 }
 
 li {
@@ -225,7 +226,9 @@ h1, h2 {
 }
 
 .restaurant-img {
-  width: 400px;
+  width: 100%;
+  height: 100%;
+  margin-left: 100px
 }
 
 .restaurant-img div {
@@ -236,4 +239,9 @@ h1, h2 {
 .font {
   color: black;
   font-family: NoodleScript;
+}
+
+.middle {
+  margin-top: 200px;
+  font-size: 50px
 }
