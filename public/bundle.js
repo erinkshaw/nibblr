@@ -13751,13 +13751,17 @@ var Selections = function (_Component) {
       var selections = this.props.selections;
 
 
-      console.log(this.props);
+      console.log(selections);
       return _react2.default.createElement(
         'div',
         null,
-        'HIIII IT WORKED OMG',
-        selections.map(function (food) {
-          return _react2.default.createElement(_Restaurant2.default, { url: food });
+        _react2.default.createElement(
+          'div',
+          { className: 'trademark' },
+          'Your Yummy Bites!'
+        ),
+        selections.map(function (place) {
+          return _react2.default.createElement(_Restaurant2.default, { place: place });
         })
       );
     }
@@ -25986,7 +25990,7 @@ var App = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.state);
+      console.log(this.state.selections);
 
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -26006,6 +26010,11 @@ var App = function (_Component) {
               { className: 'plate' },
               _react2.default.createElement(_Card2.default, { handleSwipe: this.handleSwipe, data: this.state.data })
             )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'trademark' },
+            'Tinder for Take Out!'
           )
         )
       );
@@ -26094,10 +26103,7 @@ var Stack = function (_Component) {
           data = _props.data;
 
       var places = this.state.places.results;
-      // const url = places[i].photos[0].photo_reference
-      if (places) {
-        console.log(makeGooglePlacesPhotoURL(places[1].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo'));
-      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -33298,10 +33304,39 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function Restaurant(props) {
 
+  function makeGooglePlacesPhotoURL(photoReference, key) {
+    var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
+    var maxHeight = 4000;
+    var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
+    return fullURL;
+  }
+
+  if (props) console.log(props.place, 'PROPPSPSPSPP');
+  // const url = makeGooglePlacesPhotoURL(props.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
   return _react2.default.createElement(
     'div',
     null,
-    props ? _react2.default.createElement('img', { src: props.url }) : null
+    props && props ? _react2.default.createElement(
+      'div',
+      { className: 'restaurant' },
+      _react2.default.createElement(
+        'div',
+        { className: 'restaurant-img' },
+        _react2.default.createElement('img', {
+          className: 'restaurant-img',
+          src: makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo') }),
+        _react2.default.createElement(
+          'div',
+          null,
+          props.place.name
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          props.place.vicinity
+        )
+      )
+    ) : null
   );
 }
 

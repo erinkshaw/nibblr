@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.selections)
 
     return (
       <Router>
@@ -48,6 +48,7 @@ class App extends Component {
               <Stack handleSwipe={this.handleSwipe} data={this.state.data} />
             </div>
           </Switch>
+          <div className="trademark">Tinder for Take Out!</div>
         </div>
       </Router>
     );

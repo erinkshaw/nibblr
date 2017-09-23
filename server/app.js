@@ -14,7 +14,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 // Always return the main index.html, so react-router render the route in the client
 
 app.get('/places', (req, res, next) => {
-  https.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=1000&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo', (places) => places.pipe(res))
+  https.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=5000&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo', (places) => places.pipe(res))
   .on('error', next)
 })
 

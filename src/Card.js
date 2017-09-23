@@ -27,8 +27,7 @@ export default class Stack extends Component {
     }
     const { actions, children, login, handleSwipe, data } = this.props
     const places = this.state.places.results
-    // const url = places[i].photos[0].photo_reference
-    if (places) {console.log(makeGooglePlacesPhotoURL(places[1].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')) }
+
     return (
       <div  >
         <Cards onEnd={() => console.log('end')} className='master-root'>

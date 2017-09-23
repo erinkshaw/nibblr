@@ -7,11 +7,13 @@ class Selections extends Component {
   render() {
     const { selections } = this.props
 
-    console.log(this.props)
+    console.log(selections)
     return (
       <div>
-        HIIII IT WORKED OMG
-        {selections.map((food) => <Restaurant url={food}/>)}
+        <div className="trademark">
+        Your Yummy Bites!
+        </div>
+        {selections.map((place) => <Restaurant place={place}/>)}
       </div>
     );
   }
