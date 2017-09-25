@@ -19,8 +19,11 @@ class App extends Component {
   }
 
   componentDidMount () {
-    const placesThunk = gettingPlacesData()
-    store.dispatch(placesThunk)
+
+    navigator.geolocation.getCurrentPosition((position) => {store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
+
+    // const placesThunk = gettingPlacesData(lat, lng)
+    // store.dispatch(placesThunk)
   }
 
   handleSwipe (food, direction) {

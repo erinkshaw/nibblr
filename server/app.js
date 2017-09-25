@@ -13,8 +13,9 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 // Always return the main index.html, so react-router render the route in the client
 
-app.get('/places', (req, res, next) => {
-  https.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo', (places) => places.pipe(res))
+//using next page token?
+app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
+  https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
   .on('error', next)
 })
 
@@ -32,3 +33,14 @@ module.exports = app;
 
 //lat long for FSA
 // @40.705076,-74.00916,15
+// `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`
+
+// app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
+//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
+//   .on('error', next)
+// })
+
+// app.get('/places', (req, res, next) => {
+//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
+//   .on('error', next)
+// })

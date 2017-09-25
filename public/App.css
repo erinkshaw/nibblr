@@ -98,7 +98,8 @@ body {
 
 .card img {
   height: 100%;
-  width: 100%
+  width: 100%;
+  border-radius: 400px
 }
 
 li {
@@ -132,13 +133,13 @@ h1, h2 {
   /* background-size: cover; */
   position: absolute;
   /* opacity: 0; */
-  height: 300px;
-  width: 300px;
+  height: 370px;
+  width: 370px;
   margin: 0 auto;
   transition: box-shadow .3s;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   cursor: pointer;
-  border-radius: 20px
+  border-radius: 400px
 }
 
 .animate {
@@ -166,7 +167,7 @@ h1, h2 {
   opacity: 1;
 }
 
-/* .alert-right {
+.alert-right {
   content: "YUM!";
   top: 0;
   right: 0;
@@ -174,6 +175,48 @@ h1, h2 {
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
 }
+/* .alert-right {
+  top: 1  ;
+  right: 0;
+}
+
+.alert-right:before,.alert-right:after {
+  content: "";
+  width: 35px;
+  height: 55px;
+  position: absolute;
+  background: red;
+  left: 70px;
+  top: 0;
+  -webkit-border-radius: 50px 50px 0 0;
+  -moz-border-radius: 50px 50px 0 0;
+  border-radius: 50px 50px 0 0;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform-origin: 0 100%;
+  -moz-transform-origin: 0 100%;
+  -ms-transform-origin: 0 100%;
+  -o-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+}
+
+.alert-right:after {
+  left: 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+} */
+
 
 .alert-left {
   top: 0;
@@ -181,23 +224,7 @@ h1, h2 {
   background: red;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-} */
-
-.alert-top {
-  background: purple;
-  border-radius: 50px;
-  transform: translate(-50%, 0);
-  margin-left: 50%;
- }
-
- .alert-bottom {
-  bottom: 0;
-  background: blue;
-  border-top-left-radius: 50px;
-  border-radius: 50px;
-  transform: translate(-50%, 0);
-  margin-left: 50%;
- }
+}
 
  .trademark {
    font-family: NoodleScript;
@@ -218,36 +245,33 @@ h1, h2 {
   justify-content: space-around;
   flex-flow: row wrap */
   font-size: 25px;
-  margin: 50px 0 0 50px;
-  font-family: helvetica
+  /* margin: 50px 0 0 50px; */
+  font-family: helvetica;
+  margin: 50px 0 50px 0
 
 
   /* width: 70%; */
 }
 
-.restaurant-img {
-  width: 100%;
-  height: 100%;
+/* .restaurant-img {
+  width: 80%;
+  height: 80%;
   margin-left: 100px
-}
+} */
 
-.restaurant-img div {
-  background-color: white;
-  opacity: 1;
-}
 
 .font {
   color: black;
   font-family: NoodleScript;
 }
 
-.middle {
+/* .middle {
   margin-top: 200px;
   font-size: 50px
 }
 
 .padBottom {
   margin-bottom: 50px
-}
+} */
 
 

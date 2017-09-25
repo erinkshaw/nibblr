@@ -11871,44 +11871,31 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function setPosition(position) {
+  var location = position.coords.latitude + position.coords.longitude;
+}
+
 var defaultState = {
   places: {}
-  // images: {}
 };
 
 var GET_PLACES = 'GET_PLACES';
-// const GET_IMAGES = 'GET_IMAGES'
 
 var getPlacesData = exports.getPlacesData = function getPlacesData(places) {
   return { type: GET_PLACES, places: places };
 };
 
-// export const getImages = (images) => {
-//   return {type: GET_IMAGES, images}
-// }
-
-var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData() {
+var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(lat, lng) {
+  lat = lat || '40.6845305';
+  lng = lng || '-73.9412525';
   return function thunk(dispatch) {
-    _axios2.default.get('/places').then(function (res) {
+    _axios2.default.get('/places/lat/' + lat + '/lng/' + lng).then(function (res) {
       return res.data;
     }).then(function (data) {
       dispatch(getPlacesData(data));
     }).catch(console.error);
   };
 };
-
-// export const gettingImages = (location, key) =>{
-//   return function thunk(dispatch) {
-//     axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=500&types=restaurant&key=${key}`)
-//     .then(res =>  {
-//       return res.data
-//     })
-//     .then((data)=>{
-//       dispatch(getImages(data))
-//     })
-//   }
-// }
-
 
 var reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
@@ -11919,9 +11906,7 @@ var reducer = function reducer() {
       {
         return Object.assign({}, state, { places: action.places });
       }
-    // case GET_IMAGES: {
-    //   return Object.assign({}, state, {images: [...images, action.images]})
-    // }
+
     default:
       return state;
   }
@@ -25974,8 +25959,13 @@ var App = function (_Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var placesThunk = (0, _store.gettingPlacesData)();
-      _store2.default.dispatch(placesThunk);
+
+      navigator.geolocation.getCurrentPosition(function (position) {
+        _store2.default.dispatch((0, _store.gettingPlacesData)(position.coords.latitude, position.coords.longitude));
+      });
+
+      // const placesThunk = gettingPlacesData(lat, lng)
+      // store.dispatch(placesThunk)
     }
   }, {
     key: 'handleSwipe',
@@ -33303,30 +33293,20 @@ function Restaurant(props) {
 
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'container-fluid' },
     props && props ? _react2.default.createElement(
       'div',
       { className: 'row restaurant' },
-      _react2.default.createElement('div', { className: 'col-md-1' }),
       _react2.default.createElement(
         'div',
-        { className: 'col-md-3' },
-        _react2.default.createElement('iframe', { className: 'mappad',
-          width: '450',
-          height: '250',
-          frameBorder: '0', style: { border: '0p' },
-          src: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:' + props.place.place_id, allowfullscreen: true })
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'col-md-3' },
+        { className: 'col-md-4' },
         _react2.default.createElement('img', {
           className: 'restaurant-img',
           src: makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo') })
       ),
       _react2.default.createElement(
         'div',
-        { className: 'col-md-3 restaurant' },
+        { className: 'col-md-4 restaurant' },
         _react2.default.createElement(
           'div',
           null,
@@ -33351,7 +33331,15 @@ function Restaurant(props) {
           'It\'s closed for now :('
         )
       ),
-      _react2.default.createElement('div', { className: 'col-md-3' })
+      _react2.default.createElement(
+        'div',
+        { className: 'col-md-4' },
+        _react2.default.createElement('iframe', { className: 'mappad',
+          width: '450',
+          height: '250',
+          frameBorder: '0', style: { border: '0p' },
+          src: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:' + props.place.place_id, allowfullscreen: true })
+      )
     ) : _react2.default.createElement(
       _reactRouterDom.NavLink,
       { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },
