@@ -13,11 +13,17 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 // Always return the main index.html, so react-router render the route in the client
 
-//using next page token?
+// get nearby restaurants
 app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
-  https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
+  https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`, (places) => places.pipe(res))
   .on('error', next)
 })
+
+// get image for restaurant
+// app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
+//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`, (places) => places.pipe(res))
+//   .on('error', next)
+// })
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
@@ -27,20 +33,3 @@ app.get('*', (req, res) => {
 module.exports = app;
 
 
-//my api key
-
-// AIzaSyBYHwQcut25RfGMkrRKC262-ZScpb_h2xM
-
-//lat long for FSA
-// @40.705076,-74.00916,15
-// `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`
-
-// app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
-//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
-//   .on('error', next)
-// })
-
-// app.get('/places', (req, res, next) => {
-//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.705076,-74.00916&radius=500&types=food&key=AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo`, (places) => places.pipe(res))
-//   .on('error', next)
-// })

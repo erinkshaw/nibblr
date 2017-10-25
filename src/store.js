@@ -42,9 +42,6 @@ const reducer = (state=defaultState, action) =>{
     case GET_PLACES : {
       return Object.assign({}, state, {places: action.places})
     }
-    // case REMOVE_PLACE : {
-    //   return Object.assign({}, state, {places: state.places.results.slice(1)})
-    // }
     default: return state
   }
 }
