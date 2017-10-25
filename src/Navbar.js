@@ -12,7 +12,7 @@ class Navbar extends React.Component {
         {
           <NavLink activeClassName="active" to={`/selections`} style={{ textDecoration: 'none' }}>
             <nav className="navbar navbar-default">
-              <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px'  }}>
+              <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px' }}>
                 <span className="font">What are you in the mood for?</span>
               </button>
             </nav>

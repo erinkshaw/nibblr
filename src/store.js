@@ -4,21 +4,21 @@ import thunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import axios from 'axios'
 
-
-
-function setPosition(position) {
-    const location = position.coords.latitude + position.coords.longitude
-}
-
 const defaultState = {
   places: {}
 }
 
 const GET_PLACES = 'GET_PLACES'
 
+const REMOVE_PLACE = 'REMOVE_PLACE'
+
 
 export const getPlacesData = (places) =>{
   return { type: GET_PLACES, places }
+}
+
+export const removePlace = () =>{
+  return { type: REMOVE_PLACE }
 }
 
 export const gettingPlacesData = (lat, lng) =>{
@@ -42,7 +42,9 @@ const reducer = (state=defaultState, action) =>{
     case GET_PLACES : {
       return Object.assign({}, state, {places: action.places})
     }
-
+    // case REMOVE_PLACE : {
+    //   return Object.assign({}, state, {places: state.places.results.slice(1)})
+    // }
     default: return state
   }
 }

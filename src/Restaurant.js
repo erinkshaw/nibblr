@@ -19,7 +19,7 @@ function Restaurant(props) {
             className="restaurant-img"
             src ={makeGooglePlacesPhotoURL(props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')} /></div>
 
-          <div className="col-md-4 restaurant"><div><strong>{props.place.name}</strong></div><div>{props.place.vicinity}</div>
+          <div className="col-md-4 restaurant"><div><span style={{ fontSize: 40 }}>{props.place.name}</span></div><div>{props.place.vicinity}</div>
           {props.place.opening_hours.open_now ?
           <div>It's open now!</div> :
           <div>It's closed for now :(</div>
@@ -30,7 +30,7 @@ function Restaurant(props) {
                 width="450"
                 height="250"
                 frameBorder="0" style={{ border: '0p'  }}
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:${props.place.place_id}`} allowfullscreen>
+                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:${props.place.place_id}`} >
               </iframe>
           </div>
         </div>

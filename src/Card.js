@@ -9,7 +9,6 @@ export default class Stack extends Component {
   }
 
   componentDidMount () {
-    console.log('hii mounted in card')
     this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
   }
 

@@ -6,7 +6,7 @@ import Selections from './Selections'
 import { Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom'
 import Main from './Main'
-import store, { gettingPlacesData } from './store'
+import store, { gettingPlacesData, removePlace } from './store'
 
 class App extends Component {
   constructor(props) {
@@ -19,27 +19,22 @@ class App extends Component {
   }
 
   componentDidMount () {
-
     navigator.geolocation.getCurrentPosition((position) => {store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
-
-    // const placesThunk = gettingPlacesData(lat, lng)
-    // store.dispatch(placesThunk)
   }
 
   handleSwipe (food, direction) {
-    console.log(this.state)
     if (direction === 'right') {
       this.setState({selections: [...this.state.selections, food] })
-      // this.setState({places: this.state.places.slice(1)})
+      // store.dispatch(removePlace())
+      // this.setState({places: this.state.places.results.slice(1)})
     }
     // else {
-    //   this.setState({places: this.state.places.slice(1)})
+    //   this.setState({places: this.state.places.results.slice(1)})
+
     // }
   }
 
   render() {
-    console.log(this.state.selections)
-
     return (
       <Router>
         <div>

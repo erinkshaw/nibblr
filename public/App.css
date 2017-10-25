@@ -11,7 +11,8 @@ body {
     background: white;
     background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
     linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
-    background-size: 75px 75px;
+    background-size: 70px 70px;
+    font-family: 'Dosis'
 }
 
 img {
@@ -92,7 +93,8 @@ html {
 body {
   margin: 0 auto;
   padding: 0;
-  font-family: NoodleScript;
+  /* font-family: NoodleScript; */
+  font-family: 'Dosis';
   text-align: center;
 }
 
@@ -227,7 +229,8 @@ h1, h2 {
 }
 
  .trademark {
-   font-family: NoodleScript;
+   font-family: 'Dosis';
+   /* font-family: NoodleScript;    */
    font-size: 70px;
  }
 
@@ -244,9 +247,9 @@ h1, h2 {
   margin:50px;
   justify-content: space-around;
   flex-flow: row wrap */
-  font-size: 25px;
+  font-size: 35px;
   /* margin: 50px 0 0 50px; */
-  font-family: helvetica;
+  font-family: 'Dosis';
   margin: 50px 0 50px 0
 
 
@@ -262,16 +265,16 @@ h1, h2 {
 
 .font {
   color: black;
-  font-family: NoodleScript;
+  font-family: 'Dosis';
 }
 
-/* .middle {
+.middle {
   margin-top: 200px;
-  font-size: 50px
+  font-size: 60px
 }
-
+/*
 .padBottom {
   margin-bottom: 50px
-} */
-
+}
+ */
 
