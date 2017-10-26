@@ -5,6 +5,14 @@ const axios = require('axios')
 const app = express()
 const https = require('https')
 
+
+function makeGooglePlacesPhotoURL (photoReference) {
+  var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
+  var maxHeight = 200;
+  var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
+  return fullURL;
+}
+
 // Setup logger
 app.use(morgan('dev'))
 

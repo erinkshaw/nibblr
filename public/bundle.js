@@ -7703,7 +7703,7 @@ var DIRECTIONS = exports.DIRECTIONS = ['Right', 'Left', 'Top', 'Bottom'];
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gettingPlacesData = exports.removePlace = exports.getPlacesData = undefined;
+exports.gettingImage = exports.gettingPlacesData = exports.getImage = exports.removePlace = exports.getPlacesData = undefined;
 
 var _redux = __webpack_require__(108);
 
@@ -7722,12 +7722,15 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var defaultState = {
-  places: {}
+  places: {},
+  img: ''
 };
 
 var GET_PLACES = 'GET_PLACES';
 
 var REMOVE_PLACE = 'REMOVE_PLACE';
+
+var GET_IMAGE = 'GET_IMAGE';
 
 var getPlacesData = exports.getPlacesData = function getPlacesData(places) {
   return { type: GET_PLACES, places: places };
@@ -7737,11 +7740,25 @@ var removePlace = exports.removePlace = function removePlace() {
   return { type: REMOVE_PLACE };
 };
 
+var getImage = exports.getImage = function getImage() {
+  return { type: GET_IMAGE };
+};
+
 var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(lat, lng) {
   lat = lat || '40.6845305';
   lng = lng || '-73.9412525';
   return function thunk(dispatch) {
     _axios2.default.get('/places/lat/' + lat + '/lng/' + lng).then(function (res) {
+      return res.data;
+    }).then(function (data) {
+      dispatch(getPlacesData(data));
+    }).catch(console.error);
+  };
+};
+
+var gettingImage = exports.gettingImage = function gettingImage(photoReference) {
+  return function thunk(dispatch) {
+    _axios2.default.get('/places/img/' + photoReference).then(function (res) {
       return res.data;
     }).then(function (data) {
       dispatch(getPlacesData(data));
@@ -7758,9 +7775,10 @@ var reducer = function reducer() {
       {
         return Object.assign({}, state, { places: action.places });
       }
-    // case REMOVE_PLACE : {
-    //   return Object.assign({}, state, {places: state.places.results.slice(1)})
-    // }
+    case GET_IMAGE:
+      {
+        return Object.assign({}, state, { img: action.img });
+      }
     default:
       return state;
   }
@@ -12071,7 +12089,10 @@ var Stack = function (_Component) {
           data = _props.data;
 
       var places = this.state.places.results;
-
+      if (places) places = places.filter(function (restaurant) {
+        return restaurant.photos;
+      });
+      if (places) console.log(places);
       return _react2.default.createElement(
         'div',
         null,
@@ -33319,7 +33340,7 @@ function Restaurant(props) {
           null,
           props.place.vicinity
         ),
-        props.place.opening_hours.open_now ? _react2.default.createElement(
+        props.place.opening_hours ? props.place.opening_hours.open_now ? _react2.default.createElement(
           'div',
           null,
           'It\'s open now!'
@@ -33327,7 +33348,7 @@ function Restaurant(props) {
           'div',
           null,
           'It\'s closed for now :('
-        )
+        ) : null
       ),
       _react2.default.createElement(
         'div',

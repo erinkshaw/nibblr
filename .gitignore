@@ -22,3 +22,7 @@ yarn-error.log*
 
 # secrets
 secrets.js
+
+##FRONT END BUNDLE##
+bundle.js
+public/bundle.js.map

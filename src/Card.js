@@ -4,16 +4,16 @@ import store from './store'
 
 export default class Stack extends Component {
   constructor (props) {
-    super(props);
+    super(props)
     this.state = store.getState() || [];
   }
 
   componentDidMount () {
-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
   }
 
   componentWillUnmount () {
-    this.unsubscribe();
+    this.unsubscribe()
   }
 
 
@@ -25,15 +25,16 @@ export default class Stack extends Component {
       return fullURL;
     }
     const { actions, children, login, handleSwipe, data } = this.props
-    const places = this.state.places.results
-
+    let places = this.state.places.results
+    if (places) places = places.filter((restaurant) => restaurant.photos)
+    if (places) console.log(places)
     return (
       <div  >
         <Cards onEnd={() => {console.log('you\'ve run out!')}
           } className='master-root'>
             {places && places.map((item, i) =>
               {
-                const url = makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
+                const url =  makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
                 return (<Card key={i}
                   onSwipeLeft={() => {
                     console.log('swipe left')

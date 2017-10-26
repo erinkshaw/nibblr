@@ -5,13 +5,15 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import axios from 'axios'
 
 const defaultState = {
-  places: {}
+  places: {},
+  img: ''
 }
 
 const GET_PLACES = 'GET_PLACES'
 
 const REMOVE_PLACE = 'REMOVE_PLACE'
 
+const GET_IMAGE = 'GET_IMAGE'
 
 export const getPlacesData = (places) =>{
   return { type: GET_PLACES, places }
@@ -19,6 +21,10 @@ export const getPlacesData = (places) =>{
 
 export const removePlace = () =>{
   return { type: REMOVE_PLACE }
+}
+
+export const getImage = () =>{
+  return { type: GET_IMAGE }
 }
 
 export const gettingPlacesData = (lat, lng) =>{
@@ -36,11 +42,26 @@ export const gettingPlacesData = (lat, lng) =>{
   }
 }
 
+export const gettingImage = (photoReference) =>{
+  return function thunk(dispatch) {
+    axios.get(`/places/img/${photoReference}`)
+    .then(res =>  {
+      return res.data
+    })
+    .then((data)=>{
+      dispatch(getPlacesData(data))
+    })
+    .catch(console.error)
+  }
+}
 
 const reducer = (state=defaultState, action) =>{
   switch(action.type) {
     case GET_PLACES : {
       return Object.assign({}, state, {places: action.places})
+    }
+    case GET_IMAGE : {
+      return Object.assign({}, state, {img: action.img})
     }
     default: return state
   }
