@@ -33312,8 +33312,6 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(29);
-
 var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
@@ -33321,6 +33319,10 @@ var _store2 = _interopRequireDefault(_store);
 var _Image = __webpack_require__(299);
 
 var _Image2 = _interopRequireDefault(_Image);
+
+var _Map = __webpack_require__(300);
+
+var _Map2 = _interopRequireDefault(_Map);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33342,7 +33344,6 @@ var Restaurant = function (_Component) {
   _createClass(Restaurant, [{
     key: 'render',
     value: function render() {
-      console.log(this.props);
       return _react2.default.createElement(
         'div',
         { className: 'container-fluid' },
@@ -33384,14 +33385,10 @@ var Restaurant = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-4' },
-            _react2.default.createElement('iframe', { className: 'mappad',
-              width: '450',
-              height: '250',
-              frameBorder: '0', style: { border: '0p' },
-              src: 'https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:' + this.props.place.place_id })
+            _react2.default.createElement(_Map2.default, { placeId: this.props.place.place_id })
           )
         ) : _react2.default.createElement(
-          _reactRouterDom.NavLink,
+          NavLink,
           { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },
           'Go back and swipe!'
         )
@@ -33670,8 +33667,8 @@ var Image = function (_Component) {
 
       fetch('/places/img/' + this.props.photoReference).then(function (res) {
         return res.json();
-      }).then(function (image) {
-        return _this2.setState({ url: image });
+      }).then(function (url) {
+        return _this2.setState({ url: url });
       });
     }
   }, {
@@ -33686,6 +33683,72 @@ var Image = function (_Component) {
 }(_react.Component);
 
 exports.default = Image;
+
+/***/ }),
+/* 300 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Map = function (_Component) {
+  _inherits(Map, _Component);
+
+  function Map(props) {
+    _classCallCheck(this, Map);
+
+    var _this = _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, props));
+
+    _this.state = {
+      url: ''
+    };
+    return _this;
+  }
+
+  _createClass(Map, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      fetch('/places/map/' + this.props.placeId).then(function (res) {
+        return res.json();
+      }).then(function (url) {
+        return _this2.setState({ url: url });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('iframe', { className: 'mappad',
+        width: '450',
+        height: '250',
+        frameBorder: '0', style: { border: '0p' },
+        src: this.state.url });
+    }
+  }]);
+
+  return Map;
+}(_react.Component);
+
+exports.default = Map;
 
 /***/ })
 /******/ ]);

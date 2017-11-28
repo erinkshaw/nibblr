@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import store from './store'
 import Image from './Image'
-
+import Map from './Map'
 
 export default class Restaurant extends Component {
 
   render() {
-    console.log(this.props)
     return (
       <div className="container-fluid">
         {this.props && this.props ?
@@ -24,12 +22,7 @@ export default class Restaurant extends Component {
               }
             </div>
             <div className="col-md-4">
-              <iframe className="mappad"
-                width="450"
-                height="250"
-                frameBorder="0" style={{ border: '0p' }}
-                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBiwzfKUcjy9xK8dnd8ozEVrB-elJY5fCs&q=place_id:${this.props.place.place_id}`} >
-              </iframe>
+              <Map placeId={this.props.place.place_id}/>
             </div>
           </div>
           : <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>Go back and swipe!</NavLink>

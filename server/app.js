@@ -23,6 +23,12 @@ app.get('/places/img/:photoReference', (req, res, next) => {
   res.json(photoUrl)
 })
 
+// get map for restaurant
+app.get('/places/map/:placeId', (req, res, next) => {
+  const placeUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_API_KEY}&q=place_id:${req.params.placeId}`
+  res.json(placeUrl)
+})
+
 app.get('/*', (_, res) => res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html')))
 
 function makeGooglePlacesPhotoURL(photoReference) {
@@ -33,5 +39,7 @@ function makeGooglePlacesPhotoURL(photoReference) {
 }
 
 module.exports = app;
+
+
 
 
