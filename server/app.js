@@ -4,22 +4,13 @@ const path = require('path');
 const axios = require('axios')
 const app = express()
 const https = require('https')
-
-
-function makeGooglePlacesPhotoURL (photoReference) {
-  var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-  var maxHeight = 200;
-  var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-  return fullURL;
-}
+require('../secrets')
 
 // Setup logger
 app.use(morgan('dev'))
 
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
-
-// Always return the main index.html, so react-router render the route in the client
 
 // get nearby restaurants
 app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
@@ -28,15 +19,17 @@ app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
 })
 
 // get image for restaurant
-// app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
-//   https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`, (places) => places.pipe(res))
-//   .on('error', next)
-// })
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'))
+app.get('/places/img/:photoReference', (req, res, next) => {
+  const photoUrl = makeGooglePlacesPhotoURL(req.params.photoReference)
+  res.json(photoUrl)
 })
 
+function makeGooglePlacesPhotoURL (photoReference) {
+  var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
+  var maxHeight = 200;
+  var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
+  return fullURL;
+}
 
 module.exports = app;
 

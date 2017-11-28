@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import Cards, { Card } from 'react-swipe-card'
+import Image from './Image'
 import store from './store'
 
 export default class Stack extends Component {
@@ -18,9 +19,10 @@ export default class Stack extends Component {
 
 
   render() {
-    function makeGooglePlacesPhotoURL (photoReference, key) {
+    function makeGooglePlacesPhotoURL (photoReference) {
       var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
       var maxHeight = 4000;
+      var key = 'AIzaSyCHj-XDr1thAGIPW9AfZNpAfE1_pcr0H0M'
       var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
       return fullURL;
     }
@@ -34,19 +36,23 @@ export default class Stack extends Component {
           } className='master-root'>
             {places && places.map((item, i) =>
               {
-                const url =  makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
-                return (<Card key={i}
-                  onSwipeLeft={() => {
-                    console.log('swipe left')
-                    handleSwipe(item, 'left')}
-                    }
-                  onSwipeRight={() => {
-                    console.log('swipe right')
-                    handleSwipe(item, 'right')
-                  }
-                }>
-                <img src={url} className="stock"/>
-              </Card>)}
+                // const url =  makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference)
+                return (
+                    <Card key={i}
+                      onSwipeLeft={() => {
+                        console.log('swipe left')
+                        handleSwipe(item, 'left')
+                      }
+                      }
+                      onSwipeRight={() => {
+                        console.log('swipe right')
+                        handleSwipe(item, 'right')
+                      }
+                      }>
+                      <Image photoReference={places[i].photos[0].photo_reference} />
+                    </Card>
+                )
+              }
             )}
           </Cards>
       </div>

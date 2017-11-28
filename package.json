@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.17.1",
     "express": "^4.15.4",
     "getstorybook": "^1.7.0",
     "google-maps-react": "^1.1.0",

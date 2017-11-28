@@ -43,13 +43,15 @@ export const gettingPlacesData = (lat, lng) =>{
 }
 
 export const gettingImage = (photoReference) =>{
+  console.log('hey im in the thunk')
   return function thunk(dispatch) {
+    console.log('hey im in the return thunky')
     axios.get(`/places/img/${photoReference}`)
     .then(res =>  {
       return res.data
     })
     .then((data)=>{
-      dispatch(getPlacesData(data))
+      dispatch(getImage(data))
     })
     .catch(console.error)
   }
@@ -60,9 +62,9 @@ const reducer = (state=defaultState, action) =>{
     case GET_PLACES : {
       return Object.assign({}, state, {places: action.places})
     }
-    case GET_IMAGE : {
-      return Object.assign({}, state, {img: action.img})
-    }
+    // case GET_IMAGE : {
+    //   return Object.assign({}, state, {img: action.img})
+    // }
     default: return state
   }
 }
