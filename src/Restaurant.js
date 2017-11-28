@@ -1,44 +1,20 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import store, { gettingImage } from './store'
+import store from './store'
+import Image from './Image'
 
 
 export default class Restaurant extends Component {
 
-  makeGooglePlacesPhotoURL(photoReference, key) {
-    var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-    var maxHeight = 200;
-    var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-    return fullURL;
-  }
-  constructor(props) {
-    super(props)
-    this.state = store.getState() || {};
-    this.makeGooglePlacesPhotoURL = this.makeGooglePlacesPhotoURL.bind(this)
-  }
-
-  componentDidMount() {
-    store.dispatch(gettingImage(this.props.place.photos[0].photo_reference))
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState())
-    }
-    )
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
   render() {
-    console.log(this.state)
+    console.log(this.props)
     return (
       <div className="container-fluid">
         {this.props && this.props ?
 
           <div className="row restaurant">
-            <div className="col-md-4"><img
-              className="restaurant-img"
-              src={this.makeGooglePlacesPhotoURL(this.props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')}
-            />
+            <div className="col-md-4">
+              <Image photoReference={this.props.place.photos[0].photo_reference} />
             </div>
 
             <div className="col-md-4 restaurant"><div><span style={{ fontSize: 40 }}>{this.props.place.name}</span></div><div>{this.props.place.vicinity}</div>

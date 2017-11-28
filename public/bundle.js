@@ -12080,13 +12080,6 @@ var Stack = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      function makeGooglePlacesPhotoURL(photoReference) {
-        var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-        var maxHeight = 4000;
-        var key = 'AIzaSyCHj-XDr1thAGIPW9AfZNpAfE1_pcr0H0M';
-        var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-        return fullURL;
-      }
       var _props = this.props,
           actions = _props.actions,
           children = _props.children,
@@ -12108,7 +12101,6 @@ var Stack = function (_Component) {
               console.log('you\'ve run out!');
             }, className: 'master-root' },
           places && places.map(function (item, i) {
-            // const url =  makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference)
             return _react2.default.createElement(
               _reactSwipeCard.Card,
               { key: i,
@@ -14001,7 +13993,6 @@ var _registerServiceWorker2 = _interopRequireDefault(_registerServiceWorker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import './index.css';
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
 (0, _registerServiceWorker2.default)();
 
@@ -33327,6 +33318,10 @@ var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
 
+var _Image = __webpack_require__(299);
+
+var _Image2 = _interopRequireDefault(_Image);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33338,45 +33333,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Restaurant = function (_Component) {
   _inherits(Restaurant, _Component);
 
-  _createClass(Restaurant, [{
-    key: 'makeGooglePlacesPhotoURL',
-    value: function makeGooglePlacesPhotoURL(photoReference, key) {
-      var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-      var maxHeight = 200;
-      var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-      return fullURL;
-    }
-  }]);
-
-  function Restaurant(props) {
+  function Restaurant() {
     _classCallCheck(this, Restaurant);
 
-    var _this = _possibleConstructorReturn(this, (Restaurant.__proto__ || Object.getPrototypeOf(Restaurant)).call(this, props));
-
-    _this.state = _store2.default.getState() || {};
-    _this.makeGooglePlacesPhotoURL = _this.makeGooglePlacesPhotoURL.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (Restaurant.__proto__ || Object.getPrototypeOf(Restaurant)).apply(this, arguments));
   }
 
   _createClass(Restaurant, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      _store2.default.dispatch((0, _store.gettingImage)(this.props.place.photos[0].photo_reference));
-      this.unsubscribe = _store2.default.subscribe(function () {
-        _this2.setState(_store2.default.getState());
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribe();
-    }
-  }, {
     key: 'render',
     value: function render() {
-      console.log(this.state);
+      console.log(this.props);
       return _react2.default.createElement(
         'div',
         { className: 'container-fluid' },
@@ -33386,10 +33352,7 @@ var Restaurant = function (_Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-4' },
-            _react2.default.createElement('img', {
-              className: 'restaurant-img',
-              src: this.makeGooglePlacesPhotoURL(this.props.place.photos[0].photo_reference, 'AIzaSyBv6nWAWnIZgBvtLWsCCSbSjL5DvVhPKEo')
-            })
+            _react2.default.createElement(_Image2.default, { photoReference: this.props.place.photos[0].photo_reference })
           ),
           _react2.default.createElement(
             'div',

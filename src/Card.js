@@ -19,13 +19,6 @@ export default class Stack extends Component {
 
 
   render() {
-    function makeGooglePlacesPhotoURL (photoReference) {
-      var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-      var maxHeight = 4000;
-      var key = 'AIzaSyCHj-XDr1thAGIPW9AfZNpAfE1_pcr0H0M'
-      var fullURL = baseURL + 'key=' + key + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-      return fullURL;
-    }
     const { actions, children, login, handleSwipe, data } = this.props
     let places = this.state.places.results
     if (places) places = places.filter((restaurant) => restaurant.photos)
@@ -36,7 +29,6 @@ export default class Stack extends Component {
           } className='master-root'>
             {places && places.map((item, i) =>
               {
-                // const url =  makeGooglePlacesPhotoURL(places[i].photos[0].photo_reference)
                 return (
                     <Card key={i}
                       onSwipeLeft={() => {
