@@ -22,7 +22,6 @@ export default class Stack extends Component {
     const { actions, children, login, handleSwipe, data } = this.props
     let places = this.state.places.results
     if (places) places = places.filter((restaurant) => restaurant.photos)
-    if (places) console.log(places)
     return (
       <div  >
         <Cards onEnd={() => {console.log('you\'ve run out!')}

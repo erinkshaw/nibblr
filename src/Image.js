@@ -15,7 +15,6 @@ export default class Image extends Component {
   }
 
   render() {
-    console.log(this.state.url)
     return (
       this.state.url ? <img src={this.state.url} /> : null
     )
