@@ -1,8 +1,9 @@
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
+const express = require('express')
+const morgan = require('morgan')
+const path = require('path')
 const app = express()
-const https = require('https')
+const axios = require('axios')
+
 require('../secrets')
 
 // Setup logger
@@ -11,10 +12,18 @@ app.use(morgan('dev'))
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
+
+
+//&pagetoken=
 // get nearby restaurants
 app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
-  https.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`, (places) => places.pipe(res))
-    .on('error', next)
+  const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`
+
+  axios.get(placesUrl)
+  .then(res => res.data)
+  .then(data => {
+    res.status(200).send(data);
+  })
 })
 
 // get image for restaurant
