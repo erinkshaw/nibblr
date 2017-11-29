@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const axios = require('axios')
+require('../secrets')
 
 // get nearby restaurants
 router.get('/lat/:lat/lng/:lng', (req, res, next) => {
@@ -26,6 +27,19 @@ router.get('/lat/:lat/lng/:lng', (req, res, next) => {
     })
   }
 })
+
+// get details for place
+router.get('/:placeId', (req, res, next) => {
+  const placeUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${req.params.placeId}&key=${process.env.GOOGLE_API_KEY}`
+
+  axios.get(placeUrl)
+  .then(res => res.data)
+  .then(data => {
+    res.status(200).send(data);
+  })
+
+})
+
 
 // get image for restaurant
 router.get('/img/:photoReference', (req, res, next) => {

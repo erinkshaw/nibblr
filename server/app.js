@@ -4,8 +4,6 @@ const path = require('path')
 const app = express()
 const axios = require('axios')
 
-require('../secrets')
-
 // Setup logger
 app.use(morgan('dev'))
 
