@@ -13,17 +13,34 @@ app.use(morgan('dev'))
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 
-
 //&pagetoken=
 // get nearby restaurants
 app.get('/places/lat/:lat/lng/:lng', (req, res, next) => {
-  const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`
+  //if there is a query that means it's the next page token
+  const placesUrl =
+  req.query.token ? `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}&pagetoken=${req.query.token}`
+  :
+  `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`
+  console.log(placesUrl)
 
-  axios.get(placesUrl)
-  .then(res => res.data)
-  .then(data => {
-    res.status(200).send(data);
-  })
+  if (req.query.token) {
+    setTimeout(() => {
+      axios.get(placesUrl)
+      .then(res => res.data)
+      .then(data => {
+        console.log('DATAAAAA', data)
+        res.status(200).send(data);
+      })
+    }, 2000);
+  }
+  else {
+    axios.get(placesUrl)
+    .then(res => res.data)
+    .then(data => {
+      console.log('DATAAAAA', data)
+      res.status(200).send(data);
+    })
+  }
 })
 
 // get image for restaurant

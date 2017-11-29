@@ -5312,7 +5312,7 @@ module.exports = ReactBrowserEventEmitter;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gettingPlacesData = exports.removePlace = exports.getPlacesData = undefined;
+exports.gettingPlacesData = exports.removePlace = exports.getMorePlacesData = exports.getPlacesData = undefined;
 
 var _redux = __webpack_require__(109);
 
@@ -5336,10 +5336,16 @@ var defaultState = {
 
 var GET_PLACES = 'GET_PLACES';
 
+var GET_MORE_PLACES = 'GET_MORE_PLACES';
+
 var REMOVE_PLACE = 'REMOVE_PLACE';
 
 var getPlacesData = exports.getPlacesData = function getPlacesData(places) {
   return { type: GET_PLACES, places: places };
+};
+
+var getMorePlacesData = exports.getMorePlacesData = function getMorePlacesData(places) {
+  return { type: GET_MORE_PLACES, places: places };
 };
 
 var removePlace = exports.removePlace = function removePlace() {
@@ -5347,13 +5353,29 @@ var removePlace = exports.removePlace = function removePlace() {
 };
 
 var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(lat, lng) {
+  var url = '/places/lat/' + lat + '/lng/' + lng;
+  var places = void 0;
   lat = lat || '40.6845305';
   lng = lng || '-73.9412525';
   return function thunk(dispatch) {
-    _axios2.default.get('/places/lat/' + lat + '/lng/' + lng).then(function (res) {
+    _axios2.default.get(url).then(function (res) {
       return res.data;
     }).then(function (data) {
+      var token = data.next_page_token;
       dispatch(getPlacesData(data));
+      url = '/places/lat/' + lat + '/lng/' + lng + '?token=' + token;
+      return _axios2.default.get(url);
+    }).then(function (res) {
+      return res.data;
+    }).then(function (data) {
+      var token = data.next_page_token;
+      dispatch(getMorePlacesData(data));
+      url = '/places/lat/' + lat + '/lng/' + lng + '?token=' + token;
+      return _axios2.default.get(url);
+    }).then(function (res) {
+      return res.data;
+    }).then(function (data) {
+      dispatch(getMorePlacesData(data));
     }).catch(console.error);
   };
 };
@@ -5365,6 +5387,11 @@ var reducer = function reducer() {
   switch (action.type) {
     case GET_PLACES:
       {
+        return Object.assign({}, state, { places: action.places });
+      }
+    case GET_MORE_PLACES:
+      {
+        action.places.results = action.places.results.concat(state.places.results);
         return Object.assign({}, state, { places: action.places });
       }
     default:
@@ -26405,6 +26432,7 @@ var SwipeCards = function (_Component) {
 }(_react.Component);
 
 exports.default = SwipeCards;
+
 
 /***/ }),
 /* 235 */
