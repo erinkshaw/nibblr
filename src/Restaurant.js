@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import store from './store'
-import Image from './Image'
+// import Image from './Image'
 import Map from './Map'
 
 export default class Restaurant extends Component {
@@ -12,7 +12,7 @@ export default class Restaurant extends Component {
 
           <div className="row restaurant">
             <div className="col-md-4">
-              <Image photoReference={this.props.place.photos[0].photo_reference} />
+              {/* <Image photoReference={this.props.place.photos[0].photo_reference} /> */}
             </div>
 
             <div className="col-md-4 restaurant"><div><span style={{ fontSize: 40 }}>{this.props.place.name}</span></div><div>{this.props.place.vicinity}</div>

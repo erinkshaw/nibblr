@@ -4,7 +4,7 @@ export default class Image extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      url: ''
+      // url: ''
     }
   }
 

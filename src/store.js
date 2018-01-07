@@ -5,7 +5,8 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import axios from 'axios'
 
 const defaultState = {
-  places: {}
+  places: {},
+  plaecesDetails: {}
 }
 
 const GET_PLACES = 'GET_PLACES'

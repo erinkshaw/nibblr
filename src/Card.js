@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
+import Place from './Place'
 import store from './store'
 
 export default class Stack extends Component {
@@ -26,7 +27,7 @@ export default class Stack extends Component {
       <div  >
         <Cards onEnd={() => {console.log('you\'ve run out!')}
           } className='master-root'>
-            {places && places.map((item, i) =>
+            {places && places.map((place, i) =>
               {
                 return (
                     <Card key={i}
@@ -40,7 +41,7 @@ export default class Stack extends Component {
                         handleSwipe(item, 'right')
                       }
                       }>
-                      <Image photoReference={places[i].photos[0].photo_reference} />
+                      <Image photoReference={place.photos[0].photo_reference} />
                     </Card>
                 )
               }
