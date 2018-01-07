@@ -12114,11 +12114,11 @@ var Stack = function (_Component) {
               { key: i,
                 onSwipeLeft: function onSwipeLeft() {
                   console.log('swipe left');
-                  handleSwipe(item, 'left');
+                  handleSwipe(place, 'left');
                 },
                 onSwipeRight: function onSwipeRight() {
                   console.log('swipe right');
-                  handleSwipe(item, 'right');
+                  handleSwipe(place, 'right');
                 } },
               _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
             );
@@ -26438,7 +26438,6 @@ var SwipeCards = function (_Component) {
 
 exports.default = SwipeCards;
 
-
 /***/ }),
 /* 235 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -33436,6 +33435,10 @@ var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
 
+var _Image = __webpack_require__(108);
+
+var _Image2 = _interopRequireDefault(_Image);
+
 var _Map = __webpack_require__(298);
 
 var _Map2 = _interopRequireDefault(_Map);
@@ -33447,8 +33450,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import Image from './Image'
-
 
 var Restaurant = function (_Component) {
   _inherits(Restaurant, _Component);
@@ -33468,7 +33469,11 @@ var Restaurant = function (_Component) {
         this.props && this.props ? _react2.default.createElement(
           'div',
           { className: 'row restaurant' },
-          _react2.default.createElement('div', { className: 'col-md-4' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement(_Image2.default, { photoReference: this.props.place.photos[0].photo_reference })
+          ),
           _react2.default.createElement(
             'div',
             { className: 'col-md-4 restaurant' },

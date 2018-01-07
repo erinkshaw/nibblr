@@ -33,12 +33,12 @@ export default class Stack extends Component {
                     <Card key={i}
                       onSwipeLeft={() => {
                         console.log('swipe left')
-                        handleSwipe(item, 'left')
+                        handleSwipe(place, 'left')
                       }
                       }
                       onSwipeRight={() => {
                         console.log('swipe right')
-                        handleSwipe(item, 'right')
+                        handleSwipe(place, 'right')
                       }
                       }>
                       <Image photoReference={place.photos[0].photo_reference} />
