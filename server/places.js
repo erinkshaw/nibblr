@@ -17,7 +17,8 @@ router.get('/lat/:lat/lng/:lng', (req, res, next) => {
       .then(data => {
         res.status(200).send(data);
       })
-    }, 2000);
+      .catch(next)
+    }, 2000)
   }
   else {
     axios.get(placesUrl)
@@ -25,11 +26,13 @@ router.get('/lat/:lat/lng/:lng', (req, res, next) => {
     .then(data => {
       res.status(200).send(data);
     })
+    .catch(next)
   }
 })
 
 // get details for place
 router.get('/:placeId', (req, res, next) => {
+  console.log('hiiiiiiis')
   const placeUrl = `https://maps.googleapis.com/maps/api/place/details/json?placeid=${req.params.placeId}&key=${process.env.GOOGLE_API_KEY}`
 
   axios.get(placeUrl)
@@ -37,6 +40,7 @@ router.get('/:placeId', (req, res, next) => {
   .then(data => {
     res.status(200).send(data);
   })
+  .catch(next)
 })
 
 // get image for restaurant
