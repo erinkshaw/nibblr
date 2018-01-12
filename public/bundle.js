@@ -33687,22 +33687,30 @@ var Stack = function (_Component) {
   function Stack(props) {
     _classCallCheck(this, Stack);
 
-    return _possibleConstructorReturn(this, (Stack.__proto__ || Object.getPrototypeOf(Stack)).call(this, props));
-    // this.state = store.getState() || [];
+    var _this = _possibleConstructorReturn(this, (Stack.__proto__ || Object.getPrototypeOf(Stack)).call(this, props));
+
+    _this.state = {
+      showCards: false
+    };
+    return _this;
   }
 
-  // componentDidMount() {
-  //   this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
-  // }
-
-  // componentWillUnmount() {
-  //   this.unsubscribe()
-  // }
-
-
   _createClass(Stack, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.placesDetails) this.setState({ showCards: true });
+    }
+
+    // componentWillUnmount() {
+    //   this.unsubscribe()
+    // }
+
+
+  }, {
     key: 'render',
     value: function render() {
+      console.log(this.state, 'stateee');
+
       var _props = this.props,
           placesDetails = _props.placesDetails,
           handleSwipe = _props.handleSwipe;
@@ -33711,26 +33719,34 @@ var Stack = function (_Component) {
       if (places) places = places.filter(function (restaurant) {
         return restaurant.photos;
       });
+
+      if (this.state.showCards) {
+        return _react2.default.createElement(
+          _reactSwipeCard2.default,
+          { onEnd: function onEnd() {
+              console.log('you\'ve run out!');
+            }, className: 'master-root' },
+          placesDetails && places.map(function (place, i) {
+            return _react2.default.createElement(
+              _reactSwipeCard.Card,
+              { key: i,
+                onSwipeLeft: function onSwipeLeft() {
+                  console.log('swipe left');
+                  handleSwipe(place, 'left');
+                },
+                onSwipeRight: function onSwipeRight() {
+                  console.log('swipe right');
+                  handleSwipe(place, 'right');
+                } },
+              _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
+            );
+          })
+        );
+      }
       return _react2.default.createElement(
-        _reactSwipeCard2.default,
-        { onEnd: function onEnd() {
-            console.log('you\'ve run out!');
-          }, className: 'master-root' },
-        places && places.map(function (place, i) {
-          return _react2.default.createElement(
-            _reactSwipeCard.Card,
-            { key: i,
-              onSwipeLeft: function onSwipeLeft() {
-                console.log('swipe left');
-                handleSwipe(place, 'left');
-              },
-              onSwipeRight: function onSwipeRight() {
-                console.log('swipe right');
-                handleSwipe(place, 'right');
-              } },
-            _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
-          );
-        })
+        'div',
+        null,
+        'nope!'
       );
     }
   }]);
@@ -33740,7 +33756,8 @@ var Stack = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    campuses: state.campuses
+    places: state.places,
+    placesDetails: state.placesDetails
   };
 };
 
