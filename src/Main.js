@@ -15,7 +15,7 @@ export default function(props) {
             <div className="plate">
               <Stack handleSwipe={props.handleSwipe} />
             </div>
-            <div className="trademark">Tinder for Take Out</div>
+            {/* <div className="trademark">Tinder for Take Out</div> */}
           </div>
   )
 }

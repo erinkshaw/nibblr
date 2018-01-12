@@ -5355,7 +5355,6 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//placesData {referenceId: [arrayofPhotos]}
 var defaultState = {
   places: [],
   placesDetails: {}
@@ -5380,16 +5379,12 @@ var getMorePlacesData = exports.getMorePlacesData = function getMorePlacesData(p
 };
 
 var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDetails(placeId) {
-  console.log('uh hello?');
   var url = '/places/' + placeId;
   return function thunk(dispatch) {
-    console.log('UGHHHHH');
     _axios2.default.get(url).then(function (res) {
-      console.log('hi resssss', res.data);
       return res.data;
     }).then(function (data) {
-      console.log(data.result);
-      dispatch(addPlaceDetails(data));
+      if (data.result.photos) dispatch(addPlaceDetails(data));
     });
   };
 };
@@ -5423,8 +5418,6 @@ var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(l
       return Promise.all(places.map(function (place) {
         return dispatch(gettingPlaceDetails(place.place_id));
       }));
-      //need promise.all not for each amirite?
-      // places.forEach(place => dispatch(addPlaceData(place)))
     });
   };
 };
@@ -12189,33 +12182,30 @@ var Stack = function (_Component) {
           data = _props.data;
 
       var places = this.state.places;
+      var placesDetails = this.state.placesDetails;
       if (places) places = places.filter(function (restaurant) {
         return restaurant.photos;
       });
       return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          _reactSwipeCard2.default,
-          { onEnd: function onEnd() {
-              console.log('you\'ve run out!');
-            }, className: 'master-root' },
-          places && places.map(function (place, i) {
-            return _react2.default.createElement(
-              _reactSwipeCard.Card,
-              { key: i,
-                onSwipeLeft: function onSwipeLeft() {
-                  console.log('swipe left');
-                  handleSwipe(place, 'left');
-                },
-                onSwipeRight: function onSwipeRight() {
-                  console.log('swipe right');
-                  handleSwipe(place, 'right');
-                } },
-              _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
-            );
-          })
-        )
+        _reactSwipeCard2.default,
+        { onEnd: function onEnd() {
+            console.log('you\'ve run out!');
+          }, className: 'master-root' },
+        places && places.map(function (place, i) {
+          return _react2.default.createElement(
+            _reactSwipeCard.Card,
+            { key: i,
+              onSwipeLeft: function onSwipeLeft() {
+                console.log('swipe left');
+                handleSwipe(place, 'left');
+              },
+              onSwipeRight: function onSwipeRight() {
+                console.log('swipe right');
+                handleSwipe(place, 'right');
+              } },
+            _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
+          );
+        })
       );
     }
   }]);
@@ -26256,8 +26246,7 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      selections: [],
-      places: _store2.default.getState()
+      selections: []
     };
     _this.handleSwipe = _this.handleSwipe.bind(_this);
     return _this;
@@ -33689,11 +33678,6 @@ exports.default = function (props) {
       'div',
       { className: 'plate' },
       _react2.default.createElement(_Card2.default, { handleSwipe: props.handleSwipe })
-    ),
-    _react2.default.createElement(
-      'div',
-      { className: 'trademark' },
-      'Tinder for Take Out'
     )
   );
 };

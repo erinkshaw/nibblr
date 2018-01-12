@@ -4,7 +4,6 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import axios from 'axios'
 
-//placesData {referenceId: [arrayofPhotos]}
 const defaultState = {
   places: [],
   placesDetails: {}
@@ -24,25 +23,18 @@ export const getPlacesData = (places) => {
   return { type: GET_PLACES, places }
 }
 
-
 export const getMorePlacesData = (places) => {
   return { type: GET_MORE_PLACES, places }
 }
 
 export const gettingPlaceDetails = (placeId) => {
-  console.log('uh hello?')
   const url = `/places/${placeId}`
   return function thunk(dispatch) {
-    console.log('UGHHHHH')
     axios.get(url)
-      .then(res => {
-        console.log('hi resssss', res.data)
-        return res.data
-      })
+      .then(res => res.data)
       .then(data => {
-        console.log(data.result)
-        dispatch(addPlaceDetails(data))
-      })
+        if (data.result.photos) dispatch(addPlaceDetails(data)
+      )})
   }
 }
 
@@ -77,8 +69,6 @@ export const gettingPlacesData = (lat, lng) => {
         dispatch(getMorePlacesData(data))
         dispatch(gettingPlaceDetails(places[0].place_id))
         return Promise.all(places.map(place => dispatch(gettingPlaceDetails(place.place_id))))
-        //need promise.all not for each amirite?
-        // places.forEach(place => dispatch(addPlaceData(place)))
       })
   }
 }

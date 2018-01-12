@@ -6,14 +6,13 @@ import Selections from './Selections'
 import { Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom'
 import Main from './Main'
-import store, { gettingPlacesData, removePlace } from './store'
+import store, { gettingPlacesData } from './store'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       selections: [],
-      places: store.getState()
     }
     this.handleSwipe = this.handleSwipe.bind(this)
   }
