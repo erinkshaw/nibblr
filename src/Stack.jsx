@@ -1,28 +1,27 @@
 import React, { Component } from 'react'
 import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
-import Place from './Place'
+import { connect } from 'react-redux'
 import store from './store'
 
-export default class Stack extends Component {
+class Stack extends Component {
   constructor(props) {
     super(props)
-    this.state = store.getState() || [];
+    // this.state = store.getState() || [];
   }
 
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
-  }
+  // componentDidMount() {
+  //   this.unsubscribe = store.subscribe(() => this.setState(store.getState()))
+  // }
 
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
+  // componentWillUnmount() {
+  //   this.unsubscribe()
+  // }
 
 
   render() {
-    const { actions, children, login, handleSwipe, data } = this.props
-    let places = this.state.places
-    let placesDetails = this.state.placesDetails
+    const { placesDetails, handleSwipe } = this.props
+    let places = this.props.places
     if (places) places = places.filter((restaurant) => restaurant.photos)
     return (
       <Cards onEnd={() => { console.log('you\'ve run out!') }
@@ -50,4 +49,11 @@ export default class Stack extends Component {
   }
 }
 
+const mapStateToProps = function (state) {
+  return {
+    campuses: state.campuses
+  }
+}
+
+export default connect(mapStateToProps)(Stack);
 
