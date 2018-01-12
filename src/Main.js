@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
 import Stack from './Stack'
-import Cards, { Card } from 'react-swipe-card'
 import Navbar from './Navbar'
-import Selections from './Selections'
-import { Route, Switch } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom'
-import store, { gettingPlacesData } from './store'
+
 
 export default function(props) {
 

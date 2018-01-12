@@ -12105,12 +12105,7 @@ function getHostComponentFromComposite(inst) {
 module.exports = getHostComponentFromComposite;
 
 /***/ }),
-/* 107 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/erinshaw/Grace Hopper/Senior-Phase/stackathon/nibblr/src/Card.js'");
-
-/***/ }),
+/* 107 */,
 /* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26094,22 +26089,6 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Card = __webpack_require__(107);
-
-var _Card2 = _interopRequireDefault(_Card);
-
-var _reactSwipeCard = __webpack_require__(40);
-
-var _reactSwipeCard2 = _interopRequireDefault(_reactSwipeCard);
-
-var _Navbar = __webpack_require__(120);
-
-var _Navbar2 = _interopRequireDefault(_Navbar);
-
-var _Selections = __webpack_require__(47);
-
-var _Selections2 = _interopRequireDefault(_Selections);
-
 var _reactRouter = __webpack_require__(46);
 
 var _reactRouterDom = __webpack_require__(42);
@@ -26182,7 +26161,7 @@ var App = function (_Component) {
             _reactRouter.Switch,
             null,
             _react2.default.createElement(_reactRouter.Route, { path: '/selections', render: function render() {
-                return _react2.default.createElement(_Selections2.default, { selections: _this2.state.selections });
+                return _react2.default.createElement(Selections, { selections: _this2.state.selections });
               } }),
             _react2.default.createElement(_reactRouter.Route, { path: '/', render: function render() {
                 return _react2.default.createElement(_Main2.default, { handleSwipe: _this2.handleSwipe });
@@ -33585,25 +33564,9 @@ var _Stack = __webpack_require__(304);
 
 var _Stack2 = _interopRequireDefault(_Stack);
 
-var _reactSwipeCard = __webpack_require__(40);
-
-var _reactSwipeCard2 = _interopRequireDefault(_reactSwipeCard);
-
 var _Navbar = __webpack_require__(120);
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
-
-var _Selections = __webpack_require__(47);
-
-var _Selections2 = _interopRequireDefault(_Selections);
-
-var _reactRouter = __webpack_require__(46);
-
-var _reactRouterDom = __webpack_require__(42);
-
-var _store = __webpack_require__(41);
-
-var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
