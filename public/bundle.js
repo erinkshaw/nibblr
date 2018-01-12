@@ -12106,114 +12106,9 @@ module.exports = getHostComponentFromComposite;
 
 /***/ }),
 /* 107 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactSwipeCard = __webpack_require__(40);
-
-var _reactSwipeCard2 = _interopRequireDefault(_reactSwipeCard);
-
-var _Image = __webpack_require__(67);
-
-var _Image2 = _interopRequireDefault(_Image);
-
-var _Place = __webpack_require__(238);
-
-var _Place2 = _interopRequireDefault(_Place);
-
-var _store = __webpack_require__(41);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Stack = function (_Component) {
-  _inherits(Stack, _Component);
-
-  function Stack(props) {
-    _classCallCheck(this, Stack);
-
-    var _this = _possibleConstructorReturn(this, (Stack.__proto__ || Object.getPrototypeOf(Stack)).call(this, props));
-
-    _this.state = _store2.default.getState() || [];
-    return _this;
-  }
-
-  _createClass(Stack, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.unsubscribe = _store2.default.subscribe(function () {
-        return _this2.setState(_store2.default.getState());
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.unsubscribe();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          actions = _props.actions,
-          children = _props.children,
-          login = _props.login,
-          handleSwipe = _props.handleSwipe,
-          data = _props.data;
-
-      var places = this.state.places;
-      var placesDetails = this.state.placesDetails;
-      if (places) places = places.filter(function (restaurant) {
-        return restaurant.photos;
-      });
-      return _react2.default.createElement(
-        _reactSwipeCard2.default,
-        { onEnd: function onEnd() {
-            console.log('you\'ve run out!');
-          }, className: 'master-root' },
-        places && places.map(function (place, i) {
-          return _react2.default.createElement(
-            _reactSwipeCard.Card,
-            { key: i,
-              onSwipeLeft: function onSwipeLeft() {
-                console.log('swipe left');
-                handleSwipe(place, 'left');
-              },
-              onSwipeRight: function onSwipeRight() {
-                console.log('swipe right');
-                handleSwipe(place, 'right');
-              } },
-            _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
-          );
-        })
-      );
-    }
-  }]);
-
-  return Stack;
-}(_react.Component);
-
-exports.default = Stack;
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/erinshaw/Grace Hopper/Senior-Phase/stackathon/nibblr/src/Card.js'");
 
 /***/ }),
 /* 108 */
@@ -33677,7 +33572,7 @@ exports.default = function (props) {
     _react2.default.createElement(
       'div',
       { className: 'plate' },
-      _react2.default.createElement(_Card2.default, { handleSwipe: props.handleSwipe })
+      _react2.default.createElement(_Stack2.default, { handleSwipe: props.handleSwipe })
     )
   );
 };
@@ -33686,9 +33581,9 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Card = __webpack_require__(107);
+var _Stack = __webpack_require__(304);
 
-var _Card2 = _interopRequireDefault(_Card);
+var _Stack2 = _interopRequireDefault(_Stack);
 
 var _reactSwipeCard = __webpack_require__(40);
 
@@ -33819,6 +33714,119 @@ function unregister() {
   }
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 302 */,
+/* 303 */,
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactSwipeCard = __webpack_require__(40);
+
+var _reactSwipeCard2 = _interopRequireDefault(_reactSwipeCard);
+
+var _Image = __webpack_require__(67);
+
+var _Image2 = _interopRequireDefault(_Image);
+
+var _Place = __webpack_require__(238);
+
+var _Place2 = _interopRequireDefault(_Place);
+
+var _store = __webpack_require__(41);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Stack = function (_Component) {
+  _inherits(Stack, _Component);
+
+  function Stack(props) {
+    _classCallCheck(this, Stack);
+
+    var _this = _possibleConstructorReturn(this, (Stack.__proto__ || Object.getPrototypeOf(Stack)).call(this, props));
+
+    _this.state = _store2.default.getState() || [];
+    return _this;
+  }
+
+  _createClass(Stack, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.unsubscribe = _store2.default.subscribe(function () {
+        return _this2.setState(_store2.default.getState());
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.unsubscribe();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          actions = _props.actions,
+          children = _props.children,
+          login = _props.login,
+          handleSwipe = _props.handleSwipe,
+          data = _props.data;
+
+      var places = this.state.places;
+      var placesDetails = this.state.placesDetails;
+      if (places) places = places.filter(function (restaurant) {
+        return restaurant.photos;
+      });
+      return _react2.default.createElement(
+        _reactSwipeCard2.default,
+        { onEnd: function onEnd() {
+            console.log('you\'ve run out!');
+          }, className: 'master-root' },
+        places && places.map(function (place, i) {
+          return _react2.default.createElement(
+            _reactSwipeCard.Card,
+            { key: i,
+              onSwipeLeft: function onSwipeLeft() {
+                console.log('swipe left');
+                handleSwipe(place, 'left');
+              },
+              onSwipeRight: function onSwipeRight() {
+                console.log('swipe right');
+                handleSwipe(place, 'right');
+              } },
+            _react2.default.createElement(_Image2.default, { photoReference: place.photos[0].photo_reference })
+          );
+        })
+      );
+    }
+  }]);
+
+  return Stack;
+}(_react.Component);
+
+exports.default = Stack;
 
 /***/ })
 /******/ ]);

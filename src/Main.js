@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Stack from './Card'
+import Stack from './Stack'
 import Cards, { Card } from 'react-swipe-card'
 import Navbar from './Navbar'
 import Selections from './Selections'
