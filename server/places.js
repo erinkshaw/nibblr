@@ -55,7 +55,7 @@ router.get('/map/:placeId', (req, res, next) => {
   res.json(placeUrl)
 })
 
-function makeGooglePlacesPhotoURL(photoReference) {
+router.makeGooglePlacesPhotoURL = (photoReference) => {
   var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
   var maxHeight = 200;
   var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
