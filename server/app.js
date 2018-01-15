@@ -12,6 +12,8 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 app.use('/places', require('./places'))
 
+app.use('/clarifai', require('./clarifai'))
+
 app.get('/*', (_, res) => res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html')))
 
 module.exports = app;

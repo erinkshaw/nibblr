@@ -26107,6 +26107,10 @@ var _Main = __webpack_require__(300);
 
 var _Main2 = _interopRequireDefault(_Main);
 
+var _Selections = __webpack_require__(47);
+
+var _Selections2 = _interopRequireDefault(_Selections);
+
 var _store = __webpack_require__(41);
 
 var _store2 = _interopRequireDefault(_store);
@@ -26171,7 +26175,7 @@ var App = function (_Component) {
             _reactRouter.Switch,
             null,
             _react2.default.createElement(_reactRouter.Route, { path: '/selections', render: function render() {
-                return _react2.default.createElement(Selections, { selections: _this2.state.selections });
+                return _react2.default.createElement(_Selections2.default, { selections: _this2.state.selections });
               } }),
             _react2.default.createElement(_reactRouter.Route, { path: '/', render: function render() {
                 return _react2.default.createElement(_Main2.default, { handleSwipe: _this2.handleSwipe });
