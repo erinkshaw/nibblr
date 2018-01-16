@@ -13,18 +13,13 @@ class Stack extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.placesDetails) this.setState({ showCards: true })
+    if (nextProps.foodImages.length) this.setState({ showCards: true })
   }
-
-  // componentWillUnmount() {
-  //   this.unsubscribe()
-  // }
 
 
   render() {
-    console.log(this.state, 'stateee')
 
-    const { placesDetails, handleSwipe } = this.props
+    const { foodImages, handleSwipe } = this.props
     let places = this.props.places
     if (places) places = places.filter((restaurant) => restaurant.photos)
 
@@ -32,20 +27,20 @@ class Stack extends Component {
       return (
         <Cards onEnd={() => { console.log('you\'ve run out!') }
         } className='master-root'>
-          {placesDetails && places.map((place, i) => {
+          {foodImages && foodImages.map((image, i) => {
             return (
               <Card key={i}
                 onSwipeLeft={() => {
                   console.log('swipe left')
-                  handleSwipe(place, 'left')
+                  handleSwipe(image, 'left')
                 }
                 }
                 onSwipeRight={() => {
                   console.log('swipe right')
-                  handleSwipe(place, 'right')
+                  handleSwipe(image, 'right')
                 }
                 }>
-                <Image photoReference={place.photos[0].photo_reference} />
+                <Image photoReference={image.photo_reference} />
               </Card>
             )
           }
@@ -60,7 +55,7 @@ class Stack extends Component {
 const mapStateToProps = function (state) {
   return {
     places: state.places,
-    placesDetails: state.placesDetails
+    foodImages: state.foodImages
   }
 }
 

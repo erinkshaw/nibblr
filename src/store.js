@@ -35,6 +35,29 @@ export const addPlacePhoto = (place) => {
   return { type: ADD_PLACE_PHOTO, place }
 }
 
+// export const gettingPlaceDetails = (placeId) => {
+//   const url = `/places/${placeId}`
+//   return function thunk(dispatch) {
+//     axios.get(url)
+//       .then(res => res.data)
+//       .then(data => {
+//         if (data.result.photos) {
+//           // dispatch(addPlaceDetails(data))
+//           // return data.result
+//           Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
+//         }
+//       })
+//       // .then(data => {
+//       //   if (data) {
+//       //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
+//       //   }
+//       //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
+//       //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
+//       //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
+//       // })
+//   }
+// }
+
 export const gettingPlaceDetails = (placeId) => {
   const url = `/places/${placeId}`
   return function thunk(dispatch) {
@@ -44,7 +67,8 @@ export const gettingPlaceDetails = (placeId) => {
         if (data.result.photos) {
           // dispatch(addPlaceDetails(data))
           // return data.result
-          Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
+          // Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
+          dispatch(gettingFoodImages(makeJSON(data.result.photos)))
         }
       })
       // .then(data => {
@@ -94,19 +118,32 @@ export const gettingPlacesData = (lat, lng) => {
 }
 
 
-export const gettingFoodImages = (photoReference, place) => {
-  const url = `/clarifai/predict/${photoReference}`
+// export const gettingFoodImages = (photoReference, place) => {
+//   const url = `/clarifai/predict/${photoReference}`
+//   return function thunk(dispatch) {
+//     axios.get(url)
+//     .then(res => res.data)
+//     .then(data => {
+//       // returns truthy val if food, falsey if not
+//         if (data) {
+//           dispatch(addPlacePhoto({
+//             place_id: place.place_id,
+//             photo_reference: photoReference
+//           }))
+//         }
+//       })
+//   }
+// }
+
+export const gettingFoodImages = (photoJson) => {
+  const url = `/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
     axios.get(url)
     .then(res => res.data)
     .then(data => {
       // returns truthy val if food, falsey if not
-        if (data) {
-          dispatch(addPlacePhoto({
-            place_id: place.place_id,
-            photo_reference: photoReference
-          }))
-        }
+
+      console.log(data, 'hiii what areee yooooou?????')
       })
   }
 }
@@ -134,3 +171,10 @@ const reducer = (state = defaultState, action) => {
 }
 
 export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
+
+
+const makeJSON = (arr) => {
+  let jsonify = []
+  arr.forEach(photo => jsonify.push({url: photo.photo_reference}))
+  return JSON.stringify(jsonify)
+}
