@@ -5584,7 +5584,7 @@ var matchPath = function matchPath(pathname) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gettingPlacesData = exports.gettingPlaceDetails = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
+exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addPlacePhoto = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
 
 var _redux = __webpack_require__(71);
 
@@ -5602,9 +5602,12 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var defaultState = {
   places: [],
-  placesDetails: {}
+  // placesDetails: {},
+  foodImages: []
 };
 
 var GET_PLACES = 'GET_PLACES';
@@ -5612,6 +5615,8 @@ var GET_PLACES = 'GET_PLACES';
 var GET_MORE_PLACES = 'GET_MORE_PLACES';
 
 var ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS';
+
+var ADD_PLACE_PHOTO = 'ADD_PLACE_PHOTO';
 
 var addPlaceDetails = exports.addPlaceDetails = function addPlaceDetails(place) {
   return { type: ADD_PLACE_DETAILS, place: place };
@@ -5625,14 +5630,33 @@ var getMorePlacesData = exports.getMorePlacesData = function getMorePlacesData(p
   return { type: GET_MORE_PLACES, places: places };
 };
 
+//this is only called if top concept is 'food'?
+var addPlacePhoto = exports.addPlacePhoto = function addPlacePhoto(place) {
+  return { type: ADD_PLACE_PHOTO, place: place };
+};
+
 var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDetails(placeId) {
   var url = '/places/' + placeId;
   return function thunk(dispatch) {
     _axios2.default.get(url).then(function (res) {
       return res.data;
     }).then(function (data) {
-      if (data.result.photos) dispatch(addPlaceDetails(data));
+      if (data.result.photos) {
+        // dispatch(addPlaceDetails(data))
+        // return data.result
+        Promise.all(data.result.photos.map(function (photo) {
+          return dispatch(gettingFoodImages(photo.photo_reference, data.result));
+        }));
+      }
     });
+    // .then(data => {
+    //   if (data) {
+    //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
+    //   }
+    //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
+    //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
+    //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
+    // })
   };
 };
 
@@ -5669,6 +5693,23 @@ var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(l
   };
 };
 
+var gettingFoodImages = exports.gettingFoodImages = function gettingFoodImages(photoReference, place) {
+  var url = '/clarifai/predict/' + photoReference;
+  return function thunk(dispatch) {
+    _axios2.default.get(url).then(function (res) {
+      return res.data;
+    }).then(function (data) {
+      // returns truthy val if food, falsey if not
+      if (data) {
+        dispatch(addPlacePhoto({
+          place_id: place.place_id,
+          photo_reference: photoReference
+        }));
+      }
+    });
+  };
+};
+
 var reducer = function reducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
@@ -5683,12 +5724,15 @@ var reducer = function reducer() {
         action.places.results = action.places.results.concat(state.places);
         return Object.assign({}, state, { places: action.places.results });
       }
-    case ADD_PLACE_DETAILS:
+    // case ADD_PLACE_DETAILS: {
+    //   const newPlacesDetails = state.placesDetails
+    //   const placeDetails = action.place.result
+    //   newPlacesDetails[placeDetails.place_id] = placeDetails.photos
+    //   return Object.assign({}, state, { placesDetails: newPlacesDetails })
+    // }
+    case ADD_PLACE_PHOTO:
       {
-        var newPlacesDetails = state.placesDetails;
-        var placeDetails = action.place.result;
-        newPlacesDetails[placeDetails.place_id] = placeDetails.photos;
-        return Object.assign({}, state, { placesDetails: newPlacesDetails });
+        return Object.assign({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), [action.place]) });
       }
     default:
       return state;

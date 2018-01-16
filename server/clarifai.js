@@ -6,36 +6,27 @@ require('../secrets')
 // instantiate a new Clarifai app passing in your API Key
 const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_API_KEY
- })
-
- console.log(makeGooglePlacesPhotoURL)
- router.get('/predict/:photoreference', (req, res, next) => {
-  const photoreference = req.params.photoreference
-  // const imgUrl = makeGooglePlacesPhotoURL(photoreference)
-  // app.models.predict(Clarifai.GENERAL_MODEL, imgUrl).then(
-  //   function(response) {
-  //     console.log(response)
-  //     // do something with response
-  //   },
-  //   function(err) {
-  //     console.log(error)
-  //     // there was an error
-  //   }
-  // )
-  res.send('hi :(')
- })
-
-//  function makeGooglePlacesPhotoURL(photoReference) {
-//   var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-//   var maxHeight = 200;
-//   var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
-//   return fullURL;
-// }
-
- router.get('/', (req, res, next) => {
-  res.send('hi')
 })
 
- //using to conditionally send when food is met?
+// analyze google place photo's top concepts
+router.get('/predict/:photoreference', (req, res, next) => {
+  const photoreference = req.params.photoreference
+  const imgUrl = makeGooglePlacesPhotoURL(photoreference)
 
- module.exports = router
+  //returns top concept.
+  app.models.predict(Clarifai.GENERAL_MODEL, imgUrl).then(
+    function (response) {
+      const isFood = (image => image.name === 'food')
+      const foodConcept = response.outputs[0].data.concepts.find(isFood)
+      const topConcept = response.outputs[0].data.concepts[0].name
+      res.send(foodConcept)
+    },
+    function (err) {
+      res.send(err)
+    }
+  )
+
+})
+
+
+module.exports = router
