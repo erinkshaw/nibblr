@@ -31,16 +31,17 @@ const app = new Clarifai.App({
 router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   let batchPhotosJSON = JSON.parse(req.params.batchPhotosJSON)
   batchPhotosJSON.map(photo => photo.url = makeGooglePlacesPhotoURL(photo.url))
-  // batchPhotosJSON = JSON.stringify(batchPhotosJSON)
-  console.log(batchPhotosJSON)
+  //batchPhotosJSON = JSON.stringify(batchPhotosJSON)
+  // console.log(batchPhotosJSON)
 
   app.models.predict(Clarifai.GENERAL_MODEL, batchPhotosJSON).then(
     (response) => {
       let updatedResponse = response.outputs
-      // const isFood = (image => image.name === 'food')
-      // const foodConcept = response.outputs[0].data.concepts.find(isFood)
-      // const topConcept = response.outputs[0].data.concepts[0].name
-      // res.send(foodConcept)
+      // updatedResponse.map(res => {
+      //   res.input.data.image = toPhotoReference(res.input.data.image)
+      // })
+      //array that i want to map
+      // console.log(response)
       res.send(updatedResponse)
     },
     (err) => {

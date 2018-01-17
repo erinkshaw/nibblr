@@ -4199,7 +4199,8 @@ var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDet
         // dispatch(addPlaceDetails(data))
         // return data.result
         // Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
-        dispatch(gettingFoodImages(makeJSON(data.result.photos)));
+        // console.log(data.result, 'data wheres the infooo??')
+        dispatch(gettingFoodImages(makeJSON(data.result.photos, data.result.place_id)));
       }
     });
     // .then(data => {
@@ -4308,8 +4309,9 @@ var reducer = function reducer() {
 exports.default = (0, _redux.createStore)(reducer, (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(_reduxThunk2.default, (0, _reduxLogger.createLogger)({ collapsed: true }))));
 
 
-var makeJSON = function makeJSON(arr) {
+var makeJSON = function makeJSON(arr, placeId) {
   var jsonify = [];
+  console.log(placeId);
   arr.forEach(function (photo) {
     return jsonify.push({ url: photo.photo_reference });
   });

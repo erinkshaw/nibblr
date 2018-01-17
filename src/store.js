@@ -68,17 +68,18 @@ export const gettingPlaceDetails = (placeId) => {
           // dispatch(addPlaceDetails(data))
           // return data.result
           // Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
-          dispatch(gettingFoodImages(makeJSON(data.result.photos)))
+          // console.log(data.result, 'data wheres the infooo??')
+          dispatch(gettingFoodImages(makeJSON(data.result.photos, data.result.place_id)))
         }
       })
-      // .then(data => {
-      //   if (data) {
-      //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
-      //   }
-      //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
-      //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
-      //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
-      // })
+    // .then(data => {
+    //   if (data) {
+    //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
+    //   }
+    //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
+    //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
+    //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
+    // })
   }
 }
 
@@ -139,11 +140,11 @@ export const gettingFoodImages = (photoJson) => {
   const url = `/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
     axios.get(url)
-    .then(res => res.data)
-    .then(data => {
-      // returns truthy val if food, falsey if not
+      .then(res => res.data)
+      .then(data => {
+        // returns truthy val if food, falsey if not
 
-      console.log(data, 'hiii what areee yooooou?????')
+        console.log(data, 'hiii what areee yooooou?????')
       })
   }
 }
@@ -173,8 +174,9 @@ const reducer = (state = defaultState, action) => {
 export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
 
 
-const makeJSON = (arr) => {
+const makeJSON = (arr, placeId) => {
   let jsonify = []
-  arr.forEach(photo => jsonify.push({url: photo.photo_reference}))
+  console.log(placeId)
+  arr.forEach(photo => jsonify.push({ url: photo.photo_reference }))
   return JSON.stringify(jsonify)
 }
