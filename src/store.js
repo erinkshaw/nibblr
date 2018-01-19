@@ -176,7 +176,6 @@ export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, c
 
 const makeJSON = (arr, placeId) => {
   let jsonify = []
-  console.log(placeId)
   arr.forEach(photo => jsonify.push({ url: photo.photo_reference }))
   return JSON.stringify(jsonify)
 }

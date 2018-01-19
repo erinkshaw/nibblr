@@ -4311,7 +4311,6 @@ exports.default = (0, _redux.createStore)(reducer, (0, _reduxDevtoolsExtension.c
 
 var makeJSON = function makeJSON(arr, placeId) {
   var jsonify = [];
-  console.log(placeId);
   arr.forEach(function (photo) {
     return jsonify.push({ url: photo.photo_reference });
   });

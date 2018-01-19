@@ -37,8 +37,10 @@ router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   app.models.predict(Clarifai.GENERAL_MODEL, batchPhotosJSON).then(
     (response) => {
       let updatedResponse = response.outputs
+      // console.log(toPhotoReference(updatedResponse[0].input.data.image))
       // updatedResponse.map(res => {
-      //   res.input.data.image = toPhotoReference(res.input.data.image)
+      //   console.log(toPhotoReference(res.input.data.image))
+      //   // res.input.data.image = toPhotoReference(res.input.data.image)
       // })
       //array that i want to map
       // console.log(response)
@@ -51,7 +53,7 @@ router.get('/predict/:batchPhotosJSON', (req, res, next) => {
 
 })
 
-const toPhotoReference = (photoUrl) => {
+function toPhotoReference (photoUrl) {
   return photoUrl.split('photoreference=')[1]
 }
 
