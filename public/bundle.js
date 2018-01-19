@@ -29190,13 +29190,14 @@ exports.default = function (props) {
 
   return _react2.default.createElement(
     'div',
-    null,
-    _react2.default.createElement(_Navbar2.default, null),
+    { className: 'container' },
+    _react2.default.createElement('img', { src: '/lemon.svg', id: 'aboutMe' }),
     _react2.default.createElement(
       'div',
       { className: 'plate' },
-      _react2.default.createElement(_Stack2.default, { handleSwipe: props.handleSwipe })
-    )
+      _react2.default.createElement('img', { src: '/cutlery.svg' })
+    ),
+    _react2.default.createElement('img', { src: '/groceries.svg', id: 'selections' })
   );
 };
 

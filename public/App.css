@@ -11,7 +11,7 @@ body {
     background: white;
     background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
     linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
-    background-size: 70px 70px;
+    background-size: 80px 80px;
     font-family: 'Dosis'
 }
 
@@ -21,7 +21,7 @@ img {
 
 /* make the plate */
 .plate {
-    background: white;
+    /* background: white; */
     background-position: 50% 0%;
     width: 650px;
     height: 650px;
@@ -31,17 +31,7 @@ img {
     position: relative;
     box-sizing: border-box;
     padding: 33px (33px + 20);
-    border-radius: 400px;
-    box-shadow:
-      /* Outer Plate Bevel */
-      inset 0 5px 3px 0 rgba(255,255,255,.5), /* Top */
-      inset 0 -5px 3px 0 rgba(0,0,0,.78), /* Bottom */
-      inset 3px 0 2px 0 rgba(0,0,0,.25), /* Left */
-      inset -3px 0 2px 0 rgba(0,0,0,.25), /* Right */
-
-      /* Outer Plate Shadow */
-      inset 0 5px 46px 0 rgba(0,0,0,.4),
-      0 5px 13px 0 rgba(0,0,0,.75);
+    border-radius: 400px
 }
   .plate::before {
     content: ' ';
@@ -52,11 +42,7 @@ img {
     bottom: 110px;
     left: 110px;
     border-radius: 400px;
-    box-shadow:
-    /* Inner Plate Shadow */
-      inset 0 0 4px 3px rgba(255,255,255,1), /* Top */
-      inset 0 8px 16px 4px rgba(0,0,0,.25) /* Top */
-      ;
+
   }
 
 /* place nibblr logo */
@@ -278,3 +264,14 @@ h1, h2 {
 }
  */
 
+#selections {
+  height: 100px
+}
+
+#aboutMe {
+  height: 100px
+}
+
+.container {
+  display: flex;
+}
