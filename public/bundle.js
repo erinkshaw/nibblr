@@ -26433,7 +26433,6 @@ var SwipeCards = function (_Component) {
 
 exports.default = SwipeCards;
 
-
 /***/ }),
 /* 235 */
 /***/ (function(module, exports, __webpack_require__) {
