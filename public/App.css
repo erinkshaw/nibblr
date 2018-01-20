@@ -21,7 +21,6 @@ img {
 
 /* make the plate */
 .plate {
-    /* background: white; */
     background-position: 50% 0%;
     width: 650px;
     height: 650px;
@@ -140,89 +139,39 @@ h1, h2 {
 }
 
 .alert {
-  width: 45%;
-  min-height: 10%;
+  width: 80px;
   position: absolute;
   z-index: 9999;
   opacity: 0;
   transition: opacity .5s;
   color: white;
   vertical-align: middle;
-  line-height: 3rem;
-}
+  line-height: 1rem; }
 
 .alert-visible {
-  opacity: 1;
-}
+  opacity: .8; }
+
+.alert-base, .alert-right, .alert-left {
+  height: 100px;
+  width: 100px;
+  margin: 15px;
+  padding: 8px 5px 5px 5px;
+  top: 0;
+  border-radius: 100%; }
+
+.icon {
+  height: 80px;
+  width: 80px; }
 
 .alert-right {
-  content: "YUM!";
-  top: 0;
-  right: 0;
-  background: green;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  right: 2vw;
+  /* background: red;  */
 }
-/* .alert-right {
-  top: 1  ;
-  right: 0;
-}
-
-.alert-right:before,.alert-right:after {
-  content: "";
-  width: 35px;
-  height: 55px;
-  position: absolute;
-  background: red;
-  left: 70px;
-  top: 0;
-  -webkit-border-radius: 50px 50px 0 0;
-  -moz-border-radius: 50px 50px 0 0;
-  border-radius: 50px 50px 0 0;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  -webkit-transform-origin: 0 100%;
-  -moz-transform-origin: 0 100%;
-  -ms-transform-origin: 0 100%;
-  -o-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-}
-
-.alert-right:after {
-  left: 0;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-  -webkit-transform-origin: 100% 100%;
-  -moz-transform-origin: 100% 100%;
-  -ms-transform-origin: 100% 100%;
-  -o-transform-origin: 100% 100%;
-  transform-origin: 100% 100%;
-} */
-
 
 .alert-left {
-  top: 0;
-  left: 0;
-  background: red;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
+  left: 2vw;
+  /* background: black;  */
 }
-
- .trademark {
-   font-family: 'Dosis';
-   /* font-family: NoodleScript;    */
-   font-size: 70px;
- }
-
- /* .btn {
-  font-family: NoodleShade;
-} */
 
 .restaurant {
   /* background-color: white; */
@@ -266,6 +215,31 @@ h1, h2 {
 
 #selections {
   height: 100px
+}
+
+#selections:hover {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 #aboutMe {
