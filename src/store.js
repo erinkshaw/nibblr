@@ -6,7 +6,6 @@ import axios from 'axios'
 
 const defaultState = {
   places: [],
-  // placesDetails: {},
   foodImages: []
 }
 
@@ -16,7 +15,7 @@ const GET_MORE_PLACES = 'GET_MORE_PLACES'
 
 const ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS'
 
-const ADD_PLACE_PHOTO = 'ADD_PLACE_PHOTO'
+const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
 
 export const addPlaceDetails = (place) => {
   return { type: ADD_PLACE_DETAILS, place }
@@ -30,33 +29,9 @@ export const getMorePlacesData = (places) => {
   return { type: GET_MORE_PLACES, places }
 }
 
-//this is only called if top concept is 'food'?
-export const addPlacePhoto = (place) => {
-  return { type: ADD_PLACE_PHOTO, place }
+export const addPlacePhotos = (placePhotos) => {
+  return { type: ADD_PLACE_PHOTOS, placePhotos }
 }
-
-// export const gettingPlaceDetails = (placeId) => {
-//   const url = `/places/${placeId}`
-//   return function thunk(dispatch) {
-//     axios.get(url)
-//       .then(res => res.data)
-//       .then(data => {
-//         if (data.result.photos) {
-//           // dispatch(addPlaceDetails(data))
-//           // return data.result
-//           Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
-//         }
-//       })
-//       // .then(data => {
-//       //   if (data) {
-//       //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
-//       //   }
-//       //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
-//       //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
-//       //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
-//       // })
-//   }
-// }
 
 export const gettingPlaceDetails = (placeId) => {
   const url = `/places/${placeId}`
@@ -65,21 +40,9 @@ export const gettingPlaceDetails = (placeId) => {
       .then(res => res.data)
       .then(data => {
         if (data.result.photos) {
-          // dispatch(addPlaceDetails(data))
-          // return data.result
-          // Promise.all(data.result.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data.result))))
-          // console.log(data.result, 'data wheres the infooo??')
           dispatch(gettingFoodImages(makeJSON(data.result.photos, data.result.place_id)))
         }
       })
-    // .then(data => {
-    //   if (data) {
-    //    Promise.all(data.photos.map(photo => dispatch(gettingFoodImages(photo.photo_reference, data))))
-    //   }
-    //   //PROMISE.ALL FOR OUR CLARIFAI THUNKY
-    //   //DISPATCH SHOULD TAKE TWO ARGS, THE OTHER BEING ALL THE INFO
-    //   //THEN, CREATE AN OBJ FOR EACH TRUE PHOTO IN NEW DISPATCH THAT HAS PLACE_ID
-    // })
   }
 }
 
@@ -118,23 +81,7 @@ export const gettingPlacesData = (lat, lng) => {
   }
 }
 
-
-// export const gettingFoodImages = (photoReference, place) => {
-//   const url = `/clarifai/predict/${photoReference}`
-//   return function thunk(dispatch) {
-//     axios.get(url)
-//     .then(res => res.data)
-//     .then(data => {
-//       // returns truthy val if food, falsey if not
-//         if (data) {
-//           dispatch(addPlacePhoto({
-//             place_id: place.place_id,
-//             photo_reference: photoReference
-//           }))
-//         }
-//       })
-//   }
-// }
+const isFood = image => image.name === 'food'
 
 export const gettingFoodImages = (photoJson) => {
   const url = `/clarifai/predict/${photoJson}`
@@ -142,9 +89,8 @@ export const gettingFoodImages = (photoJson) => {
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        // returns truthy val if food, falsey if not
-
-        console.log(data, 'hiii what areee yooooou?????')
+        const foodImages = data.filter(photo => photo.data.concepts.find(isFood))
+        if (foodImages.length) dispatch(addPlacePhotos(foodImages))
       })
   }
 }
@@ -158,14 +104,8 @@ const reducer = (state = defaultState, action) => {
       action.places.results = action.places.results.concat(state.places)
       return Object.assign({}, state, { places: action.places.results })
     }
-    // case ADD_PLACE_DETAILS: {
-    //   const newPlacesDetails = state.placesDetails
-    //   const placeDetails = action.place.result
-    //   newPlacesDetails[placeDetails.place_id] = placeDetails.photos
-    //   return Object.assign({}, state, { placesDetails: newPlacesDetails })
-    // }
-    case ADD_PLACE_PHOTO: {
-      return Object.assign({}, state, { foodImages: [...state.foodImages, action.place] })
+    case ADD_PLACE_PHOTOS: {
+      return Object.assign({}, state, { foodImages: [...state.foodImages, ...action.placePhotos] })
     }
     default: return state
   }
@@ -178,4 +118,8 @@ const makeJSON = (arr, placeId) => {
   let jsonify = []
   arr.forEach(photo => jsonify.push({ url: photo.photo_reference }))
   return JSON.stringify(jsonify)
+}
+
+const toPhotoReference = (photoUrl) => {
+  return photoUrl.split('photoreference=')[1]
 }

@@ -19,6 +19,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13",
     "react-swipe-card": "^0.1.4",
+    "react-tinderable": "^0.1.8",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",

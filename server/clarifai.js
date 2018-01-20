@@ -3,59 +3,23 @@ const makeGooglePlacesPhotoURL = require('./places').makeGooglePlacesPhotoURL
 const Clarifai = require('clarifai');
 require('../secrets')
 
-// instantiate a new Clarifai app passing in your API Key
 const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_API_KEY
 })
 
-// // analyze google place photo's top concepts
-// router.get('/predict/:photoreference', (req, res, next) => {
-//   const photoreference = req.params.photoreference
-//   const imgUrl = makeGooglePlacesPhotoURL(photoreference)
-
-//   //returns top concept.
-//   app.models.predict(Clarifai.GENERAL_MODEL, imgUrl).then(
-//     function (response) {
-//       const isFood = (image => image.name === 'food')
-//       const foodConcept = response.outputs[0].data.concepts.find(isFood)
-//       const topConcept = response.outputs[0].data.concepts[0].name
-//       res.send(foodConcept)
-//     },
-//     function (err) {
-//       res.send(err)
-//     }
-//   )
-
-// })
-
 router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   let batchPhotosJSON = JSON.parse(req.params.batchPhotosJSON)
   batchPhotosJSON.map(photo => photo.url = makeGooglePlacesPhotoURL(photo.url))
-  //batchPhotosJSON = JSON.stringify(batchPhotosJSON)
-  // console.log(batchPhotosJSON)
 
-  app.models.predict(Clarifai.GENERAL_MODEL, batchPhotosJSON).then(
-    (response) => {
-      let updatedResponse = response.outputs
-      // console.log(toPhotoReference(updatedResponse[0].input.data.image))
-      // updatedResponse.map(res => {
-      //   console.log(toPhotoReference(res.input.data.image))
-      //   // res.input.data.image = toPhotoReference(res.input.data.image)
-      // })
-      //array that i want to map
-      // console.log(response)
-      res.send(updatedResponse)
+  app.models.predict(Clarifai.GENERAL_MODEL, batchPhotosJSON).then(response => {
+      res.json(response.outputs)
     },
     (err) => {
       console.log(err)
     }
   )
-
 })
 
-function toPhotoReference (photoUrl) {
-  return photoUrl.split('photoreference=')[1]
-}
 
 
 module.exports = router

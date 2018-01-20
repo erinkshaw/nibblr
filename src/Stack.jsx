@@ -3,7 +3,7 @@ import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
 import { connect } from 'react-redux'
 import store from './store'
-
+import Tinderable from 'react-tinderable'
 class Stack extends Component {
   constructor(props) {
     super(props)
@@ -22,7 +22,7 @@ class Stack extends Component {
     const { foodImages, handleSwipe } = this.props
     let places = this.props.places
     if (places) places = places.filter((restaurant) => restaurant.photos)
-
+    console.log(foodImages)
     if (this.state.showCards) {
       return (
         <Cards onEnd={() => { console.log('you\'ve run out!') }
@@ -40,7 +40,9 @@ class Stack extends Component {
                   handleSwipe(image, 'right')
                 }
                 }>
-                <Image photoReference={image.photo_reference} />
+                {/* <Image photoReference={image.photo_reference} />
+              */}
+              <img src={image.input.data.image.url} />
               </Card>
             )
           }
