@@ -10,19 +10,31 @@ class Stack extends Component {
     this.state = {
       showCards: false
     }
+    this.shuffle.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.foodImages.length) this.setState({ showCards: true })
   }
 
+  shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
+  }
+
+
 
   render() {
 
-    const { foodImages, handleSwipe } = this.props
-    let places = this.props.places
-    if (places) places = places.filter((restaurant) => restaurant.photos)
-    console.log(foodImages)
+    const { handleSwipe } = this.props
+    let foodImages = this.shuffle(this.props.foodImages)
     if (this.state.showCards) {
       return (
         <Cards onEnd={() => { console.log('you\'ve run out!') }

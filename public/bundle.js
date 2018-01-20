@@ -29224,6 +29224,7 @@ var Stack = function (_Component) {
     _this.state = {
       showCards: false
     };
+    _this.shuffle.bind(_this);
     return _this;
   }
 
@@ -29233,17 +29234,26 @@ var Stack = function (_Component) {
       if (nextProps.foodImages.length) this.setState({ showCards: true });
     }
   }, {
+    key: 'shuffle',
+    value: function shuffle(array) {
+      var currentIndex = array.length,
+          temporaryValue = void 0,
+          randomIndex = void 0;
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _props = this.props,
-          foodImages = _props.foodImages,
-          handleSwipe = _props.handleSwipe;
+      var handleSwipe = this.props.handleSwipe;
 
-      var places = this.props.places;
-      if (places) places = places.filter(function (restaurant) {
-        return restaurant.photos;
-      });
-      console.log(foodImages);
+      var foodImages = this.shuffle(this.props.foodImages);
       if (this.state.showCards) {
         return _react2.default.createElement(
           _reactSwipeCard2.default,

@@ -111,7 +111,7 @@ h1, h2 {
   margin: -200px 0 0 -200px;
   top: 50%;
   left: 50%;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* border: 1px solid #e5e5e5; */
     border-radius: 400px
 }
@@ -278,5 +278,5 @@ h1, h2 {
 
 .container {
   display: flex;
-  justify-content: space-around
+  justify-content: space-between
 }
