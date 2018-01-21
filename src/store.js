@@ -39,11 +39,11 @@ export const addPlacePhotos = (placePhotos) => {
 }
 
 export const removePlacePhoto = (photoId) => {
-  return { type: ADD_PLACE_PHOTOS, photoId }
+  return { type: REMOVE_PLACE_PHOTO, photoId }
 }
 
 export const addSelection = (selection) => {
-  return { type: ADD_PLACE_PHOTOS, selection }
+  return { type: ADD_SELECTION, selection }
 }
 
 export const gettingPlaceDetails = (placeId) => {
@@ -94,16 +94,14 @@ export const gettingPlacesData = (lat, lng) => {
   }
 }
 
-const isFood = image => image.name === 'food'
-
 export const gettingFoodImages = (photoJson) => {
   const url = `/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        //now that you have object destructuring you can remove it here.
-        const foodImages = data.filter(photo => photo.data.concepts.find(isFood))
+        data = data.map(photo => ({ concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url), place_id: 'placeholder' }))
+        const foodImages = data.filter(photo => photo.concepts.find(isFood))
         if (foodImages.length) dispatch(addPlacePhotos(foodImages))
       })
   }
@@ -121,10 +119,10 @@ const reducer = (state = defaultState, action) => {
       return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
     }
     case REMOVE_PLACE_PHOTO: {
-      return { ...state, foodImages: [...state.foodImages.filter(img => img.id !== action.photoId)] }
+      return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
     }
     case ADD_SELECTION: {
-      return { ...state, selections: [...state.selections, action.selections] }
+      return { ...state, selections: [...state.selections, action.selection] }
     }
     default: return state
   }
@@ -139,6 +137,7 @@ const makeJSON = (arr, placeId) => {
   return JSON.stringify(jsonify)
 }
 
-const toPhotoReference = (photoUrl) => {
-  return photoUrl.split('photoreference=')[1]
-}
+const toPhotoReference = photoUrl => photoUrl.split('photoreference=')[1]
+
+
+const isFood = image => (image.name === 'food' && image.value > .98)

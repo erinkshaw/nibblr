@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
 import { connect } from 'react-redux'
-import store from './store'
+import { addSelection, removePlacePhoto } from './store'
 
 
 class Stack extends Component {
@@ -18,71 +18,72 @@ class Stack extends Component {
     if (nextProps.foodImages.length) this.setState({ showCards: true })
   }
 
-
   render() {
-
-    const { handleSwipe } = this.props
+    const { newSelection, removePhoto } = this.props
     let foodImages = this.shuffle(this.props.foodImages)
     if (this.state.showCards) {
       return (
         <Cards
-        alertRight={<CustomAlertRight />}
-        alertLeft={<CustomAlertLeft />}
-        onEnd={() => { console.log('you\'ve run out!') }
-      } className='master-root'>
-          {foodImages && foodImages.map((image, i) => {
-            return (
-              <Card key={i}
+          alertRight={<CustomAlertRight />}
+          alertLeft={<CustomAlertLeft />}
+          onEnd={() => { console.log('you\'ve run out!') }
+          } className='master-root'>
+          {foodImages && foodImages.map((image, i) => (
+            <Card key={i}
               onSwipeLeft={() => {
-                CustomAlertLeft
-                handleSwipe(image, 'left')
+                removePhoto(image.photo_reference)
               }
-            }
-            onSwipeRight={() => {
-              console.log('swipe right')
-              handleSwipe(image, 'right')
-            }
-          }>
-                {/* <Image photoReference={image.photo_reference} />
-              */}
-              <img src={image.input.data.image.url} />
-              </Card>
-            )
-          }
-        )}
+              }
+              onSwipeRight={() => {
+                newSelection(image)
+              }
+              }>
+              <Image photoReference={image.photo_reference} />
+            </Card>
+          )
+          )}
         </Cards>
       )
     }
-    return (<div></div>)
+      return (<div></div>)
   }
 
   shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
     while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
+      temporaryValue = array[currentIndex]
+      array[currentIndex] = array[randomIndex]
+      array[randomIndex] = temporaryValue
     }
-    return array;
+    return array
   }
 }
 
-const mapStateToProps = function (state) {
-  return {
-    places: state.places,
-    foodImages: state.foodImages
-  }
-}
+const mapStateToProps = (state) => ({
+  places: state.places,
+  foodImages: state.foodImages
+})
 
-export default connect(mapStateToProps)(Stack);
+const mapDispatchToProps = (dispatch) => ({
+  newSelection(photo) {
+    dispatch(addSelection(photo))
+    dispatch(removePlacePhoto(photo.photo_reference))
+  },
+  removePhoto(id) {
+    dispatch(removePlacePhoto(id))
+  }
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Stack);
 
 const CustomAlertLeft = () => (
   <span>
     <img alt="reject pet icon" src="/tomato.svg" className="icon" />
-  </span>);
+  </span>)
 const CustomAlertRight = () => (
   <span>
     <img alt="accept pet icon" src="/broccoli.svg" className="icon" />
-  </span>);
+  </span>)

@@ -4172,11 +4172,11 @@ var addPlacePhotos = exports.addPlacePhotos = function addPlacePhotos(placePhoto
 };
 
 var removePlacePhoto = exports.removePlacePhoto = function removePlacePhoto(photoId) {
-  return { type: ADD_PLACE_PHOTOS, photoId: photoId };
+  return { type: REMOVE_PLACE_PHOTO, photoId: photoId };
 };
 
 var addSelection = exports.addSelection = function addSelection(selection) {
-  return { type: ADD_PLACE_PHOTOS, selection: selection };
+  return { type: ADD_SELECTION, selection: selection };
 };
 
 var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDetails(placeId) {
@@ -4225,19 +4225,17 @@ var gettingPlacesData = exports.gettingPlacesData = function gettingPlacesData(l
   };
 };
 
-var isFood = function isFood(image) {
-  return image.name === 'food';
-};
-
 var gettingFoodImages = exports.gettingFoodImages = function gettingFoodImages(photoJson) {
   var url = '/clarifai/predict/' + photoJson;
   return function thunk(dispatch) {
     _axios2.default.get(url).then(function (res) {
       return res.data;
     }).then(function (data) {
-      //now that you have object destructuring you can remove it here.
+      data = data.map(function (photo) {
+        return { concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url), place_id: 'placeholder' };
+      });
       var foodImages = data.filter(function (photo) {
-        return photo.data.concepts.find(isFood);
+        return photo.concepts.find(isFood);
       });
       if (foodImages.length) dispatch(addPlacePhotos(foodImages));
     });
@@ -4264,12 +4262,12 @@ var reducer = function reducer() {
     case REMOVE_PLACE_PHOTO:
       {
         return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages.filter(function (img) {
-            return img.id !== action.photoId;
+            return img.photo_reference !== action.photoId;
           }))) });
       }
     case ADD_SELECTION:
       {
-        return _extends({}, state, { selections: [].concat(_toConsumableArray(state.selections), [action.selections]) });
+        return _extends({}, state, { selections: [].concat(_toConsumableArray(state.selections), [action.selection]) });
       }
     default:
       return state;
@@ -4289,6 +4287,10 @@ var makeJSON = function makeJSON(arr, placeId) {
 
 var toPhotoReference = function toPhotoReference(photoUrl) {
   return photoUrl.split('photoreference=')[1];
+};
+
+var isFood = function isFood(image) {
+  return image.name === 'food' && image.value > .98;
 };
 
 /***/ }),
@@ -26637,8 +26639,6 @@ var _store2 = _interopRequireDefault(_store);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -26651,13 +26651,7 @@ var App = function (_Component) {
   function App(props) {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = {
-      selections: []
-    };
-    _this.handleSwipe = _this.handleSwipe.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
   }
 
   _createClass(App, [{
@@ -26668,24 +26662,10 @@ var App = function (_Component) {
       });
     }
   }, {
-    key: 'handleSwipe',
-    value: function handleSwipe(food, direction) {
-      if (direction === 'right') {
-        this.setState({ selections: [].concat(_toConsumableArray(this.state.selections), [food]) });
-        // store.dispatch(removePlace())
-        // this.setState({places: this.state.places.results.slice(1)})
-      }
-      // else {
-      //   this.setState({places: this.state.places.results.slice(1)})
-
-      // }
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      console.log(this.state);
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
@@ -26699,7 +26679,7 @@ var App = function (_Component) {
                 return _react2.default.createElement(_Selections2.default, { selections: _this2.state.selections });
               } }),
             _react2.default.createElement(_reactRouter.Route, { path: '/', render: function render() {
-                return _react2.default.createElement(_Main2.default, { handleSwipe: _this2.handleSwipe });
+                return _react2.default.createElement(_Main2.default, null);
               } })
           )
         )
@@ -29219,8 +29199,6 @@ var _reactRedux = __webpack_require__(70);
 
 var _store = __webpack_require__(31);
 
-var _store2 = _interopRequireDefault(_store);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29252,7 +29230,9 @@ var Stack = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var handleSwipe = this.props.handleSwipe;
+      var _props = this.props,
+          newSelection = _props.newSelection,
+          removePhoto = _props.removePhoto;
 
       var foodImages = this.shuffle(this.props.foodImages);
       if (this.state.showCards) {
@@ -29269,14 +29249,12 @@ var Stack = function (_Component) {
               _reactSwipeCard.Card,
               { key: i,
                 onSwipeLeft: function onSwipeLeft() {
-                  CustomAlertLeft;
-                  handleSwipe(image, 'left');
+                  removePhoto(image.photo_reference);
                 },
                 onSwipeRight: function onSwipeRight() {
-                  console.log('swipe right');
-                  handleSwipe(image, 'right');
+                  newSelection(image);
                 } },
-              _react2.default.createElement('img', { src: image.input.data.image.url })
+              _react2.default.createElement(_Image2.default, { photoReference: image.photo_reference })
             );
           })
         );
@@ -29310,7 +29288,19 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps)(Stack);
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    newSelection: function newSelection(photo) {
+      dispatch((0, _store.addSelection)(photo));
+      dispatch((0, _store.removePlacePhoto)(photo.photo_reference));
+    },
+    removePhoto: function removePhoto(id) {
+      dispatch((0, _store.removePlacePhoto)(id));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Stack);
 
 
 var CustomAlertLeft = function CustomAlertLeft() {
