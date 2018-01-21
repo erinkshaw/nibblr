@@ -53,7 +53,7 @@ class Stack extends Component {
         </Cards>
       )
     }
-    return (<div>nope!</div>)
+    return (<div></div>)
   }
 
   shuffle(array) {

@@ -17,7 +17,8 @@ module.exports = {
           exclude: /(node_modules|bower_components)/,
           loader: 'babel-loader',
           options: {
-            presets: ['react', 'es2015'] // if you aren't using 'babel-preset-es2015', then omit the 'es2015'
+            presets: ['react', 'es2015'], // if you aren't using 'babel-preset-es2015', then omit the 'es2015'
+            plugins: ["transform-object-rest-spread"]
           }
         },
          // use the style-loader/css-loader/sass-loader combos for anything matching the .scss extension

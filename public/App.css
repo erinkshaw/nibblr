@@ -191,13 +191,6 @@ h1, h2 {
   /* width: 70%; */
 }
 
-/* .restaurant-img {
-  width: 80%;
-  height: 80%;
-  margin-left: 100px
-} */
-
-
 .font {
   color: black;
   font-family: 'Dosis';
@@ -207,17 +200,8 @@ h1, h2 {
   margin-top: 200px;
   font-size: 60px
 }
-/*
-.padBottom {
-  margin-bottom: 50px
-}
- */
 
-#selections {
-  height: 100px
-}
-
-#selections:hover {
+.shiver:hover {
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -240,6 +224,10 @@ h1, h2 {
   40%, 60% {
     transform: translate3d(4px, 0, 0);
   }
+}
+
+#selections {
+  height: 100px
 }
 
 #aboutMe {

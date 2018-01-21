@@ -4117,6 +4117,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addPlacePhotos = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _redux = __webpack_require__(72);
 
 var _reduxLogger = __webpack_require__(289);
@@ -4137,7 +4139,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var defaultState = {
   places: [],
-  foodImages: []
+  foodImages: [],
+  selections: []
 };
 
 var GET_PLACES = 'GET_PLACES';
@@ -4147,6 +4150,10 @@ var GET_MORE_PLACES = 'GET_MORE_PLACES';
 var ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS';
 
 var ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS';
+
+var REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO';
+
+var ADD_SELECTION = 'ADD_SELECTION';
 
 var addPlaceDetails = exports.addPlaceDetails = function addPlaceDetails(place) {
   return { type: ADD_PLACE_DETAILS, place: place };
@@ -4235,16 +4242,23 @@ var reducer = function reducer() {
   switch (action.type) {
     case GET_PLACES:
       {
-        return Object.assign({}, state, { places: action.places.results });
+        return _extends({}, state, { places: action.places.results });
       }
     case GET_MORE_PLACES:
       {
-        action.places.results = action.places.results.concat(state.places);
-        return Object.assign({}, state, { places: action.places.results });
+        return _extends({}, state, { places: action.places.results.concat(state.places) });
       }
     case ADD_PLACE_PHOTOS:
       {
-        return Object.assign({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
+        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
+      }
+    case REMOVE_PLACE_PHOTO:
+      {
+        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
+      }
+    case ADD_SELECTION:
+      {
+        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
       }
     default:
       return state;
@@ -29139,20 +29153,15 @@ exports.default = function (props) {
 
   return _react2.default.createElement(
     'div',
-    null,
-    _react2.default.createElement(
-      'div',
-      { className: 'container' },
-      _react2.default.createElement('img', { src: '/lemon.svg', id: 'aboutMe' }),
-      _react2.default.createElement('img', { src: '/salad.svg', id: 'getCards' }),
-      _react2.default.createElement('img', { src: '/groceries.svg', id: 'selections' })
-    ),
+    { className: 'container' },
+    _react2.default.createElement('img', { src: '/salad.svg', className: 'shiver', id: 'getCards' }),
     _react2.default.createElement(
       'div',
       { className: 'plate' },
       _react2.default.createElement('img', { src: '/cutlery.svg' }),
       _react2.default.createElement(_Stack2.default, { handleSwipe: props.handleSwipe })
-    )
+    ),
+    _react2.default.createElement('img', { src: '/groceries.svg', className: 'shiver', id: 'selections' })
   );
 };
 
@@ -29261,11 +29270,7 @@ var Stack = function (_Component) {
           })
         );
       }
-      return _react2.default.createElement(
-        'div',
-        null,
-        'nope!'
-      );
+      return _react2.default.createElement('div', null);
     }
   }, {
     key: 'shuffle',

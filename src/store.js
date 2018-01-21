@@ -6,7 +6,8 @@ import axios from 'axios'
 
 const defaultState = {
   places: [],
-  foodImages: []
+  foodImages: [],
+  selections: []
 }
 
 const GET_PLACES = 'GET_PLACES'
@@ -16,6 +17,10 @@ const GET_MORE_PLACES = 'GET_MORE_PLACES'
 const ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS'
 
 const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
+
+const REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO'
+
+const ADD_SELECTION = 'ADD_SELECTION'
 
 export const addPlaceDetails = (place) => {
   return { type: ADD_PLACE_DETAILS, place }
@@ -98,14 +103,19 @@ export const gettingFoodImages = (photoJson) => {
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_PLACES: {
-      return Object.assign({}, state, { places: action.places.results })
+      return { ...state, places: action.places.results }
     }
     case GET_MORE_PLACES: {
-      action.places.results = action.places.results.concat(state.places)
-      return Object.assign({}, state, { places: action.places.results })
+      return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
-      return Object.assign({}, state, { foodImages: [...state.foodImages, ...action.placePhotos] })
+      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+    }
+    case REMOVE_PLACE_PHOTO: {
+      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+    }
+    case ADD_SELECTION: {
+      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
     }
     default: return state
   }
