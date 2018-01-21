@@ -38,6 +38,14 @@ export const addPlacePhotos = (placePhotos) => {
   return { type: ADD_PLACE_PHOTOS, placePhotos }
 }
 
+export const removePlacePhoto = (photoId) => {
+  return { type: ADD_PLACE_PHOTOS, photoId }
+}
+
+export const addSelection = (selection) => {
+  return { type: ADD_PLACE_PHOTOS, selection }
+}
+
 export const gettingPlaceDetails = (placeId) => {
   const url = `/places/${placeId}`
   return function thunk(dispatch) {
@@ -94,6 +102,7 @@ export const gettingFoodImages = (photoJson) => {
     axios.get(url)
       .then(res => res.data)
       .then(data => {
+        //now that you have object destructuring you can remove it here.
         const foodImages = data.filter(photo => photo.data.concepts.find(isFood))
         if (foodImages.length) dispatch(addPlacePhotos(foodImages))
       })
@@ -112,10 +121,10 @@ const reducer = (state = defaultState, action) => {
       return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
     }
     case REMOVE_PLACE_PHOTO: {
-      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+      return { ...state, foodImages: [...state.foodImages.filter(img => img.id !== action.photoId)] }
     }
     case ADD_SELECTION: {
-      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+      return { ...state, selections: [...state.selections, action.selections] }
     }
     default: return state
   }

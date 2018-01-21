@@ -4115,7 +4115,7 @@ var createPath = function createPath(location) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addPlacePhotos = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
+exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addSelection = exports.removePlacePhoto = exports.addPlacePhotos = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -4169,6 +4169,14 @@ var getMorePlacesData = exports.getMorePlacesData = function getMorePlacesData(p
 
 var addPlacePhotos = exports.addPlacePhotos = function addPlacePhotos(placePhotos) {
   return { type: ADD_PLACE_PHOTOS, placePhotos: placePhotos };
+};
+
+var removePlacePhoto = exports.removePlacePhoto = function removePlacePhoto(photoId) {
+  return { type: ADD_PLACE_PHOTOS, photoId: photoId };
+};
+
+var addSelection = exports.addSelection = function addSelection(selection) {
+  return { type: ADD_PLACE_PHOTOS, selection: selection };
 };
 
 var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDetails(placeId) {
@@ -4227,6 +4235,7 @@ var gettingFoodImages = exports.gettingFoodImages = function gettingFoodImages(p
     _axios2.default.get(url).then(function (res) {
       return res.data;
     }).then(function (data) {
+      //now that you have object destructuring you can remove it here.
       var foodImages = data.filter(function (photo) {
         return photo.data.concepts.find(isFood);
       });
@@ -4254,11 +4263,13 @@ var reducer = function reducer() {
       }
     case REMOVE_PLACE_PHOTO:
       {
-        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
+        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages.filter(function (img) {
+            return img.id !== action.photoId;
+          }))) });
       }
     case ADD_SELECTION:
       {
-        return _extends({}, state, { foodImages: [].concat(_toConsumableArray(state.foodImages), _toConsumableArray(action.placePhotos)) });
+        return _extends({}, state, { selections: [].concat(_toConsumableArray(state.selections), [action.selections]) });
       }
     default:
       return state;
