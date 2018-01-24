@@ -19,7 +19,7 @@ class App extends Component {
       <Router>
         <div>
           <Switch>
-            <Route path="/selections" render = {() => <Selections selections={this.state.selections} />} />
+            <Route path="/selections" render = {() => <Selections />} />
             <Route path="/" render = {() => <Main />} />
           </Switch>
         </div>

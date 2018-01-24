@@ -15,9 +15,9 @@ app.use(bodyParser.json())
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
-app.use('/places', require('./places'))
+app.use('/api/places', require('./api/places'))
 
-app.use('/clarifai', require('./clarifai'))
+app.use('/api/clarifai', require('./api/clarifai'))
 
 app.get('/*', (_, res) => res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html')))
 

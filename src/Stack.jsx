@@ -5,23 +5,9 @@ import { connect } from 'react-redux'
 import { addSelection, removePlacePhoto } from './store'
 
 
-class Stack extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      showCards: false
-    }
-    this.shuffle.bind(this)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.foodImages.length) this.setState({ showCards: true })
-  }
-
-  render() {
-    const { newSelection, removePhoto } = this.props
-    let foodImages = this.shuffle(this.props.foodImages)
-    if (this.state.showCards) {
+function Stack (props) {
+    const { newSelection, removePhoto, showCards, foodImages } = props
+    if (showCards) {
       return (
         <Cards
           alertRight={<CustomAlertRight />}
@@ -45,20 +31,7 @@ class Stack extends Component {
         </Cards>
       )
     }
-      return (<div></div>)
-  }
-
-  shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex)
-      currentIndex -= 1
-      temporaryValue = array[currentIndex]
-      array[currentIndex] = array[randomIndex]
-      array[randomIndex] = temporaryValue
-    }
-    return array
-  }
+    return (<div></div>)
 }
 
 const mapStateToProps = (state) => ({

@@ -47,7 +47,7 @@ export const addSelection = (selection) => {
 }
 
 export const gettingPlaceDetails = (placeId) => {
-  const url = `/places/${placeId}`
+  const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
     axios.get(url)
       .then(res => res.data)
@@ -60,7 +60,7 @@ export const gettingPlaceDetails = (placeId) => {
 }
 
 export const gettingPlacesData = (lat, lng) => {
-  let url = `/places/lat/${lat}/lng/${lng}`
+  let url = `/api/places/lat/${lat}/lng/${lng}`
   let places
   lat = lat || '40.6845305'
   lng = lng || '-73.9412525'
@@ -70,7 +70,7 @@ export const gettingPlacesData = (lat, lng) => {
       .then(data => {
         let token = data.next_page_token
         dispatch(getPlacesData(data))
-        url = `/places/lat/${lat}/lng/${lng}?token=${token}`
+        url = `/api/places/lat/${lat}/lng/${lng}?token=${token}`
         return axios.get(url)
       })
       .then(res => {
@@ -79,7 +79,7 @@ export const gettingPlacesData = (lat, lng) => {
       .then(data => {
         let token = data.next_page_token
         dispatch(getMorePlacesData(data))
-        url = `/places/lat/${lat}/lng/${lng}?token=${token}`
+        url = `/api/places/lat/${lat}/lng/${lng}?token=${token}`
         return axios.get(url)
       })
       .then(res => {
@@ -95,7 +95,7 @@ export const gettingPlacesData = (lat, lng) => {
 }
 
 export const gettingFoodImages = (photoJson) => {
-  const url = `/clarifai/predict/${photoJson}`
+  const url = `/api/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
     axios.get(url)
       .then(res => res.data)
@@ -116,7 +116,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
-      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+      return { ...state, foodImages: shuffle([...state.foodImages, ...action.placePhotos]) }
     }
     case REMOVE_PLACE_PHOTO: {
       return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
@@ -141,3 +141,15 @@ const toPhotoReference = photoUrl => photoUrl.split('photoreference=')[1]
 
 
 const isFood = image => (image.name === 'food' && image.value > .98)
+
+const shuffle = (array) => {
+  let currentIndex = array.length, temporaryValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex -= 1
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+  }
+  return array
+}

@@ -9,7 +9,7 @@ export default class Image extends Component {
   }
 
   componentDidMount() {
-    fetch(`/places/img/${this.props.photoReference}`)
+    fetch(`/api/places/img/${this.props.photoReference}`)
       .then( res => res.json())
       .then(url => this.setState({ url }))
   }

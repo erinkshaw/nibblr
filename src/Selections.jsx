@@ -12,7 +12,7 @@ class Selections extends Component {
       <div className="padBottom">
         <NavHome />
         {!selections.length ? <h1 className="middle">You haven't swiped anything yet!</h1> :
-        selections.map((image, i) => <Restaurant key={i} place={places[image.place_id]} photoReference={image.photo_reference}/>)}
+        selections.map((image, i) => <Restaurant /* key={i} place={places[image.place_id]}*/ photoReference={image.photo_reference}/>)}
       </div>
     );
   }
@@ -20,7 +20,8 @@ class Selections extends Component {
 
 const mapStateToProps = function (state) {
   return {
-    places: state.places
+    places: state.places,
+    selections: state.selections
   }
 }
 
