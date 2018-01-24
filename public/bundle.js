@@ -4115,7 +4115,7 @@ var createPath = function createPath(location) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addSelection = exports.removePlacePhoto = exports.addPlacePhotos = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
+exports.gettingFoodImages = exports.gettingPlacesData = exports.gettingPlaceDetails = exports.addPlaceAssociation = exports.addSelection = exports.removePlacePhoto = exports.addPlacePhotos = exports.getMorePlacesData = exports.getPlacesData = exports.addPlaceDetails = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -4139,6 +4139,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var defaultState = {
   places: [],
+  placesMap: {},
   foodImages: [],
   selections: []
 };
@@ -4154,6 +4155,8 @@ var ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS';
 var REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO';
 
 var ADD_SELECTION = 'ADD_SELECTION';
+
+var ADD_PLACE_ASSOCIATION = 'ADD_PLACE_ASSOCIATION';
 
 var addPlaceDetails = exports.addPlaceDetails = function addPlaceDetails(place) {
   return { type: ADD_PLACE_DETAILS, place: place };
@@ -4179,6 +4182,10 @@ var addSelection = exports.addSelection = function addSelection(selection) {
   return { type: ADD_SELECTION, selection: selection };
 };
 
+var addPlaceAssociation = exports.addPlaceAssociation = function addPlaceAssociation(placesMap) {
+  return { type: ADD_PLACE_ASSOCIATION, placesMap: placesMap };
+};
+
 var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDetails(placeId) {
   var url = '/api/places/' + placeId;
   return function thunk(dispatch) {
@@ -4186,7 +4193,10 @@ var gettingPlaceDetails = exports.gettingPlaceDetails = function gettingPlaceDet
       return res.data;
     }).then(function (data) {
       if (data.result.photos) {
-        dispatch(gettingFoodImages(makeJSON(data.result.photos, data.result.place_id)));
+        var clarifaiRequest = makeJSON(data.result.photos, data.result.place_id);
+        console.log(clarifaiRequest);
+        dispatch(gettingFoodImages(clarifaiRequest.json));
+        dispatch(addPlaceAssociation(clarifaiRequest.placesMap));
       }
     });
   };
@@ -4232,7 +4242,7 @@ var gettingFoodImages = exports.gettingFoodImages = function gettingFoodImages(p
       return res.data;
     }).then(function (data) {
       data = data.map(function (photo) {
-        return { concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url), place_id: 'placeholder' };
+        return { concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url) };
       });
       var foodImages = data.filter(function (photo) {
         return photo.concepts.find(isFood);
@@ -4269,6 +4279,11 @@ var reducer = function reducer() {
       {
         return _extends({}, state, { selections: [].concat(_toConsumableArray(state.selections), [action.selection]) });
       }
+    case ADD_PLACE_ASSOCIATION:
+      {
+        var newPlacesMap = action.placesMap;
+        return _extends({}, state, { placesMap: _extends({}, state.placesMap, newPlacesMap) });
+      }
     default:
       return state;
   }
@@ -4279,10 +4294,13 @@ exports.default = (0, _redux.createStore)(reducer, (0, _reduxDevtoolsExtension.c
 
 var makeJSON = function makeJSON(arr, placeId) {
   var jsonify = [];
+  var placesMap = {};
   arr.forEach(function (photo) {
-    return jsonify.push({ url: photo.photo_reference });
+    jsonify.push({ url: photo.photo_reference });
+    placesMap[photo.photo_reference] = placeId;
   });
-  return JSON.stringify(jsonify);
+  console.log(placesMap);
+  return { json: JSON.stringify(jsonify), placesMap: placesMap };
 };
 
 var toPhotoReference = function toPhotoReference(photoUrl) {
@@ -29199,7 +29217,7 @@ var Main = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'container' },
-        _react2.default.createElement('img', { src: '/salad.svg',
+        _react2.default.createElement('img', { src: '/img/salad.svg',
           className: 'shiver',
           id: 'getCards',
           onClick: function onClick() {
@@ -29208,10 +29226,10 @@ var Main = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'plate' },
-          _react2.default.createElement('img', { src: '/cutlery.svg' }),
+          _react2.default.createElement('img', { src: '/img/cutlery.svg' }),
           _react2.default.createElement(_Stack2.default, { showCards: this.state.showCards })
         ),
-        _react2.default.createElement('img', { src: '/groceries.svg',
+        _react2.default.createElement('img', { src: '/img/groceries.svg',
           className: 'shiver',
           id: 'selections',
           onClick: function onClick() {

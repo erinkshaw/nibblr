@@ -6,6 +6,7 @@ import axios from 'axios'
 
 const defaultState = {
   places: [],
+  placesMap: {},
   foodImages: [],
   selections: []
 }
@@ -21,6 +22,8 @@ const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
 const REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO'
 
 const ADD_SELECTION = 'ADD_SELECTION'
+
+const ADD_PLACE_ASSOCIATION = 'ADD_PLACE_ASSOCIATION'
 
 export const addPlaceDetails = (place) => {
   return { type: ADD_PLACE_DETAILS, place }
@@ -46,6 +49,10 @@ export const addSelection = (selection) => {
   return { type: ADD_SELECTION, selection }
 }
 
+export const addPlaceAssociation = (placesMap) => {
+  return { type: ADD_PLACE_ASSOCIATION, placesMap }
+}
+
 export const gettingPlaceDetails = (placeId) => {
   const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
@@ -53,7 +60,10 @@ export const gettingPlaceDetails = (placeId) => {
       .then(res => res.data)
       .then(data => {
         if (data.result.photos) {
-          dispatch(gettingFoodImages(makeJSON(data.result.photos, data.result.place_id)))
+          const clarifaiRequest = makeJSON(data.result.photos, data.result.place_id)
+          console.log(clarifaiRequest)
+          dispatch(gettingFoodImages(clarifaiRequest.json))
+          dispatch(addPlaceAssociation(clarifaiRequest.placesMap))
         }
       })
   }
@@ -100,7 +110,7 @@ export const gettingFoodImages = (photoJson) => {
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        data = data.map(photo => ({ concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url), place_id: 'placeholder' }))
+        data = data.map(photo => ({ concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url) }))
         const foodImages = data.filter(photo => photo.concepts.find(isFood))
         if (foodImages.length) dispatch(addPlacePhotos(foodImages))
       })
@@ -124,17 +134,25 @@ const reducer = (state = defaultState, action) => {
     case ADD_SELECTION: {
       return { ...state, selections: [...state.selections, action.selection] }
     }
+    case ADD_PLACE_ASSOCIATION: {
+      const newPlacesMap = action.placesMap
+      return { ...state, placesMap: { ...state.placesMap, ...newPlacesMap } }
+    }
     default: return state
   }
 }
 
 export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
 
-
 const makeJSON = (arr, placeId) => {
   let jsonify = []
-  arr.forEach(photo => jsonify.push({ url: photo.photo_reference }))
-  return JSON.stringify(jsonify)
+  const placesMap = {}
+  arr.forEach(photo => {
+    jsonify.push({ url: photo.photo_reference })
+    placesMap[photo.photo_reference] = placeId
+  })
+  console.log(placesMap)
+  return ({json: JSON.stringify(jsonify), placesMap})
 }
 
 const toPhotoReference = photoUrl => photoUrl.split('photoreference=')[1]

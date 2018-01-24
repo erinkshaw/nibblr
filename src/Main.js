@@ -15,15 +15,15 @@ class Main extends Component {
   render() {
     return (
       <div className='container'>
-        <img src="/salad.svg"
+        <img src="/img/salad.svg"
           className="shiver"
           id="getCards"
           onClick={() => this.setState({ showCards: true })} />
         <div className="plate">
-          <img src="/cutlery.svg" />
+          <img src="/img/cutlery.svg" />
           <Stack showCards={this.state.showCards} />
         </div>
-        <img src="/groceries.svg"
+        <img src="/img/groceries.svg"
           className="shiver"
           id="selections"
           onClick={() => this.props.history.push('/selections')} />
