@@ -15,7 +15,6 @@ export default class Restaurant extends Component {
             <div className="col-md-4">
               <Image photoReference={this.props.photoReference} />
             </div>
-{/*
             <div className="col-md-4 restaurant"><div><span style={{ fontSize: 40 }}>{this.props.place.name}</span></div><div>{this.props.place.vicinity}</div>
               {this.props.place.opening_hours ? (this.props.place.opening_hours.open_now ?
                 <div>It's open now!</div> :
@@ -24,7 +23,7 @@ export default class Restaurant extends Component {
             </div>
             <div className="col-md-4">
               <Map placeId={this.props.place.place_id}/>
-            </div> */}
+            </div>
           </div>
           : <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>Go back and swipe!</NavLink>
         }

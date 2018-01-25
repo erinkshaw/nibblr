@@ -31,7 +31,7 @@ function Stack (props) {
         </Cards>
       )
     }
-    return (<div className="master-root"><img src="/img/pizza.svg" /></div>)
+    return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
 }
 
 const mapStateToProps = (state) => ({

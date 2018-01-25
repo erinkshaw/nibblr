@@ -8576,7 +8576,8 @@ var Selections = function (_Component) {
     value: function render() {
       var _props = this.props,
           selections = _props.selections,
-          places = _props.places;
+          places = _props.places,
+          placesMap = _props.placesMap;
 
       return _react2.default.createElement(
         'div',
@@ -8587,7 +8588,11 @@ var Selections = function (_Component) {
           { className: 'middle' },
           'You haven\'t swiped anything yet!'
         ) : selections.map(function (image, i) {
-          return _react2.default.createElement(_Restaurant2.default /* key={i} place={places[image.place_id]}*/, { photoReference: image.photo_reference });
+          var placeId = placesMap[image.photo_reference];
+          var place = places.find(function (place) {
+            return place.place_id === placeId;
+          });
+          return _react2.default.createElement(_Restaurant2.default, { key: i, place: place, photoReference: image.photo_reference });
         })
       );
     }
@@ -8599,7 +8604,8 @@ var Selections = function (_Component) {
 var mapStateToProps = function mapStateToProps(state) {
   return {
     places: state.places,
-    selections: state.selections
+    selections: state.selections,
+    placesMap: state.placesMap
   };
 };
 
@@ -29305,7 +29311,7 @@ function Stack(props) {
   }
   return _react2.default.createElement(
     'div',
-    { className: 'master-root' },
+    { className: 'master-root', id: 'load' },
     _react2.default.createElement('img', { src: '/img/pizza.svg' })
   );
 }
@@ -34664,6 +34670,38 @@ var Restaurant = function (_Component) {
             'div',
             { className: 'col-md-4' },
             _react2.default.createElement(_Image2.default, { photoReference: this.props.photoReference })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4 restaurant' },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                'span',
+                { style: { fontSize: 40 } },
+                this.props.place.name
+              )
+            ),
+            _react2.default.createElement(
+              'div',
+              null,
+              this.props.place.vicinity
+            ),
+            this.props.place.opening_hours ? this.props.place.opening_hours.open_now ? _react2.default.createElement(
+              'div',
+              null,
+              'It\'s open now!'
+            ) : _react2.default.createElement(
+              'div',
+              null,
+              'It\'s closed for now :('
+            ) : null
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement(_Map2.default, { placeId: this.props.place.place_id })
           )
         ) : _react2.default.createElement(
           NavLink,
