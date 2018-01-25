@@ -31,7 +31,7 @@ function Stack (props) {
         </Cards>
       )
     }
-    return (<div></div>)
+    return (<div className="master-root"><img src="/img/pizza.svg" /></div>)
 }
 
 const mapStateToProps = (state) => ({
@@ -54,9 +54,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Stack);
 
 const CustomAlertLeft = () => (
   <span>
-    <img alt="reject pet icon" src="/tomato.svg" className="icon" />
+    <img alt="reject pet icon" src="/img/tomato.svg" className="icon" />
   </span>)
 const CustomAlertRight = () => (
   <span>
-    <img alt="accept pet icon" src="/broccoli.svg" className="icon" />
+    <img alt="accept pet icon" src="/img/broccoli.svg" className="icon" />
   </span>)

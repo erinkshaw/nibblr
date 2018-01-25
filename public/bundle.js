@@ -29303,7 +29303,11 @@ function Stack(props) {
       })
     );
   }
-  return _react2.default.createElement('div', null);
+  return _react2.default.createElement(
+    'div',
+    { className: 'master-root' },
+    _react2.default.createElement('img', { src: '/img/pizza.svg' })
+  );
 }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -29332,14 +29336,14 @@ var CustomAlertLeft = function CustomAlertLeft() {
   return _react2.default.createElement(
     'span',
     null,
-    _react2.default.createElement('img', { alt: 'reject pet icon', src: '/tomato.svg', className: 'icon' })
+    _react2.default.createElement('img', { alt: 'reject pet icon', src: '/img/tomato.svg', className: 'icon' })
   );
 };
 var CustomAlertRight = function CustomAlertRight() {
   return _react2.default.createElement(
     'span',
     null,
-    _react2.default.createElement('img', { alt: 'accept pet icon', src: '/broccoli.svg', className: 'icon' })
+    _react2.default.createElement('img', { alt: 'accept pet icon', src: '/img/broccoli.svg', className: 'icon' })
   );
 };
 
