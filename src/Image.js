@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Avatar from 'material-ui/Avatar'
 
 export default class Image extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class Image extends Component {
 
   render() {
     return (
-      this.state.url ? <img src={this.state.url} /> : null
+      this.state.url ? <img src={this.state.url}/> : null
     )
   }
 }

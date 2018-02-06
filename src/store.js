@@ -61,7 +61,6 @@ export const gettingPlaceDetails = (placeId) => {
       .then(data => {
         if (data.result.photos) {
           const clarifaiRequest = makeJSON(data.result.photos, data.result.place_id)
-          console.log(clarifaiRequest)
           dispatch(gettingFoodImages(clarifaiRequest.json))
           dispatch(addPlaceAssociation(clarifaiRequest.placesMap))
         }
@@ -151,8 +150,7 @@ const makeJSON = (arr, placeId) => {
     jsonify.push({ url: photo.photo_reference })
     placesMap[photo.photo_reference] = placeId
   })
-  console.log(placesMap)
-  return ({json: JSON.stringify(jsonify), placesMap})
+  return ({ json: JSON.stringify(jsonify), placesMap })
 }
 
 const toPhotoReference = photoUrl => photoUrl.split('photoreference=')[1]

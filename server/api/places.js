@@ -4,8 +4,7 @@ require('../../secrets')
 
 // get nearby restaurants
 router.get('/lat/:lat/lng/:lng', (req, res, next) => {
-
-  let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`
+  let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=1000&types=restaurant&key=${process.env.GOOGLE_API_KEY}`
 
   //if there is a query that means it's the next page token
   placesUrl = req.query.token ? `${placesUrl}&pagetoken=${req.query.token}` : placesUrl
@@ -56,7 +55,7 @@ router.get('/map/:placeId', (req, res, next) => {
 
 router.makeGooglePlacesPhotoURL = (photoReference) => {
   var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-  var maxHeight = 200;
+  var maxHeight = 500;
   var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
   return fullURL;
 }

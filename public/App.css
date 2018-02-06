@@ -16,7 +16,7 @@ body {
 }
 
 img {
-  border-radius: 25px
+  border-radius: 50%
 }
 
 /* make the plate */
@@ -122,7 +122,7 @@ h1, h2 {
   left: 50%;
   /* overflow: hidden; */
   /* border: 1px solid #e5e5e5; */
-    border-radius: 400px
+    /* border-radius: 400px */
 }
 
 .card {
@@ -251,4 +251,15 @@ h1, h2 {
 .container {
   display: flex;
   justify-content: space-between
+}
+
+.container {
+  display: flex;
+  justify-content: center
+}
+
+#chatbox {
+  background-color: white;
+  border-radius: 20px;
+  width: 70%;
 }

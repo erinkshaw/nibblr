@@ -11,6 +11,7 @@
     "getstorybook": "^1.7.0",
     "google-maps-react": "^1.1.0",
     "google-places-web": "^0.0.7",
+    "material-ui": "^0.20.0",
     "morgan": "^1.8.2",
     "path": "^0.12.7",
     "react": "^15.6.1",

@@ -54,9 +54,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(Stack);
 
 const CustomAlertLeft = () => (
   <span>
-    <img alt="reject pet icon" src="/img/tomato.svg" className="icon" />
+    <img src="/img/tomato.svg" className="icon" />
   </span>)
 const CustomAlertRight = () => (
   <span>
-    <img alt="accept pet icon" src="/img/broccoli.svg" className="icon" />
+    <img src="/img/broccoli.svg" className="icon" />
   </span>)
