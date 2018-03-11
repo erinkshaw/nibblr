@@ -125,7 +125,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
-      return { ...state, foodImages: shuffle([...state.foodImages, ...action.placePhotos]) }
+      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle) }
     }
     case REMOVE_PLACE_PHOTO: {
       return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
@@ -155,17 +155,6 @@ const makeJSON = (arr, placeId) => {
 
 const toPhotoReference = photoUrl => photoUrl.split('photoreference=')[1]
 
-
 const isFood = image => (image.name === 'food' && image.value > .98)
 
-const shuffle = (array) => {
-  let currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex)
-    currentIndex -= 1
-    temporaryValue = array[currentIndex]
-    array[currentIndex] = array[randomIndex]
-    array[randomIndex] = temporaryValue
-  }
-  return array
-}
+const shuffle = () => .5 - Math.random()
