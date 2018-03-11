@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import Avatar from 'material-ui/Avatar'
 
 export default class Image extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // url: ''
+      url: ''
     }
   }
 

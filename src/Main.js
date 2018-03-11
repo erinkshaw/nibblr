@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import Stack from './Stack'
-import Navbar from './Navbar'
-
 
 class Main extends Component {
   constructor(props) {

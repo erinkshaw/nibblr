@@ -12,7 +12,7 @@ function Stack (props) {
         <Cards
           alertRight={<CustomAlertRight />}
           alertLeft={<CustomAlertLeft />}
-          onEnd={() => { console.log('you\'ve run out!') }
+          onEnd={() => { alert('you\'ve run out!') }
           } className='master-root'>
           {foodImages && foodImages.map((image, i) => (
             <Card key={i}
