@@ -24,10 +24,10 @@ export default class Restaurant extends Component {
       return (
             <ListItem
               leftAvatar={<Avatar src={this.state.url} />}
-              primaryText="Brunch this weekend?"
+              primaryText={`${this.props.place.name}`}
               secondaryText={
                 <p>
-                  <span style={{ color: darkBlack }}>Brendan Lim</span> --
+                  <span style={{ color: darkBlack }}>{`${this.props.place.name}`}</span> --
               I&apos;ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?
             </p>
               }

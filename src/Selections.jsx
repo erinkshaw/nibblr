@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Restaurant from './Restaurant'
-import NavHome from './NavHome'
 import { connect } from 'react-redux'
 import store from './store'
 import { List } from 'material-ui/List';
@@ -14,7 +13,6 @@ class Selections extends Component {
     const { selections, places, placesMap } = this.props
     return (
       <div>
-        <NavHome />
         <div className="container">
           <div id="chatbox">
             {!selections.length

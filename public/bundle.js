@@ -35963,10 +35963,6 @@ var _Restaurant = __webpack_require__(482);
 
 var _Restaurant2 = _interopRequireDefault(_Restaurant);
 
-var _NavHome = __webpack_require__(522);
-
-var _NavHome2 = _interopRequireDefault(_NavHome);
-
 var _reactRedux = __webpack_require__(264);
 
 var _store = __webpack_require__(291);
@@ -36011,7 +36007,6 @@ var Selections = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_NavHome2.default, null),
         _react2.default.createElement(
           'div',
           { className: 'container' },
@@ -44102,14 +44097,14 @@ var Restaurant = function (_Component) {
       if (this.state.url) {
         return _react2.default.createElement(_List.ListItem, {
           leftAvatar: _react2.default.createElement(_Avatar2.default, { src: this.state.url }),
-          primaryText: 'Brunch this weekend?',
+          primaryText: '' + this.props.place.name,
           secondaryText: _react2.default.createElement(
             'p',
             null,
             _react2.default.createElement(
               'span',
               { style: { color: _colors.darkBlack } },
-              'Brendan Lim'
+              '' + this.props.place.name
             ),
             ' -- I\'ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?'
           ),
@@ -48905,58 +48900,7 @@ exports.default = Avatar;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 522 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(40);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouterDom = __webpack_require__(416);
-
-var _reactRouter = __webpack_require__(418);
-
-var _Selections = __webpack_require__(425);
-
-var _Selections2 = _interopRequireDefault(_Selections);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function NavHome() {
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      _reactRouterDom.NavLink,
-      { activeClassName: 'active', to: '/', style: { textDecoration: 'none' } },
-      _react2.default.createElement(
-        'nav',
-        { className: 'navbar navbar-default' },
-        _react2.default.createElement(
-          'button',
-          { type: 'button', className: 'btn btn-outline-danger', style: { fontSize: '50px' } },
-          _react2.default.createElement(
-            'span',
-            { className: 'font' },
-            'Go back and swipe some more!'
-          )
-        )
-      )
-    )
-  );
-}
-
-exports.default = NavHome;
-
-/***/ }),
+/* 522 */,
 /* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
