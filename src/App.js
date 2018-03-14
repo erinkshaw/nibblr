@@ -8,6 +8,10 @@ import store, { gettingPlacesData } from './store'
 class App extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      showCards: false
+    }
+    this.removePizza = this.removePizza.bind(this)
   }
 
   componentDidMount () {
@@ -15,17 +19,19 @@ class App extends Component {
   }
 
   render() {
+    const { showCards } = this.state
     return (
       <Router>
         <div>
           <Switch>
-            <Route path="/selections" render = {() => <Selections />} />
-            <Route path="/" render = {() => <Main />} />
+            <Route path="/selections" render = {() => <Selections  />} />
+            <Route path="/" render = {() => <Main showCards={showCards} removePizza={this.removePizza}/>} />
           </Switch>
         </div>
       </Router>
     );
   }
+  removePizza() { this.setState({showCards: true}) }
 }
 
 export default App;

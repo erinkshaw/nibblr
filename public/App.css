@@ -19,26 +19,11 @@ body {
   width: 100%;
 }
 
-.plate::before {
-  content: ' ';
-  /* display: block; */
-  position: absolute;
-}
-
 /* place nibblr logo */
 @font-face {
     font-family: NoodleShade;
     src: url("./font/nooshade.ttf");
 }
-
-/* .plate::after {
-    content: "Nibblr.";
-    font-family: NoodleShade;
-    font-size: 90px;
-    color: rgba(0,0,0,.75);
-
-    position: absolute;
-} */
 
 #logo {
   font-family: NoodleShade;
@@ -59,14 +44,14 @@ body {
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-html {
+/* html {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
+} */
 
 .card img {
   position: absolute;
@@ -79,29 +64,17 @@ h1, h2 {
   font-weight: 500;
 }
 
-
 .master-root {
-  /* margin: 20px auto;
-  position: relative;
-  min-height: 300px;
-  max-height: 100px;
-  width: 300px; */
   position: absolute;
   height: 400px;
   width: 400px;
   margin: -200px 0 0 -200px;
   top: 50%;
   left: 50%;
-  /* overflow: hidden; */
-  /* border: 1px solid #e5e5e5; */
-    /* border-radius: 400px */
 }
 
 .card {
-  /* background-color: white; */
-  /* background-size: cover; */
   position: absolute;
-  /* opacity: 0; */
   height: 370px;
   width: 370px;
   margin: 0 auto;
@@ -139,7 +112,8 @@ h1, h2 {
   margin: 15px;
   padding: 8px 5px 5px 5px;
   top: 0;
-  border-radius: 100%; }
+  border-radius: 100%;
+}
 
 .icon {
   height: 80px;
@@ -147,12 +121,10 @@ h1, h2 {
 
 .alert-right {
   right: 2vw;
-  /* background: red;  */
 }
 
 .alert-left {
   left: 2vw;
-  /* background: black;  */
 }
 
 .restaurant {
@@ -168,9 +140,6 @@ h1, h2 {
   /* margin: 50px 0 0 50px; */
   font-family: 'Dosis';
   margin: 50px 0 50px 0
-
-
-  /* width: 70%; */
 }
 
 .font {
