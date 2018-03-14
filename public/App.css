@@ -1,10 +1,3 @@
-html,
-body,
-ul,
-li {
-    margin: 0; padding: 0;
-
-}
 
 /* make tablecloth background */
 body {
@@ -12,58 +5,47 @@ body {
     background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
     linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
     background-size: 80px 80px;
-    font-family: 'Dosis'
-}
-
-img {
-  border-radius: 50%
+    margin-top: 1em;
 }
 
 /* make the plate */
 .plate {
-    background-position: 50% 0%;
     width: 650px;
     height: 650px;
-    margin: 30px auto 0px;
-
-    /* Plate Styling */
-    position: relative;
-    box-sizing: border-box;
-    padding: 33px (33px + 20);
-    /* border-radius: 400px */
+    margin: auto;
 }
-  .plate::before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    top: 110px;
-    right: 110px;
-    bottom: 110px;
-    left: 110px;
-    /* border-radius: 400px; */
 
-  }
+.plate > img {
+  width: 100%;
+}
+
+.plate::before {
+  content: ' ';
+  /* display: block; */
+  position: absolute;
+}
 
 /* place nibblr logo */
-
 @font-face {
     font-family: NoodleShade;
     src: url("./font/nooshade.ttf");
 }
 
-@font-face {
-  font-family: NoodleScript;
-  src: url("./font/NoodleScript.ttf");
-}
-
-.plate::after {
+/* .plate::after {
     content: "Nibblr.";
     font-family: NoodleShade;
-    position: absolute;
-    top: 10px;
-    left: 200px;
     font-size: 90px;
     color: rgba(0,0,0,.75);
+
+    position: absolute;
+} */
+
+#logo {
+  font-family: NoodleShade;
+  font-size: 90px;
+  color: rgba(0,0,0,.75);
+  margin-left: 30%;
+  position: absolute;
 }
 
 #load > img {
@@ -86,21 +68,11 @@ html {
   user-select: none;
 }
 
-body {
-  margin: 0 auto;
-  padding: 0;
-  font-family: 'Dosis';
-  text-align: center;
-}
-
 .card img {
+  position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 400px
-}
-
-li {
-  list-style: none;
 }
 
 h1, h2 {
@@ -250,12 +222,7 @@ h1, h2 {
 
 .container {
   display: flex;
-  justify-content: space-between
-}
-
-.container {
-  display: flex;
-  justify-content: center
+  justify-content: space-between;
 }
 
 #chatbox {

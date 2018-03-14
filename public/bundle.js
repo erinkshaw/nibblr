@@ -40778,6 +40778,15 @@ var Main = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'plate' },
+          _react2.default.createElement(
+            'div',
+            { className: 'container' },
+            _react2.default.createElement(
+              'span',
+              { id: 'logo' },
+              'Nibblr'
+            )
+          ),
           _react2.default.createElement('img', { src: '/img/cutlery.svg' }),
           _react2.default.createElement(_Stack2.default, { showCards: this.state.showCards })
         ),

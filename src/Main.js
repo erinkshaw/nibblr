@@ -18,6 +18,10 @@ class Main extends Component {
           id="getCards"
           onClick={() => this.setState({ showCards: true })} />
         <div className="plate">
+          <div className="container">
+            <span id="logo">Nibblr
+            </span>
+          </div>
           <img src="/img/cutlery.svg" />
           <Stack showCards={this.state.showCards} />
         </div>
