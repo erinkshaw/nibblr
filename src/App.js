@@ -43,11 +43,11 @@ class App extends Component {
           this.msg = msg
       }
 
-      toastr.options.positionClass = 'toast-top-full-width';
-      toastr.options.extendedTimeOut = 0; //1000;
-      toastr.options.timeOut = 1000;
-      toastr.options.fadeOut = 250;
-      toastr.options.fadeIn = 250;
+      toastr.options.positionClass = 'toast-top-full-width'
+      toastr.options.extendedTimeOut = 0
+      toastr.options.timeOut = 1000
+      toastr.options.fadeOut = 250
+      toastr.options.fadeIn = 250
 
       var toasts = [
         new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout"
@@ -55,13 +55,13 @@ class App extends Component {
         Swipe right on something yummy ;)`),
         new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'),
         new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
-    ];
+    ]
 
 
       var i = 0
 
       function delayToasts() {
-          if (i === toasts.length) { return; }
+          if (i === toasts.length) { return }
           var delay = i === 0 ? 0 : 2100
           setTimeout(function () { showToast() }, delay)
       }

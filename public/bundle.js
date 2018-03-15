@@ -38388,7 +38388,7 @@ var App = function (_Component) {
       }
 
       _toastr2.default.options.positionClass = 'toast-top-full-width';
-      _toastr2.default.options.extendedTimeOut = 0; //1000;
+      _toastr2.default.options.extendedTimeOut = 0;
       _toastr2.default.options.timeOut = 1000;
       _toastr2.default.options.fadeOut = 250;
       _toastr2.default.options.fadeIn = 250;
