@@ -38332,7 +38332,8 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      showCards: false
+      showCards: false,
+      showToast: true
     };
     _this.removePizza = _this.removePizza.bind(_this);
     _this.startNotifications = _this.startNotifications.bind(_this);
@@ -38351,9 +38352,14 @@ var App = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      setTimeout(this.startNotifications, 1000);
-      var showCards = this.state.showCards;
+      var _state = this.state,
+          showCards = _state.showCards,
+          showToast = _state.showToast;
 
+      if (showToast) {
+        setTimeout(this.startNotifications, 1000);
+        this.setState({ showToast: false });
+      }
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,

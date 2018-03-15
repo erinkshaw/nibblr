@@ -10,7 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showCards: false
+      showCards: false,
+      showToast: true
     }
     this.removePizza = this.removePizza.bind(this)
     this.startNotifications = this.startNotifications.bind(this)
@@ -21,8 +22,11 @@ class App extends Component {
   }
 
   render() {
-    setTimeout(this.startNotifications, 1000)
-    const { showCards } = this.state
+    const { showCards, showToast } = this.state
+    if (showToast) {
+      setTimeout(this.startNotifications, 1000)
+      this.setState({showToast: false})
+    }
     return (
       <Router>
         <div>
