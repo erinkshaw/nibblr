@@ -15,6 +15,7 @@ class Selections extends Component {
     const { selections, places, placesMap } = this.props
     return (
       <div>
+        {/* temp solution to be able to nav back to main */}
         <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>
           <nav className="navbar navbar-default">
             <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px'  }}>

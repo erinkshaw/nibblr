@@ -38311,6 +38311,10 @@ var _store = __webpack_require__(291);
 
 var _store2 = _interopRequireDefault(_store);
 
+var _toastr = __webpack_require__(756);
+
+var _toastr2 = _interopRequireDefault(_toastr);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38331,6 +38335,7 @@ var App = function (_Component) {
       showCards: false
     };
     _this.removePizza = _this.removePizza.bind(_this);
+    _this.startNotifications = _this.startNotifications.bind(_this);
     return _this;
   }
 
@@ -38346,6 +38351,7 @@ var App = function (_Component) {
     value: function render() {
       var _this2 = this;
 
+      setTimeout(this.startNotifications, 1000);
       var showCards = this.state.showCards;
 
       return _react2.default.createElement(
@@ -38371,6 +38377,44 @@ var App = function (_Component) {
     key: 'removePizza',
     value: function removePizza() {
       this.setState({ showCards: true });
+    }
+  }, {
+    key: 'startNotifications',
+    value: function startNotifications() {
+      function Toast(type, css, msg) {
+        this.type = type;
+        this.css = css;
+        this.msg = msg;
+      }
+
+      _toastr2.default.options.positionClass = 'toast-top-full-width';
+      _toastr2.default.options.extendedTimeOut = 0; //1000;
+      _toastr2.default.options.timeOut = 1000;
+      _toastr2.default.options.fadeOut = 250;
+      _toastr2.default.options.fadeIn = 250;
+
+      var toasts = [new Toast('info', 'toast-top-full-width', 'Welcome to Nibblr! I\'m "Tinder for Takeout"\n        wiple left on something yucky :(\n        Swipe right on something yummy ;)'), new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'), new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!')];
+
+      var i = 0;
+
+      function delayToasts() {
+        if (i === toasts.length) {
+          return;
+        }
+        var delay = i === 0 ? 0 : 2100;
+        setTimeout(function () {
+          showToast();
+        }, delay);
+      }
+
+      function showToast() {
+        var t = toasts[i];
+        _toastr2.default.options.positionClass = t.css;
+        _toastr2.default[t.type](t.msg);
+        i++;
+        delayToasts();
+      }
+      return showToast();
     }
   }]);
 
@@ -40769,10 +40813,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(416);
 
-var _toastr = __webpack_require__(756);
-
-var _toastr2 = _interopRequireDefault(_toastr);
-
 var _Stack = __webpack_require__(474);
 
 var _Stack2 = _interopRequireDefault(_Stack);
@@ -40801,21 +40841,9 @@ var Main = function (_Component) {
   }
 
   _createClass(Main, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      setTimeout(function () {
-        _this2.setState({ leftToastr: true });
-        setTimeout(function () {
-          _this2.setState({ rightToastr: true });
-        });
-      }, 1000);
-    }
-  }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _state = this.state,
           leftToastr = _state.leftToastr,
@@ -40824,8 +40852,7 @@ var Main = function (_Component) {
           removePizza = _props.removePizza,
           showCards = _props.showCards;
 
-      console.log(showCards);
-      _toastr2.default.options.positionClass = "toast-top-right";
+
       return _react2.default.createElement(
         'div',
         { className: 'container' },
@@ -40833,7 +40860,6 @@ var Main = function (_Component) {
           className: 'shiver',
           id: 'getCards',
           onClick: function onClick() {
-            _toastr2.default.success('Item added to cart!');
             removePizza();
           } }),
         _react2.default.createElement(
@@ -40855,7 +40881,7 @@ var Main = function (_Component) {
           className: 'shiver',
           id: 'selections',
           onClick: function onClick() {
-            return _this3.props.history.push('/selections');
+            return _this2.props.history.push('/selections');
           } })
       );
     }
