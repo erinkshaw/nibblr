@@ -38358,7 +38358,6 @@ var App = function (_Component) {
 
       if (showToast) {
         setTimeout(this.startNotifications, 1000);
-        this.setState({ showToast: false });
       }
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
@@ -38387,6 +38386,7 @@ var App = function (_Component) {
   }, {
     key: 'startNotifications',
     value: function startNotifications() {
+      this.setState({ showToast: false });
       function Toast(type, css, msg) {
         this.type = type;
         this.css = css;
@@ -38399,7 +38399,7 @@ var App = function (_Component) {
       _toastr2.default.options.fadeOut = 250;
       _toastr2.default.options.fadeIn = 250;
 
-      var toasts = [new Toast('info', 'toast-top-full-width', 'Welcome to Nibblr! I\'m "Tinder for Takeout"\n        wiple left on something yucky :(\n        Swipe right on something yummy ;)'), new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'), new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!')];
+      var toasts = [new Toast('info', 'toast-top-full-width', 'Welcome to Nibblr! I\'m "Tinder for Takeout"\n      wiple left on something yucky :(\n      Swipe right on something yummy ;)'), new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'), new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!')];
 
       var i = 0;
 
@@ -44178,6 +44178,7 @@ var Restaurant = function (_Component) {
     _this.state = {
       url: ''
     };
+    _this.generateRandomMessage = _this.generateRandomMessage.bind(_this);
     return _this;
   }
 
@@ -44196,6 +44197,8 @@ var Restaurant = function (_Component) {
     key: 'render',
     value: function render() {
       console.log(this.props.place);
+      var place = this.props.place;
+
       if (this.state.url) {
         return _react2.default.createElement(_List.ListItem, {
           leftAvatar: _react2.default.createElement(_Avatar2.default, { src: this.state.url }),
@@ -44203,17 +44206,22 @@ var Restaurant = function (_Component) {
           secondaryText: _react2.default.createElement(
             'p',
             null,
-            _react2.default.createElement(
-              'span',
-              { style: { color: _colors.darkBlack } },
-              '' + this.props.place.name
-            ),
-            ' -- I\'ll be in your neighborhood doing errands this weekend. Do you want to grab brunch?'
+            '' + this.generateRandomMessage(place)
           ),
           secondaryTextLines: 2
         });
       }
       return _react2.default.createElement('div', null);
+    }
+  }, {
+    key: 'generateRandomMessage',
+    value: function generateRandomMessage(place) {
+      var greetings = ['Hey!', 'Howdy!', 'Ciao,', 'How are you?', 'How are you doing?!', 'Sup?'];
+      // const closings = ['I taste mighty good']
+      var myGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+      var isOpen = place.opening_hours.open_now ? 'I\'m open right now!' : 'sadly I\'m closed, but come visit me soon!';
+      var message = myGreeting + ' My name is ' + place.name + '! People think I\'m a ' + place.rating + ' out of 5, and ' + isOpen;
+      return message;
     }
   }]);
 

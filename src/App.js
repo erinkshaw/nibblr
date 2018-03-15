@@ -17,67 +17,65 @@ class App extends Component {
     this.startNotifications = this.startNotifications.bind(this)
   }
 
-  componentDidMount () {
-    navigator.geolocation.getCurrentPosition((position) => {store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition((position) => { store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
   }
 
   render() {
     const { showCards, showToast } = this.state
-    if (showToast) {
-      setTimeout(this.startNotifications, 1000)
-      this.setState({showToast: false})
-    }
+    if (showToast) { setTimeout(this.startNotifications, 1000) }
     return (
       <Router>
         <div>
           <Switch>
-            <Route path="/selections" render = {() => <Selections  />} />
-            <Route path="/" render = {() => <Main showCards={showCards} removePizza={this.removePizza}/>} />
+            <Route path="/selections" render={() => <Selections />} />
+            <Route path="/" render={() => <Main showCards={showCards} removePizza={this.removePizza} />} />
           </Switch>
         </div>
       </Router>
     )
   }
-  removePizza() { this.setState({showCards: true}) }
+  removePizza() { this.setState({ showCards: true }) }
 
   startNotifications() {
-      function Toast(type, css, msg) {
-          this.type = type
-          this.css = css
-          this.msg = msg
-      }
+    this.setState({ showToast: false })
+    function Toast(type, css, msg) {
+      this.type = type
+      this.css = css
+      this.msg = msg
+    }
 
-      toastr.options.positionClass = 'toast-top-full-width'
-      toastr.options.extendedTimeOut = 0
-      toastr.options.timeOut = 1000
-      toastr.options.fadeOut = 250
-      toastr.options.fadeIn = 250
+    toastr.options.positionClass = 'toast-top-full-width'
+    toastr.options.extendedTimeOut = 0
+    toastr.options.timeOut = 1000
+    toastr.options.fadeOut = 250
+    toastr.options.fadeIn = 250
 
-      var toasts = [
-        new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout"
-        wiple left on something yucky :(
-        Swipe right on something yummy ;)`),
-        new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'),
-        new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
+    var toasts = [
+      new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout"
+      wiple left on something yucky :(
+      Swipe right on something yummy ;)`),
+      new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'),
+      new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
     ]
 
 
-      var i = 0
+    var i = 0
 
-      function delayToasts() {
-          if (i === toasts.length) { return }
-          var delay = i === 0 ? 0 : 2100
-          setTimeout(function () { showToast() }, delay)
-      }
+    function delayToasts() {
+      if (i === toasts.length) { return }
+      var delay = i === 0 ? 0 : 2100
+      setTimeout(function () { showToast() }, delay)
+    }
 
-      function showToast() {
-          var t = toasts[i]
-          toastr.options.positionClass = t.css
-          toastr[t.type](t.msg)
-          i++
-          delayToasts()
-      }
-      return showToast()
+    function showToast() {
+      var t = toasts[i]
+      toastr.options.positionClass = t.css
+      toastr[t.type](t.msg)
+      i++
+      delayToasts()
+    }
+    return showToast()
   }
 }
 
