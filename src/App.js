@@ -52,9 +52,7 @@ class App extends Component {
     toastr.options.fadeIn = 250
 
     var toasts = [
-      new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout"
-      wiple left on something yucky :(
-      Swipe right on something yummy ;)`),
+      new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout" `),
       new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'),
       new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
     ]

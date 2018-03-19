@@ -44,15 +44,6 @@ body {
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
-/* html {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-} */
-
 .card img {
   position: absolute;
   height: 100%;
@@ -142,10 +133,6 @@ h1, h2 {
   margin: 50px 0 50px 0
 }
 
-.font {
-  color: black;
-  font-family: 'Dosis';
-}
 
 .middle {
   margin-top: 200px;
@@ -197,5 +184,6 @@ h1, h2 {
 #chatbox {
   background-color: white;
   border-radius: 20px;
-  width: 70%;
+  width: 90%;
+  margin-left: 100px
 }

@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 import Restaurant from './Restaurant'
 import { connect } from 'react-redux'
 import store from './store'
-import { List } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Subheader from 'material-ui/Subheader';
-import {NavLink} from 'react-router-dom'
-
+import { List } from 'material-ui/List'
+import Divider from 'material-ui/Divider'
+import Subheader from 'material-ui/Subheader'
 
 
 class Selections extends Component {
@@ -15,15 +14,14 @@ class Selections extends Component {
     const { selections, places, placesMap } = this.props
     return (
       <div>
-        {/* temp solution to be able to nav back to main */}
-        <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>
-          <nav className="navbar navbar-default">
-            <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px'  }}>
-              <span className="font">Go back and swipe some more!</span>
-            </button>
-          </nav>
-        </NavLink>
         <div className="container">
+          <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>
+            <nav className="navbar navbar-default">
+              <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px' }}>
+                <span className="font">Go back and swipe some more!</span>
+              </button>
+            </nav>
+          </NavLink>
           <div id="chatbox">
             {!selections.length
               ? <h1 className="middle">You haven't swiped anything yet!</h1> :
