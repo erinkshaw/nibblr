@@ -14,9 +14,9 @@ function Main(props) {
         <div className="container-logo">
           <span id="logo">Nibblr
           </span>
+          <Stack showCards={showCards} />
         </div>
-        <img src="/img/cutlery.svg" />
-        <Stack showCards={showCards} />
+        {/* <img src="/img/cutlery.svg" /> */}
       </div>
       <img src="/img/groceries.svg"
         className="shiver"

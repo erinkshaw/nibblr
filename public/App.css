@@ -12,6 +12,8 @@ body {
   width: 650px;
   height: 650px;
   margin: auto;
+  position: absolute;
+  background-image: url("/img/cutlery.svg");
 }
 
 .plate > img {

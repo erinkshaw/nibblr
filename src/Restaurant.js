@@ -12,7 +12,8 @@ export default class Restaurant extends Component {
       showModal: false
     }
     this.generateRandomMessage = this.generateRandomMessage.bind(this)
-    this.handleHide = this.handleHide.bind(this)
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
@@ -24,14 +25,28 @@ export default class Restaurant extends Component {
   render() {
     console.log(this.props.place)
     const { place } = this.props
-    if (this.state.url) {
+    const { showModal, url } = this.state
+    if (url) {
       return (
+        <div>
             <ListItem
-              leftAvatar={<Avatar src={this.state.url} />}
-              primaryText={`${this.props.place.name}`}
+              leftAvatar={<Avatar src={url} />}
+              primaryText={`${place.name}`}
               secondaryText={<p>{`${this.generateRandomMessage(place)}`}</p>}
               secondaryTextLines={2}
             />
+            <Modal show={showModal} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <p>yaaaaa</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button onClick={this.handleClose}>Close</Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
       )
     }
     return (<div></div>)
@@ -43,8 +58,11 @@ export default class Restaurant extends Component {
     const message = `${myGreeting} My name is ${place.name}! People think I'm a ${place.rating} out of 5, and ${isOpen}`
     return message
   }
-  handleHide() {
-    this.setState({ showModal: false });
+  handleClose() {
+    this.setState({ showModal: false })
+  }
+  handleShow() {
+    this.setState({ showModal: true })
   }
 }
 
