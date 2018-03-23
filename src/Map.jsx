@@ -17,7 +17,7 @@ export default class Map extends Component {
   render() {
     return (
       <iframe
-        width="450"
+        width="100%"
         height="250"
         frameBorder="0" style={{ border: '0p' }}
         src={this.state.url} >
