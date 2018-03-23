@@ -129,7 +129,6 @@ h1, h2 {
   flex-flow: row wrap */
   font-size: 35px;
   /* margin: 50px 0 0 50px; */
-  font-family: 'Dosis';
   margin: 50px 0 50px 0
 }
 
@@ -168,10 +167,6 @@ h1, h2 {
   height: 100px
 }
 
-#aboutMe {
-  height: 100px
-}
-
 #getCards {
   height: 100px
 }
@@ -185,5 +180,7 @@ h1, h2 {
   background-color: white;
   border-radius: 20px;
   width: 90%;
-  margin-left: 100px
+  margin-left: 100px;
+  margin-top: 1em
 }
+

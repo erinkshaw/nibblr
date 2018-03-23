@@ -8,9 +8,11 @@ export default class Restaurant extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      url: ''
+      url: '',
+      showModal: false
     }
     this.generateRandomMessage = this.generateRandomMessage.bind(this)
+    this.handleHide = this.handleHide.bind(this)
   }
 
   componentDidMount() {
@@ -27,9 +29,7 @@ export default class Restaurant extends Component {
             <ListItem
               leftAvatar={<Avatar src={this.state.url} />}
               primaryText={`${this.props.place.name}`}
-              secondaryText={
-                <p>{`${this.generateRandomMessage(place)}`}</p>
-              }
+              secondaryText={<p>{`${this.generateRandomMessage(place)}`}</p>}
               secondaryTextLines={2}
             />
       )
@@ -42,6 +42,9 @@ export default class Restaurant extends Component {
     const isOpen = place.opening_hours.open_now ? 'I\'m open right now!' : 'sadly I\'m closed, but come visit me soon!'
     const message = `${myGreeting} My name is ${place.name}! People think I'm a ${place.rating} out of 5, and ${isOpen}`
     return message
+  }
+  handleHide() {
+    this.setState({ showModal: false });
   }
 }
 
