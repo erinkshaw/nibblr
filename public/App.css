@@ -14,10 +14,7 @@ body {
   margin: auto;
   position: absolute;
   background-image: url("/img/cutlery.svg");
-}
-
-.plate > img {
-width: 100%;
+  left: 25%
 }
 
 /* place nibblr logo */
@@ -162,7 +159,8 @@ perspective: 1000px;
 }
 
 #selections {
-height: 100px
+height: 100px;
+float: right;
 }
 
 #getCards {

@@ -5,11 +5,7 @@ import Stack from './Stack'
 function Main(props) {
     const { removePizza, showCards } = props
   return (
-    <div className='container'>
-      <img src="/img/salad.svg"
-        className="shiver"
-        id="getCards"
-        onClick={() => removePizza()} />
+    <div>
       <div className="plate">
         <div className="container-logo">
           <span id="logo">Nibblr
@@ -18,10 +14,16 @@ function Main(props) {
         </div>
         {/* <img src="/img/cutlery.svg" /> */}
       </div>
+    <div>
+      <img src="/img/salad.svg"
+        className="shiver"
+        id="getCards"
+        onClick={() => removePizza()} />
       <img src="/img/groceries.svg"
         className="shiver"
         id="selections"
         onClick={() => props.history.push('/selections')} />
+    </div>
     </div>
   )
 }
