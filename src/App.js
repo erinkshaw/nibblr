@@ -22,8 +22,14 @@ class App extends Component {
   }
 
   render() {
+    const currentHref = window.location.href.split('/')
     const { showCards, showToast } = this.state
-    if (showToast) { setTimeout(this.startNotifications, 1000) }
+
+    //if this is the first time on main && the current href is main
+    if (showToast && !currentHref[currentHref.length-1]) {
+      setTimeout(this.startNotifications, 1000)
+    }
+
     return (
       <Router>
         <div>

@@ -5,16 +5,10 @@ import Stack from './Stack'
 class Main extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      leftToastr: false,
-      rightToastr: false
-    }
   }
 
   render() {
-    const { leftToastr, rightToastr } = this.state
     const { removePizza, showCards } = this.props
-
     return (
       <div className='container'>
         <img src="/img/salad.svg"

@@ -28,8 +28,10 @@ class Selections extends Component {
                 ? <ListItem
                 leftAvatar={<Avatar src={"/img/cutlery.svg"} />}
                 primaryText={`No matches :(`}
-                secondaryText={<p>{`Hit the salad bowl and get swiping`}</p>}
-                secondaryTextLines={2} />
+                secondaryText={<p>{`Click the salad bowl and get swiping`}</p>}
+                secondaryTextLines={2}
+                onClick={() => console.log('hi')}
+                />
                 :
                 selections.map((image, i) => {
                   const placeId = placesMap[image.photo_reference]
