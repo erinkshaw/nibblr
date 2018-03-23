@@ -10,9 +10,8 @@ function Main(props) {
         <div className="container-logo">
           <span id="logo">Nibblr
           </span>
-          <Stack showCards={showCards} />
         </div>
-        {/* <img src="/img/cutlery.svg" /> */}
+          <Stack showCards={showCards} />
       </div>
     <div>
       <img src="/img/salad.svg"

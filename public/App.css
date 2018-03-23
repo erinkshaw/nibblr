@@ -24,19 +24,22 @@ body {
 }
 
 #logo {
-font-family: NoodleShade;
-font-size: 90px;
-color: rgba(0,0,0,.75);
-margin: auto;
-position: absolute;
+  font-family: NoodleShade;
+  font-size: 90px;
+  color: rgba(0,0,0,.75);
+  margin: auto;
+  position: absolute;
 }
 
 #load > img {
-margin: 7%;
-height: 85%;
--webkit-animation:spin 4s linear infinite;
--moz-animation:spin 4s linear infinite;
-animation:spin 4s linear infinite;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 14%;
+  height: 85%;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
 }
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
