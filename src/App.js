@@ -63,7 +63,6 @@ class App extends Component {
       new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
     ]
 
-
     var i = 0
 
     function delayToasts() {
