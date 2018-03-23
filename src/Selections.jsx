@@ -15,12 +15,10 @@ class Selections extends Component {
     return (
       <div>
         <div className="container">
-          <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>
-            <nav className="navbar navbar-default">
-              <button type="button" className="btn btn-outline-danger" style={{ fontSize: '50px' }}>
-                <span className="font">Go back and swipe some more!</span>
-              </button>
-            </nav>
+          <NavLink activeClassName="active" to={`/`} >
+            <img src="/img/salad.svg"
+            className="shiver"
+            id="getCards" />
           </NavLink>
           <div id="chatbox">
             {!selections.length
