@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
+import Map from './Map'
 import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import { grey400, darkBlack, lightBlack } from 'material-ui/styles/colors'
-
+import { Modal, Image } from 'react-bootstrap'
 
 export default class Restaurant extends Component {
   constructor(props) {
     super(props)
     this.state = {
       url: '',
+      placesDetails: {},
       showModal: false
     }
     this.generateRandomMessage = this.generateRandomMessage.bind(this)
@@ -20,12 +21,16 @@ export default class Restaurant extends Component {
     fetch(`/api/places/img/${this.props.photoReference}`)
       .then(res => res.json())
       .then(url => this.setState({ url }))
+    fetch(`/api/places/${this.props.place.place_id}`)
+      .then(res => res.json())
+      .then(placesDetails => this.setState({ placesDetails: placesDetails.result }))
   }
 
   render() {
     console.log(this.props.place)
+    console.log('this dot state', this.state)
     const { place } = this.props
-    const { showModal, url } = this.state
+    const { showModal, url, placesDetails } = this.state
     if (url) {
       return (
         <div>
@@ -34,16 +39,22 @@ export default class Restaurant extends Component {
               primaryText={`${place.name}`}
               secondaryText={<p>{`${this.generateRandomMessage(place)}`}</p>}
               secondaryTextLines={2}
+              onClick={this.handleShow}
             />
             <Modal show={showModal} onHide={this.handleClose}>
               <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>{`${place.name}`}</Modal.Title>
+                <p>{placesDetails.formatted_address && placesDetails.formatted_address}</p>
+                <p>{placesDetails.formatted_phone_number && placesDetails.formatted_phone_number}</p>
+                {placesDetails.website && <a href={placesDetails.website}>Website</a>}
               </Modal.Header>
               <Modal.Body>
-                <p>yaaaaa</p>
+              <Image src={url} rounded />
+                <p>{placesDetails.opening_hours.weekday_text && placesDetails.opening_hours.weekday_text}</p>
+                <p>{placesDetails.rating && placesDetails.rating}</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={this.handleClose}>Close</Button>
+                <Map placeId={place.place_id} />
               </Modal.Footer>
             </Modal>
           </div>

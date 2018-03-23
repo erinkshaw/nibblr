@@ -11,21 +11,24 @@ class App extends Component {
     super(props)
     this.state = {
       showCards: false,
-      showToast: true
+      showToast: true,
+      currentHref: window.location.href.split('/')
     }
     this.removePizza = this.removePizza.bind(this)
     this.startNotifications = this.startNotifications.bind(this)
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition((position) => { store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
+    // if this is a new page load && the current href is main
+    if (this.state.showToast && !this.state.currentHref[this.state.currentHref.length-1]) {
+      navigator.geolocation.getCurrentPosition((position) => { store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
+    }
   }
 
   render() {
-    const currentHref = window.location.href.split('/')
-    const { showCards, showToast } = this.state
+    const { showCards, showToast, currentHref } = this.state
 
-    //if this is the first time on main && the current href is main
+    // if this is a new page load && the current href is main
     if (showToast && !currentHref[currentHref.length-1]) {
       setTimeout(this.startNotifications, 1000)
     }

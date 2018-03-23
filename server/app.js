@@ -17,7 +17,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'public')))
 
 app.use('/api/places', require('./api/places'))
 
-// app.use('/api/clarifai', require('./api/clarifai'))
+app.use('/api/clarifai', require('./api/clarifai'))
 
 app.get('/*', (_, res) => res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html')))
 

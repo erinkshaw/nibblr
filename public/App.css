@@ -1,10 +1,13 @@
 /* make tablecloth background */
+:root {
+  margin: 2em 1em 0 1em;
+}
+
 body {
   background: white;
   background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
   linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
   background-size: 80px 80px;
-  margin-top: 1em;
 }
 
 /* make the plate */
@@ -35,7 +38,7 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 14%;
+  margin-top: 7%;
   height: 85%;
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
@@ -46,101 +49,88 @@ body {
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .card img {
-position: absolute;
-height: 100%;
-width: 100%;
-border-radius: 400px
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 400px
 }
 
 .master-root {
-position: absolute;
-height: 400px;
-width: 400px;
-margin: -225px 0 0 -200px;
-top: 50%;
-left: 50%;
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  margin: -200px 0 0 -200px;
+  top: 50%;
+  left: 50%;
 }
 
 .card {
-position: absolute;
-height: 370px;
-width: 370px;
-margin: 0 auto;
-transition: box-shadow .3s;
-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-cursor: pointer;
-border-radius: 400px
+  position: absolute;
+  height: 370px;
+  width: 370px;
+  margin: 0 auto;
+  transition: box-shadow .3s;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  cursor: pointer;
+  border-radius: 400px
 }
 
 .animate {
-transition: transform .3s;
-box-shadow: none;
+  transition: transform .3s;
+  box-shadow: none;
 }
 
 .inactive {
-box-shadow: none;
+  box-shadow: none;
 }
 
 .alert {
-width: 80px;
-position: absolute;
-z-index: 9999;
-opacity: 0;
-transition: opacity .5s;
-color: white;
-vertical-align: middle;
-line-height: 1rem; }
+  width: 80px;
+  position: absolute;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity .5s;
+  color: white;
+  vertical-align: middle;
+  line-height: 1rem;
+}
 
 .alert-visible {
-opacity: .8; }
+  opacity: .8;
+}
 
 .alert-base, .alert-right, .alert-left {
-height: 100px;
-width: 100px;
-margin: 15px;
-padding: 8px 5px 5px 5px;
-top: 0;
-border-radius: 100%;
+  height: 100px;
+  width: 100px;
+  margin: 15px;
+  padding: 8px 5px 5px 5px;
+  top: 0;
+  border-radius: 100%;
 }
 
 .icon {
-height: 80px;
-width: 80px; }
+  height: 80px;
+  width: 80px;
+}
 
 .alert-right {
-right: 2vw;
+  right: 2vw;
 }
 
 .alert-left {
-left: 2vw;
+  left: 2vw;
 }
-
-.restaurant {
-/* background-color: white; */
-/* opacity: .5; */
-/* width: 150;
-display: inline-flex;
-align-content: center;
-margin:50px;
-justify-content: space-around;
-flex-flow: row wrap */
-font-size: 35px;
-/* margin: 50px 0 0 50px; */
-font-family: 'Dosis';
-margin: 50px 0 50px 0
-}
-
 
 .middle {
-margin-top: 200px;
-font-size: 60px
+  margin-top: 200px;
+  font-size: 60px
 }
 
 .shiver:hover {
-animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-transform: translate3d(0, 0, 0);
-backface-visibility: hidden;
-perspective: 1000px;
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 @keyframes shake {
@@ -181,8 +171,8 @@ justify-content: space-between;
 }
 
 #chatbox {
-background-color: white;
-border-radius: 20px;
-width: 90%;
-margin-left: 100px
+  background-color: white;
+  border-radius: 20px;
+  margin-top: -100px;
+  width: 50em;
 }

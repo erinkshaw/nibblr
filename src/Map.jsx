@@ -9,14 +9,14 @@ export default class Map extends Component {
   }
 
   componentDidMount() {
-    fetch(`/places/map/${this.props.placeId}`)
+    fetch(`/api/places/map/${this.props.placeId}`)
       .then(res => res.json())
       .then(url => this.setState({ url }))
   }
 
   render() {
     return (
-      <iframe className="mappad"
+      <iframe
         width="450"
         height="250"
         frameBorder="0" style={{ border: '0p' }}
