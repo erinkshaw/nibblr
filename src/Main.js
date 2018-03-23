@@ -11,7 +11,7 @@ function Main(props) {
         id="getCards"
         onClick={() => removePizza()} />
       <div className="plate">
-        <div className="container">
+        <div className="container-logo">
           <span id="logo">Nibblr
           </span>
         </div>
