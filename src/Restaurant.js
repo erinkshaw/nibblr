@@ -1,35 +1,84 @@
 import React, { Component } from 'react'
-import store from './store'
-import Image from './Image'
 import Map from './Map'
+import { ListItem } from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
+import { Modal, Image } from 'react-bootstrap'
 
 export default class Restaurant extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      url: '',
+      placesDetails: {},
+      showModal: false
+    }
+    this.generateRandomMessage = this.generateRandomMessage.bind(this)
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(`/api/places/img/${this.props.photoReference}`)
+      .then(res => res.json())
+      .then(url => this.setState({ url }))
+    fetch(`/api/places/${this.props.place.place_id}`)
+      .then(res => res.json())
+      .then(placesDetails => this.setState({ placesDetails: placesDetails.result }))
+  }
 
   render() {
-    return (
-      <div className="container-fluid">
-        {this.props && this.props ?
-
-          <div className="row restaurant">
-            <div className="col-md-4">
-              <Image photoReference={this.props.place.photos[0].photo_reference} />
-            </div>
-
-            <div className="col-md-4 restaurant"><div><span style={{ fontSize: 40 }}>{this.props.place.name}</span></div><div>{this.props.place.vicinity}</div>
-              {this.props.place.opening_hours ? (this.props.place.opening_hours.open_now ?
-                <div>It's open now!</div> :
-                <div>It's closed for now :(</div>) : null
-              }
-            </div>
-            <div className="col-md-4">
-              <Map placeId={this.props.place.place_id}/>
-            </div>
+    console.log(this.props.place)
+    console.log('this dot state', this.state)
+    const { place } = this.props
+    const { showModal, url, placesDetails } = this.state
+    if (url) {
+      return (
+        <div>
+            <ListItem
+              leftAvatar={<Avatar src={url} />}
+              primaryText={`${place.name}`}
+              secondaryText={<p>{`${this.generateRandomMessage(place)}`}</p>}
+              secondaryTextLines={2}
+              onClick={this.handleShow}
+            />
+            <Modal show={showModal} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>{`${place.name}`}</Modal.Title>
+                <p>{placesDetails.formatted_address && placesDetails.formatted_address}</p>
+                <p>{placesDetails.formatted_phone_number && placesDetails.formatted_phone_number}</p>
+                {placesDetails.website && <a href={placesDetails.website}>Website</a>}
+              </Modal.Header>
+              <Modal.Body>
+              <Image src={url} rounded style={{ width: "100%" }} />
+              {placesDetails.opening_hours.weekday_text &&
+                <div>
+                  <Modal.Title>Hours</Modal.Title>
+                  <p>{placesDetails.opening_hours.weekday_text.map(
+                    day => <p>{day}</p>
+                  )}</p>
+                </div>}
+              </Modal.Body>
+              <Modal.Footer>
+                <Map placeId={place.place_id} />
+              </Modal.Footer>
+            </Modal>
           </div>
-          : <NavLink activeClassName="active" to={`/`} style={{ textDecoration: 'none' }}>Go back and swipe!</NavLink>
-        }
-      </div>
-
-    )
+      )
+    }
+    return (<div></div>)
+  }
+  generateRandomMessage(place) {
+    const greetings = ['Hey!', 'Howdy!', 'Ciao,', 'How are you?', 'How are you doing?!', 'Sup?']
+    const myGreeting = greetings[Math.floor(Math.random()* greetings.length)]
+    const isOpen = place.opening_hours.open_now ? 'I\'m open right now!' : 'sadly I\'m closed, but come visit me soon!'
+    const message = `${myGreeting} My name is ${place.name}! People think I'm a ${place.rating} out of 5, and ${isOpen}`
+    return message
+  }
+  handleClose() {
+    this.setState({ showModal: false })
+  }
+  handleShow() {
+    this.setState({ showModal: true })
   }
 }
 

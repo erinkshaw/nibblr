@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
-import Stack from './Card'
-import Cards, { Card } from 'react-swipe-card'
-import Navbar from './Navbar'
-import Selections from './Selections'
-import { Route, Switch } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom'
-import store, { gettingPlacesData } from './store'
+import { withRouter } from 'react-router-dom'
+import Stack from './Stack'
 
-export default function(props) {
-
+function Main(props) {
+    const { removePizza, showCards } = props
   return (
-          <div>
-            <Navbar />
-            <div className="plate">
-              <Stack handleSwipe={props.handleSwipe} />
-            </div>
-            <div className="trademark">Tinder for Take Out</div>
-          </div>
+    <div>
+      <div className="plate">
+        <div className="container-logo">
+          <span id="logo">Nibblr
+          </span>
+        </div>
+          <Stack showCards={showCards} />
+      </div>
+    <div>
+      <img src="/img/salad.svg"
+        className="shiver"
+        id="getCards"
+        onClick={() => removePizza()} />
+      <img src="/img/groceries.svg"
+        className="shiver"
+        id="selections"
+        onClick={() => props.history.push('/selections')} />
+    </div>
+    </div>
   )
 }
+
+export default withRouter(Main)

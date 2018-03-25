@@ -1,140 +1,75 @@
-html,
-body,
-ul,
-li {
-    margin: 0; padding: 0;
-
+:root {
+  margin: 2em 1em 2em 1em;
 }
 
 /* make tablecloth background */
 body {
-    background: white;
-    background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
-    linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
-    background-size: 70px 70px;
-    font-family: 'Dosis'
+  background: white;
+  background-image: linear-gradient(90deg, rgba(200,0,0, .40) 50%, transparent 0),
+  linear-gradient(rgba(200,0,0,.40) 50%, transparent 0);
+  background-size: 80px 80px;
 }
 
-img {
-  border-radius: 25px
+p {
+  margin: 0 !important;
 }
 
 /* make the plate */
 .plate {
-    background: white;
-    background-position: 50% 0%;
-    width: 650px;
-    height: 650px;
-    margin: 30px auto 0px;
-
-    /* Plate Styling */
-    position: relative;
-    box-sizing: border-box;
-    padding: 33px (33px + 20);
-    border-radius: 400px;
-    box-shadow:
-      /* Outer Plate Bevel */
-      inset 0 5px 3px 0 rgba(255,255,255,.5), /* Top */
-      inset 0 -5px 3px 0 rgba(0,0,0,.78), /* Bottom */
-      inset 3px 0 2px 0 rgba(0,0,0,.25), /* Left */
-      inset -3px 0 2px 0 rgba(0,0,0,.25), /* Right */
-
-      /* Outer Plate Shadow */
-      inset 0 5px 46px 0 rgba(0,0,0,.4),
-      0 5px 13px 0 rgba(0,0,0,.75);
+  width: 650px;
+  height: 650px;
+  margin: auto;
+  position: absolute;
+  background-image: url("/img/cutlery.svg");
+  left: 25%
 }
-  .plate::before {
-    content: ' ';
-    display: block;
-    position: absolute;
-    top: 110px;
-    right: 110px;
-    bottom: 110px;
-    left: 110px;
-    border-radius: 400px;
-    box-shadow:
-    /* Inner Plate Shadow */
-      inset 0 0 4px 3px rgba(255,255,255,1), /* Top */
-      inset 0 8px 16px 4px rgba(0,0,0,.25) /* Top */
-      ;
-  }
 
 /* place nibblr logo */
-
 @font-face {
-    font-family: NoodleShade;
-    src: url("./font/nooshade.ttf");
+  font-family: NoodleShade;
+  src: url("./font/nooshade.ttf");
 }
 
-@font-face {
-  font-family: NoodleScript;
-  src: url("./font/NoodleScript.ttf");
+#logo {
+  font-family: NoodleShade;
+  font-size: 90px;
+  color: rgba(0,0,0,.75);
+  margin: auto;
+  position: absolute;
 }
 
-.plate::after {
-    content: "Nibblr.";
-    font-family: NoodleShade;
-    position: absolute;
-    top: 10px;
-    left: 200px;
-    font-size: 90px;
-    color: rgba(0,0,0,.75);
+#load > img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 7%;
+  height: 85%;
+  -webkit-animation:spin 4s linear infinite;
+  -moz-animation:spin 4s linear infinite;
+  animation:spin 4s linear infinite;
 }
-
-html {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-body {
-  margin: 0 auto;
-  padding: 0;
-  /* font-family: NoodleScript; */
-  font-family: 'Dosis';
-  text-align: center;
-}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
 .card img {
+  position: absolute;
   height: 100%;
   width: 100%;
   border-radius: 400px
 }
 
-li {
-  list-style: none;
-}
-
-h1, h2 {
-  font-weight: 500;
-}
-
-
 .master-root {
-  /* margin: 20px auto;
-  position: relative;
-  min-height: 300px;
-  max-height: 100px;
-  width: 300px; */
   position: absolute;
   height: 400px;
   width: 400px;
   margin: -200px 0 0 -200px;
   top: 50%;
   left: 50%;
-  overflow: hidden;
-  /* border: 1px solid #e5e5e5; */
-    border-radius: 400px
 }
 
 .card {
-  /* background-color: white; */
-  /* background-size: cover; */
   position: absolute;
-  /* opacity: 0; */
   height: 370px;
   width: 370px;
   margin: 0 auto;
@@ -154,127 +89,94 @@ h1, h2 {
 }
 
 .alert {
-  width: 45%;
-  min-height: 10%;
+  width: 80px;
   position: absolute;
   z-index: 9999;
   opacity: 0;
   transition: opacity .5s;
   color: white;
   vertical-align: middle;
-  line-height: 3rem;
+  line-height: 1rem;
 }
 
 .alert-visible {
-  opacity: 1;
+  opacity: .8;
+}
+
+.alert-base, .alert-right, .alert-left {
+  height: 100px;
+  width: 100px;
+  margin: 15px;
+  padding: 8px 5px 5px 5px;
+  top: 0;
+  border-radius: 100%;
+}
+
+.icon {
+  height: 80px;
+  width: 80px;
 }
 
 .alert-right {
-  content: "YUM!";
-  top: 0;
-  right: 0;
-  background: green;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+  right: 2vw;
 }
-/* .alert-right {
-  top: 1  ;
-  right: 0;
-}
-
-.alert-right:before,.alert-right:after {
-  content: "";
-  width: 35px;
-  height: 55px;
-  position: absolute;
-  background: red;
-  left: 70px;
-  top: 0;
-  -webkit-border-radius: 50px 50px 0 0;
-  -moz-border-radius: 50px 50px 0 0;
-  border-radius: 50px 50px 0 0;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  -webkit-transform-origin: 0 100%;
-  -moz-transform-origin: 0 100%;
-  -ms-transform-origin: 0 100%;
-  -o-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-}
-
-.alert-right:after {
-  left: 0;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  transform: rotate(45deg);
-  -webkit-transform-origin: 100% 100%;
-  -moz-transform-origin: 100% 100%;
-  -ms-transform-origin: 100% 100%;
-  -o-transform-origin: 100% 100%;
-  transform-origin: 100% 100%;
-} */
-
 
 .alert-left {
-  top: 0;
-  left: 0;
-  background: red;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-}
-
- .trademark {
-   font-family: 'Dosis';
-   /* font-family: NoodleScript;    */
-   font-size: 70px;
- }
-
- /* .btn {
-  font-family: NoodleShade;
-} */
-
-.restaurant {
-  /* background-color: white; */
-  /* opacity: .5; */
-  /* width: 150;
-  display: inline-flex;
-  align-content: center;
-  margin:50px;
-  justify-content: space-around;
-  flex-flow: row wrap */
-  font-size: 35px;
-  /* margin: 50px 0 0 50px; */
-  font-family: 'Dosis';
-  margin: 50px 0 50px 0
-
-
-  /* width: 70%; */
-}
-
-/* .restaurant-img {
-  width: 80%;
-  height: 80%;
-  margin-left: 100px
-} */
-
-
-.font {
-  color: black;
-  font-family: 'Dosis';
+  left: 2vw;
 }
 
 .middle {
   margin-top: 200px;
   font-size: 60px
 }
-/*
-.padBottom {
-  margin-bottom: 50px
-}
- */
 
+.shiver:hover {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+10%, 90% {
+  transform: translate3d(-1px, 0, 0);
+}
+
+20%, 80% {
+  transform: translate3d(2px, 0, 0);
+}
+
+30%, 50%, 70% {
+  transform: translate3d(-4px, 0, 0);
+}
+
+40%, 60% {
+  transform: translate3d(4px, 0, 0);
+}
+}
+
+#selections {
+height: 100px;
+float: right;
+}
+
+#getCards {
+height: 100px
+}
+
+.container {
+display: flex;
+justify-content: space-between;
+}
+
+.container-logo {
+  display: flex;
+  justify-content: center;
+}
+
+#chatbox {
+  background-color: white;
+  border-radius: 20px;
+  margin-top: -100px;
+  width: 50em;
+}
