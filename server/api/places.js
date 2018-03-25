@@ -1,11 +1,10 @@
 const router = require('express').Router()
 const axios = require('axios')
-require('../secrets')
+require('../../secrets')
 
 // get nearby restaurants
 router.get('/lat/:lat/lng/:lng', (req, res, next) => {
-
-  let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=500&types=food&key=${process.env.GOOGLE_API_KEY}`
+  let placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat},${req.params.lng}&radius=1000&types=restaurant&key=${process.env.GOOGLE_API_KEY}`
 
   //if there is a query that means it's the next page token
   placesUrl = req.query.token ? `${placesUrl}&pagetoken=${req.query.token}` : placesUrl
@@ -17,7 +16,8 @@ router.get('/lat/:lat/lng/:lng', (req, res, next) => {
       .then(data => {
         res.status(200).send(data);
       })
-    }, 2000);
+      .catch(next)
+    }, 2000)
   }
   else {
     axios.get(placesUrl)
@@ -25,6 +25,7 @@ router.get('/lat/:lat/lng/:lng', (req, res, next) => {
     .then(data => {
       res.status(200).send(data);
     })
+    .catch(next)
   }
 })
 
@@ -37,13 +38,12 @@ router.get('/:placeId', (req, res, next) => {
   .then(data => {
     res.status(200).send(data);
   })
-
+  .catch(next)
 })
-
 
 // get image for restaurant
 router.get('/img/:photoReference', (req, res, next) => {
-  const photoUrl = makeGooglePlacesPhotoURL(req.params.photoReference)
+  const photoUrl = router.makeGooglePlacesPhotoURL(req.params.photoReference)
   res.json(photoUrl)
 })
 
@@ -53,13 +53,11 @@ router.get('/map/:placeId', (req, res, next) => {
   res.json(placeUrl)
 })
 
-function makeGooglePlacesPhotoURL(photoReference) {
+router.makeGooglePlacesPhotoURL = (photoReference) => {
   var baseURL = 'https://maps.googleapis.com/maps/api/place/photo?';
-  var maxHeight = 200;
+  var maxHeight = 500;
   var fullURL = baseURL + 'key=' + process.env.GOOGLE_API_KEY + '&' + 'maxheight=' + maxHeight + '&' + 'photoreference=' + photoReference;
   return fullURL;
 }
 
 module.exports = router
-
-// https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=AIzaSyDArX30BmlDv_D0LOJ1242aogy3G5r8Y70
