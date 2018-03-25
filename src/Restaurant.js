@@ -50,10 +50,13 @@ export default class Restaurant extends Component {
               </Modal.Header>
               <Modal.Body>
               <Image src={url} rounded style={{ width: "100%" }} />
-                <Modal.Title>Hours</Modal.Title>
-                <p>{placesDetails.opening_hours.weekday_text && placesDetails.opening_hours.weekday_text.map(
-                  day => <p>{day}</p>
-                )}</p>
+              {placesDetails.opening_hours.weekday_text &&
+                <div>
+                  <Modal.Title>Hours</Modal.Title>
+                  <p>{placesDetails.opening_hours.weekday_text.map(
+                    day => <p>{day}</p>
+                  )}</p>
+                </div>}
               </Modal.Body>
               <Modal.Footer>
                 <Map placeId={place.place_id} />
