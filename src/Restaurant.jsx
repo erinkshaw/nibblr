@@ -58,7 +58,7 @@ class Restaurant extends Component {
                 <div>
                   <Modal.Title>Hours</Modal.Title>
                   {placesDetails.opening_hours.weekday_text.map(
-                    day => <p>{day}</p>
+                    day => <p key={day}>{day}</p>
                   )}
                 </div>}
               </Modal.Body>
