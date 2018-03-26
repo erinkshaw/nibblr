@@ -1,11 +1,15 @@
 # This is 🍜 🍕 Nibblr 🌮 🍔
 
+![Alt Text](nibblr-walkthrough.gif)
 
 I am "Tinder for Take-Out"
 
 ## How to use
 
-TO BE DEPLOYED SOON
+* Visit me at: https://tinder-for-takeout.herokuapp.com
+* Click on the salad bowl in the top left corner to reveal your choices
+* Once your nearby food images load, swipe left on 'yucks' and swipe right on 'yums'
+* Click on the grocery bag to scroll through your selections
 
 ## Configuration on local machine
 
@@ -25,15 +29,15 @@ And then you'll have me! If I change – which I probably will – you can get t
 version by doing this again:
 
 ```sh
-git fetch attune
-git merge attune/master
+git fetch nibblr
+git merge nibblr/master
 ```
 
 ## My anatomy
 
-`/app` has the React setup. `main.jsx` is the entry point.
+`/src` has the React setup. `index.jsx` is the entry point.
 
-`/bin` has scripts.
+`/server` has node files.
 
 `/public` has all visual assets
 
@@ -41,7 +45,7 @@ git merge attune/master
 
 I use `require` and `module.exports` in `.js` files.
 
-I use `import` and `export` in `.jsx` files, unless `require` makes for cleaner code.
+I use `import` and `export` in `.jsx` files
 
 I use two spaces, no semi-colons, and generally prefer a less strict version of
 [NPM's funny coding style](https://docs.npmjs.com/misc/coding-style).
