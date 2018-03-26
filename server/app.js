@@ -1,9 +1,12 @@
 const express = require('express')
+const session = require('express-session')
 const morgan = require('morgan')
 const path = require('path')
 const app = express()
 const axios = require('axios')
 const bodyParser = require('body-parser')
+
+if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // Setup logger
 app.use(morgan('dev'))

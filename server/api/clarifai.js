@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const makeGooglePlacesPhotoURL = require('./places').makeGooglePlacesPhotoURL
 const Clarifai = require('clarifai');
-require('../../secrets')
+if (process.env.NODE_ENV !== 'production') require('../../secrets')
 
 const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_API_KEY

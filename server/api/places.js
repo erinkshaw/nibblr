@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const axios = require('axios')
-require('../../secrets')
+if (process.env.NODE_ENV !== 'production') require('../../secrets')
 
 // get nearby restaurants
 router.get('/lat/:lat/lng/:lng', (req, res, next) => {

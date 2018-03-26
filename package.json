@@ -8,6 +8,7 @@
     "clarifai": "^2.5.0",
     "csshake": "^1.5.3",
     "express": "^4.15.4",
+    "express-session": "^1.15.6",
     "getstorybook": "^1.7.0",
     "google-maps-react": "^1.1.0",
     "google-places-web": "^0.0.7",
