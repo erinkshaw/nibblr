@@ -19,6 +19,4 @@ router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   )
 })
 
-
-
 module.exports = router

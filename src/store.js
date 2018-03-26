@@ -125,7 +125,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
-      // action.placePhotos = action.placePhotos.sort(shuffle)
+      action.placePhotos = action.placePhotos.sort(shuffle)
       return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
     }
     case REMOVE_PLACE_PHOTO: {
