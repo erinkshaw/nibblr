@@ -20,11 +20,11 @@ class Selections extends React.Component {
   }
 
   handleClose() {
-    this.setState({ showModal: false });
+    this.setState({ showModal: false })
   }
 
   handleShow() {
-    this.setState({ showModal: true });
+    this.setState({ showModal: true })
   }
 
   render() {
@@ -32,51 +32,37 @@ class Selections extends React.Component {
     const { showModal } = this.state
     return (
       <div>
-        <div>
-          <NavLink activeClassName="active" to={`/`} >
-            <img src="/img/salad.svg"
-              className="shiver"
-              id="getCards" />
-          </NavLink>
-          <div className="container">
-            <div id="chatbox">
-              <List>
-                <Subheader>{`Messages: ${selections.length}`}</Subheader>
-                {!selections.length
-                  ? <ListItem
-                    leftAvatar={<Avatar src={"/img/cutlery.svg"} />}
-                    primaryText={`No matches :(`}
-                    secondaryText={<p>{`Click the salad bowl to go back and get swiping`}</p>}
-                    secondaryTextLines={2}
-                    onClick={this.handleShow}
-                  />
-                  :
-                  selections.map((image, i) => {
-                    const placeId = placesMap[image.photo_reference]
-                    const place = places.find(place => place.place_id === placeId)
-                    return <Restaurant key={i} place={place} photoReference={image.photo_reference} />
-                  })
-                }
-              </List>
-            </div>
+        <NavLink activeClassName="active" to={`/`} >
+          <img src="/img/salad.svg"
+            className="shiver"
+            id="getCards" />
+        </NavLink>
+        <div className="container">
+          <div id="chatbox">
+            <List>
+              <Subheader>{`Messages: ${selections.length}`}</Subheader>
+              {!selections.length
+                ? <ListItem
+                  leftAvatar={<Avatar src={"/img/cutlery.svg"} />}
+                  primaryText={`No matches :(`}
+                  secondaryText={<p>{`Click the salad bowl to go back and get swiping`}</p>}
+                  secondaryTextLines={2}
+                  onClick={this.handleShow}
+                />
+                :
+                selections.map((image, i) => {
+                  const placeId = placesMap[image.photo_reference]
+                  const place = places.find(place => place.place_id === placeId)
+                  return <Restaurant key={i} place={place} photoReference={image.photo_reference} />
+                })
+              }
+            </List>
           </div>
         </div>
-        <Modal show={showModal} onHide={this.handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>yaaaaa</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.handleClose}>Close</Button>
-          </Modal.Footer>
-        </Modal>
       </div>
     );
   }
 }
-
 
 const mapStateToProps = function (state) {
   return {

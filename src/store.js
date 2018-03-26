@@ -23,6 +23,8 @@ const REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO'
 
 const ADD_SELECTION = 'ADD_SELECTION'
 
+const REMOVE_SELECTION = 'REMOVE_SELECTION'
+
 const ADD_PLACE_ASSOCIATION = 'ADD_PLACE_ASSOCIATION'
 
 export const addPlaceDetails = (place) => {
@@ -47,6 +49,10 @@ export const removePlacePhoto = (photoId) => {
 
 export const addSelection = (selection) => {
   return { type: ADD_SELECTION, selection }
+}
+
+export const removeSelection = (photoReference) => {
+  return { type: REMOVE_SELECTION, photoReference }
 }
 
 export const addPlaceAssociation = (placesMap) => {
@@ -125,14 +131,16 @@ const reducer = (state = defaultState, action) => {
       return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
-      action.placePhotos = action.placePhotos.sort(shuffle)
-      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos] }
+      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle) }
     }
     case REMOVE_PLACE_PHOTO: {
       return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
     }
     case ADD_SELECTION: {
       return { ...state, selections: [...state.selections, action.selection] }
+    }
+    case REMOVE_SELECTION: {
+      return { ...state, selections: [...state.selections.filter(selection => selection.photo_reference != action.photoReference)] }
     }
     case ADD_PLACE_ASSOCIATION: {
       const newPlacesMap = action.placesMap

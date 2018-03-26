@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Stack);
+export default connect(mapStateToProps, mapDispatchToProps)(Stack)
 
 const CustomAlertLeft = () => (
   <span>

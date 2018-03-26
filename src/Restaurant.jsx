@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { removeSelection } from './store'
 import Map from './Map'
-import { ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+import { ListItem } from 'material-ui/List'
 import { Modal, Image } from 'react-bootstrap'
 
-export default class Restaurant extends Component {
+class Restaurant extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,8 +29,11 @@ export default class Restaurant extends Component {
   }
 
   render() {
-    const { place } = this.props
+    const { place, photoReference, removingSelection } = this.props
     const { showModal, url, placesDetails } = this.state
+    const Deselect = <button type="button" className="close" aria-label="Close" onClick={() => removingSelection(photoReference)} >
+    <span aria-hidden="true">&times;</span>
+    </button>
     if (url) {
       return (
         <div>
@@ -38,6 +43,7 @@ export default class Restaurant extends Component {
               secondaryText={<p>{`${this.generateRandomMessage(place)}`}</p>}
               secondaryTextLines={2}
               onClick={this.handleShow}
+              rightIconButton={Deselect}
             />
             <Modal show={showModal} onHide={this.handleClose}>
               <Modal.Header closeButton>
@@ -51,9 +57,9 @@ export default class Restaurant extends Component {
               {placesDetails.opening_hours.weekday_text &&
                 <div>
                   <Modal.Title>Hours</Modal.Title>
-                  <p>{placesDetails.opening_hours.weekday_text.map(
+                  {placesDetails.opening_hours.weekday_text.map(
                     day => <p>{day}</p>
-                  )}</p>
+                  )}
                 </div>}
               </Modal.Body>
               <Modal.Footer>
@@ -83,3 +89,10 @@ export default class Restaurant extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  removingSelection(photoReference) {
+    dispatch(removeSelection(photoReference))
+  }
+})
+
+export default connect(null, mapDispatchToProps)(Restaurant)
