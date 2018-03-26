@@ -27,8 +27,6 @@ export default class Restaurant extends Component {
   }
 
   render() {
-    console.log(this.props.place)
-    console.log('this dot state', this.state)
     const { place } = this.props
     const { showModal, url, placesDetails } = this.state
     if (url) {
@@ -67,6 +65,7 @@ export default class Restaurant extends Component {
     }
     return (<div></div>)
   }
+
   generateRandomMessage(place) {
     const greetings = ['Hey!', 'Howdy!', 'Ciao,', 'How are you?', 'How are you doing?!', 'Sup?']
     const myGreeting = greetings[Math.floor(Math.random()* greetings.length)]
@@ -74,9 +73,11 @@ export default class Restaurant extends Component {
     const message = `${myGreeting} My name is ${place.name}! People think I'm a ${place.rating} out of 5, and ${isOpen}`
     return message
   }
+
   handleClose() {
     this.setState({ showModal: false })
   }
+
   handleShow() {
     this.setState({ showModal: true })
   }

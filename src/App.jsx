@@ -44,6 +44,7 @@ class App extends Component {
       </Router>
     )
   }
+
   removePizza() { this.setState({ showCards: true }) }
 
   startNotifications() {
