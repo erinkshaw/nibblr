@@ -4,10 +4,9 @@ import Restaurant from './Restaurant'
 import { connect } from 'react-redux'
 import store from './store'
 import { List, ListItem } from 'material-ui/List'
-import Divider from 'material-ui/Divider'
 import Subheader from 'material-ui/Subheader'
 import Avatar from 'material-ui/Avatar'
-import { Modal, Button, Tooltip, Popover, OverlayTrigger } from 'react-bootstrap'
+
 
 class Selections extends React.Component {
   constructor(props) {
