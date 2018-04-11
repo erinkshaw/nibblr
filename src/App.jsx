@@ -19,9 +19,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // if this is a new page load && the current href is main
+    console.log('Component did mount', Date())
     if (this.state.showToast && !this.state.currentHref[this.state.currentHref.length-1]) {
-      navigator.geolocation.getCurrentPosition((position) => { store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude)) })
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(`Got position ${position}`, Date())
+        store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
+      }, (error) => {
+        store.dispatch(gettingPlacesData('40.6845305', '-73.9412525'))
+        console.log('geolocation.getCurrentPosition returned an error:', error)
+      }, {
+        maximumAge: 5 * 60 * 1000,
+        timeout:    5000
+      })
     }
   }
 

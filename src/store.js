@@ -35,10 +35,6 @@ export const getPlacesData = (places) => {
   return { type: GET_PLACES, places }
 }
 
-export const getMorePlacesData = (places) => {
-  return { type: GET_MORE_PLACES, places }
-}
-
 export const addPlacePhotos = (placePhotos) => {
   return { type: ADD_PLACE_PHOTOS, placePhotos }
 }
@@ -60,11 +56,14 @@ export const addPlaceAssociation = (placesMap) => {
 }
 
 export const gettingPlaceDetails = (placeId) => {
+  console.log('start of gettingplacesdetails', Date())
   const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
+    console.log('inside details thunk', Date())
     axios.get(url)
       .then(res => res.data)
       .then(data => {
+        console.log('second details dot then', Date())
         if (data.result.photos) {
           const clarifaiRequest = makeJSON(data.result.photos, data.result.place_id)
           dispatch(gettingFoodImages(clarifaiRequest.json))
@@ -74,47 +73,47 @@ export const gettingPlaceDetails = (placeId) => {
   }
 }
 
-export const gettingPlacesData = (lat, lng) => {
+function placesURL(lat, lng, token) {
   let url = `/api/places/lat/${lat}/lng/${lng}`
-  let places
-  lat = lat || '40.6845305'
-  lng = lng || '-73.9412525'
+  if (token) {
+    url += `?token=${token}`
+  }
+  return url
+}
+
+function gettingPlacesDataHelper(dispatch, lat, lng, more, token) {
+  console.log('start of helper', Date())
+  let url = placesURL(lat, lng, token);
+  axios.get(url)
+  .then(res => res.data)
+  .then(data => {
+    console.log(`second dot then ${more}`, Date())
+    dispatch(getPlacesData(data))
+    const places = data.results
+    places.map(place => dispatch(gettingPlaceDetails(place.place_id)))
+    if (more > 0) {
+      gettingPlacesDataHelper(dispatch, lat, lng, more - 1, data.next_page_token)
+    }
+  })
+}
+
+export const gettingPlacesData = (lat, lng) => {
+  console.log('start gettingplacesdata', Date())
   return function thunk(dispatch) {
-    axios.get(url)
-      .then(res => res.data)
-      .then(data => {
-        let token = data.next_page_token
-        dispatch(getPlacesData(data))
-        url = `/api/places/lat/${lat}/lng/${lng}?token=${token}`
-        return axios.get(url)
-      })
-      .then(res => {
-        return res.data
-      })
-      .then(data => {
-        let token = data.next_page_token
-        dispatch(getMorePlacesData(data))
-        url = `/api/places/lat/${lat}/lng/${lng}?token=${token}`
-        return axios.get(url)
-      })
-      .then(res => {
-        return res.data
-      })
-      .then(data => {
-        const places = data.results
-        dispatch(getMorePlacesData(data))
-        dispatch(gettingPlaceDetails(places[0].place_id))
-        return Promise.all(places.map(place => dispatch(gettingPlaceDetails(place.place_id))))
-      })
+    console.log('inside thunk', Date())
+    gettingPlacesDataHelper(dispatch, lat, lng, 2, null)
   }
 }
 
 export const gettingFoodImages = (photoJson) => {
+  console.log('getting food images start', Date())
   const url = `/api/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
+    console.log('start of food images thunk', Date())
     axios.get(url)
       .then(res => res.data)
       .then(data => {
+        console.log('second dot then in gettingfoodimages', Date())
         data = data.map(photo => ({
           concepts: photo.data.concepts,
           photo_reference: toPhotoReference(photo.input.data.image.url)
@@ -128,9 +127,6 @@ export const gettingFoodImages = (photoJson) => {
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_PLACES: {
-      return { ...state, places: action.places.results }
-    }
-    case GET_MORE_PLACES: {
       return { ...state, places: action.places.results.concat(state.places) }
     }
     case ADD_PLACE_PHOTOS: {
@@ -153,7 +149,8 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
+// export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
+export default createStore(reducer, applyMiddleware(thunk, createLogger({ collapsed: true })))
 
 const makeJSON = (arr, placeId) => {
   let jsonify = []
