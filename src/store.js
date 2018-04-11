@@ -115,7 +115,10 @@ export const gettingFoodImages = (photoJson) => {
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        data = data.map(photo => ({ concepts: photo.data.concepts, photo_reference: toPhotoReference(photo.input.data.image.url) }))
+        data = data.map(photo => ({
+          concepts: photo.data.concepts,
+          photo_reference: toPhotoReference(photo.input.data.image.url)
+        }))
         const foodImages = data.filter(photo => photo.concepts.find(isFood))
         if (foodImages.length) dispatch(addPlacePhotos(foodImages))
       })
