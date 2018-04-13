@@ -8,6 +8,7 @@ const defaultState = {
   places: [],
   placesMap: {},
   foodImages: [],
+  currImages: [],
   selections: []
 }
 
@@ -18,6 +19,10 @@ const GET_MORE_PLACES = 'GET_MORE_PLACES'
 const ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS'
 
 const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
+
+const GET_CURRENT_IMAGES = 'GET_CURRENT_IMAGES'
+
+const REMOVE_CURRENT_IMAGE = 'REMOVE_CURRENT_IMAGE'
 
 const REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO'
 
@@ -39,6 +44,14 @@ export const addPlacePhotos = (placePhotos) => {
   return { type: ADD_PLACE_PHOTOS, placePhotos }
 }
 
+export const getCurrentImages = () => {
+  return { type: GET_CURRENT_IMAGES }
+}
+
+export const removeCurrentImage = (photoId) => {
+  return { type: REMOVE_CURRENT_IMAGE, photoId }
+}
+
 export const removePlacePhoto = (photoId) => {
   return { type: REMOVE_PLACE_PHOTO, photoId }
 }
@@ -56,14 +69,15 @@ export const addPlaceAssociation = (placesMap) => {
 }
 
 export const gettingPlaceDetails = (placeId) => {
-  console.log('start of gettingplacesdetails', Date())
   const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
-    console.log('inside details thunk', Date())
+    // if the first image request has completed, then serve the first 5 images to our store
+    if (store.getState().foodImages.length && !store.getState().currImages.length) {
+      dispatch(getCurrentImages())
+    }
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        console.log('second details dot then', Date())
         if (data.result.photos) {
           const clarifaiRequest = makeJSON(data.result.photos, data.result.place_id)
           dispatch(gettingFoodImages(clarifaiRequest.json))
@@ -82,12 +96,10 @@ function placesURL(lat, lng, token) {
 }
 
 function gettingPlacesDataHelper(dispatch, lat, lng, more, token) {
-  console.log('start of helper', Date())
-  let url = placesURL(lat, lng, token);
+  let url = placesURL(lat, lng, token)
   axios.get(url)
   .then(res => res.data)
   .then(data => {
-    console.log(`second dot then ${more}`, Date())
     dispatch(getPlacesData(data))
     const places = data.results
     places.map(place => dispatch(gettingPlaceDetails(place.place_id)))
@@ -98,22 +110,17 @@ function gettingPlacesDataHelper(dispatch, lat, lng, more, token) {
 }
 
 export const gettingPlacesData = (lat, lng) => {
-  console.log('start gettingplacesdata', Date())
   return function thunk(dispatch) {
-    console.log('inside thunk', Date())
     gettingPlacesDataHelper(dispatch, lat, lng, 2, null)
   }
 }
 
 export const gettingFoodImages = (photoJson) => {
-  console.log('getting food images start', Date())
   const url = `/api/clarifai/predict/${photoJson}`
   return function thunk(dispatch) {
-    console.log('start of food images thunk', Date())
     axios.get(url)
       .then(res => res.data)
       .then(data => {
-        console.log('second dot then in gettingfoodimages', Date())
         data = data.map(photo => ({
           concepts: photo.data.concepts,
           photo_reference: toPhotoReference(photo.input.data.image.url)
@@ -127,13 +134,19 @@ export const gettingFoodImages = (photoJson) => {
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
     case GET_PLACES: {
-      return { ...state, places: action.places.results.concat(state.places) }
+      return { ...state, places: [...action.places.results, ...state.places] }
     }
     case ADD_PLACE_PHOTOS: {
       return { ...state, foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle) }
     }
     case REMOVE_PLACE_PHOTO: {
       return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
+    }
+    case GET_CURRENT_IMAGES: {
+      return { ...state, currImages: [...state.currImages, ...state.foodImages.slice(0, 5)] }
+    }
+    case REMOVE_CURRENT_IMAGE: {
+      return { ...state, currImages: [...state.currImages.filter(img => img.photo_reference !== action.photoId)] }
     }
     case ADD_SELECTION: {
       return { ...state, selections: [...state.selections, action.selection] }
@@ -149,8 +162,10 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-// export default createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
-export default createStore(reducer, applyMiddleware(thunk, createLogger({ collapsed: true })))
+// const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
+const store = createStore(reducer, applyMiddleware(thunk, createLogger({ collapsed: true })))
+
+export default store
 
 const makeJSON = (arr, placeId) => {
   let jsonify = []

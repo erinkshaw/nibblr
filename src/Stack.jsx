@@ -2,50 +2,81 @@ import React, { Component } from 'react'
 import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
 import { connect } from 'react-redux'
-import { addSelection, removePlacePhoto } from './store'
+import { addSelection, removePlacePhoto, getCurrentImages, removeCurrentImage } from './store'
 
 
-function Stack (props) {
-    const { newSelection, removePhoto, showCards, foodImages } = props
-    if (showCards) {
+// TODO: Return to functional component
+class Stack extends Component {
+
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const { newSelection, removePhoto, getCurrentImages, getMoreImages, showCards, foodImages, currImages } = this.props
+
+
+    if (currImages && currImages.length) {
+      const foods = currImages.map((image, i) => (
+        <Card key={i}
+          onSwipeLeft={() => {
+            removePhoto(image.photo_reference)
+          }
+          }
+          onSwipeRight={() => {
+            newSelection(image)
+          }
+          }>
+          <Image photoReference={image.photo_reference} />
+        </Card>
+      ))
+
+      console.log(currImages, foods)
+      //console.log('curr images', currImages)
       return (
         <Cards
           alertRight={<CustomAlertRight />}
           alertLeft={<CustomAlertLeft />}
-          onEnd={() => { alert('you\'ve run out!') }
-          } className='master-root'>
-          {foodImages && foodImages.map((image, i) => (
+          onEnd={() => getMoreImages()} className='master-root'>
+
+          {currImages.map((image, i) => (
             <Card key={i}
-              onSwipeLeft={() => {
+              onSwipeLeft={() =>
                 removePhoto(image.photo_reference)
+
               }
-              }
-              onSwipeRight={() => {
+              onSwipeRight={() =>
                 newSelection(image)
-              }
+
               }>
               <Image photoReference={image.photo_reference} />
             </Card>
-          )
-          )}
+          ))}
         </Cards>
       )
     }
     return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
+  }
 }
 
 const mapStateToProps = (state) => ({
   places: state.places,
-  foodImages: state.foodImages
+  foodImages: state.foodImages,
+  currImages: state.currImages
 })
 
 const mapDispatchToProps = (dispatch) => ({
   newSelection(photo) {
     dispatch(addSelection(photo))
     dispatch(removePlacePhoto(photo.photo_reference))
+    dispatch(removeCurrentImage(photo.photo_reference))
   },
   removePhoto(id) {
     dispatch(removePlacePhoto(id))
+    dispatch(removeCurrentImage(id))
+  },
+  getMoreImages() {
+    dispatch(getCurrentImages())
   }
 })
 

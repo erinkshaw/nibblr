@@ -3,39 +3,50 @@ import { Route, Switch } from 'react-router';
 import { BrowserRouter as Router } from 'react-router-dom'
 import Main from './Main'
 import Selections from './Selections'
-import store, { gettingPlacesData } from './store'
+import store, { gettingPlacesData, getCurrentImages } from './store'
 import toastr from 'toastr'
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showCards: false,
       showToast: true,
       currentHref: window.location.href.split('/')
     }
-    this.removePizza = this.removePizza.bind(this)
     this.startNotifications = this.startNotifications.bind(this)
   }
 
+
+  // TODO: jfc deal with this
   componentDidMount() {
-    console.log('Component did mount', Date())
     if (this.state.showToast && !this.state.currentHref[this.state.currentHref.length-1]) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(`Got position ${position}`, Date())
-        store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
-      }, (error) => {
-        store.dispatch(gettingPlacesData('40.6845305', '-73.9412525'))
-        console.log('geolocation.getCurrentPosition returned an error:', error)
-      }, {
-        maximumAge: 5 * 60 * 1000,
-        timeout:    5000
-      })
+      if (!localStorage.getItem('coords')) {
+        navigator.geolocation.getCurrentPosition(position => {
+          localStorage.setItem('coords', JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude}))
+          store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
+        }, (error) => {
+          const { lat, lng } = JSON.parse(localStorage.getItem('coords'))
+          store.dispatch(gettingPlacesData(lat, lng))
+          console.log('geolocation.getCurrentPosition returned an error:', error)
+        })
+      } else {
+        navigator.geolocation.getCurrentPosition(position => {
+          localStorage.setItem('coords', JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude}))
+          store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
+        }, (error) => {
+          const { lat, lng } = JSON.parse(localStorage.getItem('coords'))
+          store.dispatch(gettingPlacesData(lat, lng))
+          console.log('geolocation.getCurrentPosition returned an error:', error)
+        }, {
+          timeout: 5000,
+          enableHighAccuracy: false,
+        })
+      }
     }
   }
 
   render() {
-    const { showCards, showToast, currentHref } = this.state
+    const { showToast, currentHref } = this.state
 
     // if this is a new page load && the current href is main
     if (showToast && !currentHref[currentHref.length-1]) {
@@ -47,14 +58,12 @@ class App extends Component {
         <div>
           <Switch>
             <Route path="/selections" render={() => <Selections />} />
-            <Route path="/" render={() => <Main showCards={showCards} removePizza={this.removePizza} />} />
+            <Route path="/" render={() => <Main />} />
           </Switch>
         </div>
       </Router>
     )
   }
-
-  removePizza() { this.setState({ showCards: true }) }
 
   startNotifications() {
     this.setState({ showToast: false })

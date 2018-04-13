@@ -7,7 +7,7 @@ const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_API_KEY
 })
 
-const MOCK_CLARIFAI = false
+const MOCK_CLARIFAI = true
 
 router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   let batchPhotosJSON = JSON.parse(req.params.batchPhotosJSON)
@@ -31,6 +31,7 @@ router.get('/predict/:batchPhotosJSON', (req, res, next) => {
       }
     })
     res.json(mockJSON)
+
   } else {
     batchPhotosJSON.map(photo => photo.url = makeGooglePlacesPhotoURL(photo.url))
     app.models.predict(Clarifai.GENERAL_MODEL, batchPhotosJSON).then(response => {
@@ -41,6 +42,7 @@ router.get('/predict/:batchPhotosJSON', (req, res, next) => {
       }
     )
   }
+
 })
 
 module.exports = router
