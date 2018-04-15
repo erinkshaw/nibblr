@@ -16,27 +16,34 @@ class App extends Component {
     this.startNotifications = this.startNotifications.bind(this)
   }
 
-
-  // TODO: jfc deal with this
   componentDidMount() {
+    // if this is the first time on main
     if (this.state.showToast && !this.state.currentHref[this.state.currentHref.length-1]) {
+      // if this is the first time on the site (ever), so user coords are not saved on localStorage
       if (!localStorage.getItem('coords')) {
         navigator.geolocation.getCurrentPosition(position => {
           localStorage.setItem('coords', JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude}))
           store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
         }, (error) => {
-          const { lat, lng } = JSON.parse(localStorage.getItem('coords'))
-          store.dispatch(gettingPlacesData(lat, lng))
-          console.log('geolocation.getCurrentPosition returned an error:', error)
+          // if browser can't grab coords, serve static lat lng from fidi
+          store.dispatch(gettingPlacesData('40.6845305', '-73.9412525'))
+          console.log('geolocation.getCurrentPosition returned an error:', error, 'defaulting to fidi coords')
+        }, {
+          // give it 20 seconds to fetch current location, then default to err
+          timeout: 20000,
+          enableHighAccuracy: false,
         })
       } else {
+        // otherwise user has visited before
         navigator.geolocation.getCurrentPosition(position => {
+          // on success reset the coords stored in localStorage to newest coords
           localStorage.setItem('coords', JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude}))
           store.dispatch(gettingPlacesData(position.coords.latitude, position.coords.longitude))
         }, (error) => {
+          // on error (most likely, timeout) serve lat lng on localStorage
           const { lat, lng } = JSON.parse(localStorage.getItem('coords'))
           store.dispatch(gettingPlacesData(lat, lng))
-          console.log('geolocation.getCurrentPosition returned an error:', error)
+          console.log('geolocation.getCurrentPosition returned an error:', error, 'using coords from local storage')
         }, {
           timeout: 5000,
           enableHighAccuracy: false,
@@ -81,8 +88,8 @@ class App extends Component {
 
     var toasts = [
       new Toast('info', 'toast-top-full-width', `Welcome to Nibblr! I\'m "Tinder for Takeout" `),
-      new Toast('warning', 'toast-top-left', 'Click on the salad bowl to reveal your choices!'),
-      new Toast('success', 'toast-top-right', 'Click on the grocery bag to see your matches!'),
+      new Toast('warning', 'toast-top-left', 'Click on the salad bowl to learn more about me!'),
+      new Toast('success', 'toast-top-right', 'Click on the grocery bag to toggle between matches and choices!'),
     ]
 
     var i = 0
