@@ -7,7 +7,6 @@ I am "Tinder for Take-Out"
 ## How to use
 
 * Visit me at: https://tinder-for-takeout.herokuapp.com
-* Click on the salad bowl in the top left corner to reveal your choices
 * Once your nearby food images load, swipe left on 'yucks' and swipe right on 'yums'
 * Click on the grocery bag to scroll through your selections
 
