@@ -7,7 +7,7 @@ const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_API_KEY
 })
 
-const MOCK_CLARIFAI = true
+const MOCK_CLARIFAI = false
 
 router.get('/predict/:batchPhotosJSON', (req, res, next) => {
   let batchPhotosJSON = JSON.parse(req.params.batchPhotosJSON)
