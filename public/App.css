@@ -10,18 +10,21 @@ body {
   background-size: 80px 80px;
 }
 
+/* overwrite auto p setting for react bootstrap modal */
 p {
   margin: 0 !important;
 }
 
 /* make the plate */
 .plate {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 650px;
   height: 650px;
-  margin: auto;
-  position: absolute;
   background-image: url("/img/cutlery.svg");
-  left: 25%
 }
 
 /* place nibblr logo */

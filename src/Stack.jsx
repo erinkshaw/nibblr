@@ -7,7 +7,7 @@ import { addSelection, removePlacePhoto, getCurrentImages, removeCurrentImage } 
 
 // TODO: Return to functional component
 function Stack(props) {
-  const { newSelection, removePhoto, getMoreImages, foodImages, currImages } = props
+  const { newSelection, removePhoto, getMoreImages, currImages } = props
   if (currImages && currImages.length) {
     if (currImages.length < 3) getMoreImages()
     return (
@@ -18,7 +18,7 @@ function Stack(props) {
 
         {currImages.map((image, i) => (
           <Card key={i}
-            onSwipeLeft={ () => removePhoto(image.photo_reference) }
+            onSwipeLeft={ () => console.log(`removed ${image.photo_reference}`) }
             onSwipeRight={ () => newSelection(image) } >
             <Image photoReference={image.photo_reference} />
           </Card>
@@ -29,21 +29,11 @@ function Stack(props) {
   return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
 }
 
-const mapStateToProps = (state) => ({
-  places: state.places,
-  foodImages: state.foodImages,
-  currImages: state.currImages
-})
+const mapStateToProps = (state) => ({ currImages: state.currImages })
 
 const mapDispatchToProps = (dispatch) => ({
   newSelection(photo) {
     dispatch(addSelection(photo))
-    dispatch(removePlacePhoto(photo.photo_reference))
-    dispatch(removeCurrentImage(photo.photo_reference))
-  },
-  removePhoto(id) {
-    dispatch(removePlacePhoto(id))
-    dispatch(removeCurrentImage(id))
   },
   getMoreImages() {
     dispatch(getCurrentImages())

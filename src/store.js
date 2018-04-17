@@ -22,10 +22,6 @@ const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
 
 const GET_CURRENT_IMAGES = 'GET_CURRENT_IMAGES'
 
-const REMOVE_CURRENT_IMAGE = 'REMOVE_CURRENT_IMAGE'
-
-const REMOVE_PLACE_PHOTO = 'REMOVE_PLACE_PHOTO'
-
 const ADD_SELECTION = 'ADD_SELECTION'
 
 const REMOVE_SELECTION = 'REMOVE_SELECTION'
@@ -71,7 +67,8 @@ export const addPlaceAssociation = (placesMap) => {
 export const gettingPlaceDetails = (placeId) => {
   const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
-    // if the first image request has completed, then serve the first images to our store
+    // if the first image request has completed,
+    // then serve the first images to our store
     if (store.getState().foodImages.length && !store.getState().currImages.length) {
       dispatch(getCurrentImages())
     }
@@ -137,16 +134,16 @@ const reducer = (state = defaultState, action) => {
       return { ...state, places: [...action.places.results, ...state.places] }
     }
     case ADD_PLACE_PHOTOS: {
-      return { ...state, foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle) }
-    }
-    case REMOVE_PLACE_PHOTO: {
-      return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
+      return { ...state,
+        foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle)
+      }
     }
     case GET_CURRENT_IMAGES: {
-      return { ...state, currImages: [...state.currImages, ...state.foodImages.slice(0, 20)] }
-    }
-    case REMOVE_CURRENT_IMAGE: {
-      return { ...state, currImages: [...state.currImages.filter(img => img.photo_reference !== action.photoId)] }
+      const fifthFromLast = state.foodImages.length - 6
+      return { ...state,
+        currImages: [...state.currImages, ...state.foodImages.slice(fifthFromLast)],
+        foodImages: state.foodImages.slice(0, -5)
+      }
     }
     case ADD_SELECTION: {
       return { ...state, selections: [...state.selections, action.selection] }
