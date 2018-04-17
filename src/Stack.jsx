@@ -6,34 +6,27 @@ import { addSelection, removePlacePhoto, getCurrentImages, removeCurrentImage } 
 
 
 // TODO: Return to functional component
-class Stack extends Component {
+function Stack(props) {
+  const { newSelection, removePhoto, getMoreImages, foodImages, currImages } = props
+  if (currImages && currImages.length) {
+    if (currImages.length < 3) getMoreImages()
+    return (
+      <Cards
+        alertRight={<CustomAlertRight />}
+        alertLeft={<CustomAlertLeft />}
+        onEnd={() => getMoreImages()} className='master-root'>
 
-  constructor(props) {
-    super(props)
+        {currImages.map((image, i) => (
+          <Card key={i}
+            onSwipeLeft={ () => removePhoto(image.photo_reference) }
+            onSwipeRight={ () => newSelection(image) } >
+            <Image photoReference={image.photo_reference} />
+          </Card>
+        ))}
+      </Cards>
+    )
   }
-
-  render() {
-    const { newSelection, removePhoto, getCurrentImages, getMoreImages, showCards, foodImages, currImages } = this.props
-    if (currImages && currImages.length) {
-      if (currImages.length < 3) getMoreImages()
-      return (
-        <Cards
-          alertRight={<CustomAlertRight />}
-          alertLeft={<CustomAlertLeft />}
-          onEnd={() => getMoreImages()} className='master-root'>
-
-          {currImages.map((image, i) => (
-            <Card key={i}
-              onSwipeLeft={ () => removePhoto(image.photo_reference) }
-              onSwipeRight={ () => newSelection(image) } >
-              <Image photoReference={image.photo_reference} />
-            </Card>
-          ))}
-        </Cards>
-      )
-    }
-    return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
-  }
+  return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
 }
 
 const mapStateToProps = (state) => ({
