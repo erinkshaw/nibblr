@@ -54,7 +54,7 @@ class Restaurant extends Component {
               </Modal.Header>
               <Modal.Body>
               <Image src={url} rounded style={{ width: "100%" }} />
-              {placesDetails.opening_hours.weekday_text &&
+              {placesDetails.opening_hours &&
                 <div>
                   <Modal.Title>Hours</Modal.Title>
                   {placesDetails.opening_hours.weekday_text.map(

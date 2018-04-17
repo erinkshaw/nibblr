@@ -31,10 +31,15 @@ class Selections extends React.Component {
     const { showModal } = this.state
     return (
       <div>
-        <NavLink activeClassName="active" to={`/`} >
+        <a href={`https://github.com/erinkshaw/nibblr`} >
           <img src="/img/salad.svg"
             className="shiver"
             id="getCards" />
+        </a>
+      <NavLink activeClassName="active" to={`/`} >
+          <img src="/img/groceries.svg"
+            className="shiver"
+            id="selections" />
         </NavLink>
         <div className="container">
           <div id="chatbox">
@@ -59,7 +64,7 @@ class Selections extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 

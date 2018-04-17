@@ -2,50 +2,51 @@ import React, { Component } from 'react'
 import Cards, { Card } from 'react-swipe-card'
 import Image from './Image'
 import { connect } from 'react-redux'
-import { addSelection, removePlacePhoto } from './store'
+import { addSelection, removePlacePhoto, getCurrentImages, removeCurrentImage } from './store'
 
 
-function Stack (props) {
-    const { newSelection, removePhoto, showCards, foodImages } = props
-    if (showCards) {
-      return (
-        <Cards
-          alertRight={<CustomAlertRight />}
-          alertLeft={<CustomAlertLeft />}
-          onEnd={() => { alert('you\'ve run out!') }
-          } className='master-root'>
-          {foodImages && foodImages.map((image, i) => (
-            <Card key={i}
-              onSwipeLeft={() => {
-                removePhoto(image.photo_reference)
-              }
-              }
-              onSwipeRight={() => {
-                newSelection(image)
-              }
-              }>
-              <Image photoReference={image.photo_reference} />
-            </Card>
-          )
-          )}
-        </Cards>
-      )
-    }
-    return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
+// TODO: Return to functional component
+function Stack(props) {
+  const { newSelection, removePhoto, getMoreImages, foodImages, currImages } = props
+  if (currImages && currImages.length) {
+    if (currImages.length < 3) getMoreImages()
+    return (
+      <Cards
+        alertRight={<CustomAlertRight />}
+        alertLeft={<CustomAlertLeft />}
+        onEnd={() => getMoreImages()} className='master-root'>
+
+        {currImages.map((image, i) => (
+          <Card key={i}
+            onSwipeLeft={ () => removePhoto(image.photo_reference) }
+            onSwipeRight={ () => newSelection(image) } >
+            <Image photoReference={image.photo_reference} />
+          </Card>
+        ))}
+      </Cards>
+    )
+  }
+  return (<div className="master-root" id="load"><img src="/img/pizza.svg" /></div>)
 }
 
 const mapStateToProps = (state) => ({
   places: state.places,
-  foodImages: state.foodImages
+  foodImages: state.foodImages,
+  currImages: state.currImages
 })
 
 const mapDispatchToProps = (dispatch) => ({
   newSelection(photo) {
     dispatch(addSelection(photo))
     dispatch(removePlacePhoto(photo.photo_reference))
+    dispatch(removeCurrentImage(photo.photo_reference))
   },
   removePhoto(id) {
     dispatch(removePlacePhoto(id))
+    dispatch(removeCurrentImage(id))
+  },
+  getMoreImages() {
+    dispatch(getCurrentImages())
   }
 })
 
