@@ -71,7 +71,7 @@ export const addPlaceAssociation = (placesMap) => {
 export const gettingPlaceDetails = (placeId) => {
   const url = `/api/places/${placeId}`
   return function thunk(dispatch) {
-    // if the first image request has completed, then serve the first 5 images to our store
+    // if the first image request has completed, then serve the first images to our store
     if (store.getState().foodImages.length && !store.getState().currImages.length) {
       dispatch(getCurrentImages())
     }
@@ -143,7 +143,7 @@ const reducer = (state = defaultState, action) => {
       return { ...state, foodImages: [...state.foodImages.filter(img => img.photo_reference !== action.photoId)] }
     }
     case GET_CURRENT_IMAGES: {
-      return { ...state, currImages: [...state.currImages, ...state.foodImages.slice(0, 5)] }
+      return { ...state, currImages: [...state.currImages, ...state.foodImages.slice(0, 20)] }
     }
     case REMOVE_CURRENT_IMAGE: {
       return { ...state, currImages: [...state.currImages.filter(img => img.photo_reference !== action.photoId)] }
@@ -162,8 +162,7 @@ const reducer = (state = defaultState, action) => {
   }
 }
 
-// const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
-const store = createStore(reducer, applyMiddleware(thunk, createLogger({ collapsed: true })))
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk, createLogger({ collapsed: true }))))
 
 export default store
 

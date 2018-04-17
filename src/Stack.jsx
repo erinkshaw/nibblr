@@ -14,25 +14,8 @@ class Stack extends Component {
 
   render() {
     const { newSelection, removePhoto, getCurrentImages, getMoreImages, showCards, foodImages, currImages } = this.props
-
-
     if (currImages && currImages.length) {
-      const foods = currImages.map((image, i) => (
-        <Card key={i}
-          onSwipeLeft={() => {
-            removePhoto(image.photo_reference)
-          }
-          }
-          onSwipeRight={() => {
-            newSelection(image)
-          }
-          }>
-          <Image photoReference={image.photo_reference} />
-        </Card>
-      ))
-
-      console.log(currImages, foods)
-      //console.log('curr images', currImages)
+      if (currImages.length < 3) getMoreImages()
       return (
         <Cards
           alertRight={<CustomAlertRight />}
@@ -41,14 +24,8 @@ class Stack extends Component {
 
           {currImages.map((image, i) => (
             <Card key={i}
-              onSwipeLeft={() =>
-                removePhoto(image.photo_reference)
-
-              }
-              onSwipeRight={() =>
-                newSelection(image)
-
-              }>
+              onSwipeLeft={ () => removePhoto(image.photo_reference) }
+              onSwipeRight={ () => newSelection(image) } >
               <Image photoReference={image.photo_reference} />
             </Card>
           ))}

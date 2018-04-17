@@ -19,7 +19,7 @@ class App extends Component {
   componentDidMount() {
     // if this is the first time on main
     if (this.state.showToast && !this.state.currentHref[this.state.currentHref.length-1]) {
-      // if this is the first time on the site (ever), so user coords are not saved on localStorage
+      // if this is the first time on the site (ever), user coords are not saved on localStorage
       if (!localStorage.getItem('coords')) {
         navigator.geolocation.getCurrentPosition(position => {
           localStorage.setItem('coords', JSON.stringify({lat: position.coords.latitude, lng: position.coords.longitude}))

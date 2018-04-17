@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import Stack from './Stack'
 
 function Main(props) {
-    const { removePizza, showCards } = props
   return (
     <div>
       <div className="plate">
@@ -11,13 +10,14 @@ function Main(props) {
           <span id="logo">Nibblr
           </span>
         </div>
-          <Stack showCards={showCards} />
+          <Stack />
       </div>
     <div>
-      <img src="/img/salad.svg"
-        className="shiver"
-        id="getCards"
-        onClick={() => removePizza()} />
+      <a href={`https://github.com/erinkshaw/nibblr`} >
+        <img src="/img/salad.svg"
+          className="shiver"
+          id="getCards" />
+      </a>
       <img src="/img/groceries.svg"
         className="shiver"
         id="selections"
