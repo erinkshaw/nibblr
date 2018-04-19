@@ -75,10 +75,14 @@ class Restaurant extends Component {
   generateRandomMessage(place) {
     const greetings = ['Hey!', 'Howdy!', 'Ciao,', 'How are you?', 'How are you doing?!', 'Sup?']
     const myGreeting = greetings[Math.floor(Math.random()* greetings.length)]
-    const isOpen = place.opening_hours.open_now ? 'I\'m open right now!' : 'sadly I\'m closed, but come visit me soon!'
+    let isOpen = 'come visit me soon!'
+    if (place.opening_hours) {
+      isOpen = place.opening_hours.open_now ? 'I\'m open right now!' : 'sadly I\'m closed, but come visit me soon!'
+    }
     const message = `${myGreeting} My name is ${place.name}! People think I'm a ${place.rating} out of 5, and ${isOpen}`
     return message
   }
+
 
   handleClose() {
     this.setState({ showModal: false })

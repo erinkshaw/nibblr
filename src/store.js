@@ -16,8 +16,6 @@ const GET_PLACES = 'GET_PLACES'
 
 const GET_MORE_PLACES = 'GET_MORE_PLACES'
 
-const ADD_PLACE_DETAILS = 'ADD_PLACE_DETAILS'
-
 const ADD_PLACE_PHOTOS = 'ADD_PLACE_PHOTOS'
 
 const GET_CURRENT_IMAGES = 'GET_CURRENT_IMAGES'
@@ -27,10 +25,6 @@ const ADD_SELECTION = 'ADD_SELECTION'
 const REMOVE_SELECTION = 'REMOVE_SELECTION'
 
 const ADD_PLACE_ASSOCIATION = 'ADD_PLACE_ASSOCIATION'
-
-export const addPlaceDetails = (place) => {
-  return { type: ADD_PLACE_DETAILS, place }
-}
 
 export const getPlacesData = (places) => {
   return { type: GET_PLACES, places }
@@ -46,10 +40,6 @@ export const getCurrentImages = () => {
 
 export const removeCurrentImage = (photoId) => {
   return { type: REMOVE_CURRENT_IMAGE, photoId }
-}
-
-export const removePlacePhoto = (photoId) => {
-  return { type: REMOVE_PLACE_PHOTO, photoId }
 }
 
 export const addSelection = (selection) => {
@@ -135,13 +125,12 @@ const reducer = (state = defaultState, action) => {
     }
     case ADD_PLACE_PHOTOS: {
       return { ...state,
-        foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle)
-      }
+        foodImages: [...state.foodImages, ...action.placePhotos].sort(shuffle) }
     }
     case GET_CURRENT_IMAGES: {
-      const fifthFromLast = state.foodImages.length - 6
+      const fifthFromLast = state.foodImages.length - 5
       return { ...state,
-        currImages: [...state.currImages, ...state.foodImages.slice(fifthFromLast)],
+        currImages: state.foodImages.slice(fifthFromLast),
         foodImages: state.foodImages.slice(0, -5)
       }
     }
