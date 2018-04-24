@@ -4,8 +4,6 @@ import Image from './Image'
 import { connect } from 'react-redux'
 import { addSelection, removePlacePhoto, getCurrentImages, removeCurrentImage } from './store'
 
-
-// TODO: Return to functional component
 function Stack(props) {
   const { newSelection, removePhoto, getMoreImages, currImages } = props
   if (currImages && currImages.length) {
